@@ -4,7 +4,9 @@ import { Nav } from "@/components/Nav";
 import { Hero } from "@/components/Hero";
 import { Features } from "@/components/Features";
 import { Performance } from "@/components/Performance";
+import { Philosophy } from "@/components/Philosophy";
 import { Experience } from "@/components/Experience";
+import { BetaForm } from "@/components/BetaForm";
 import { CTA } from "@/components/CTA";
 import { Footer } from "@/components/Footer";
 
@@ -12,17 +14,17 @@ export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "Nori — Developer terminal. Reimagined." },
+      { title: "Nori — A terminal, engineered." },
       {
         name: "description",
         content:
-          "Nori is a fast, context-aware terminal focused on performance, workflow clarity, and premium developer experience.",
+          "Nori is a fast, context-aware terminal runtime built for developers who live in the terminal. Closed developer preview.",
       },
-      { property: "og:title", content: "Nori — Developer terminal. Reimagined." },
+      { property: "og:title", content: "Nori — A terminal, engineered." },
       {
         property: "og:description",
         content:
-          "A fast, context-aware terminal focused on performance and premium developer experience.",
+          "Closed developer preview of Nori — a premium terminal runtime engineered for performance and focused workflows.",
       },
     ],
   }),
@@ -36,7 +38,9 @@ function Index() {
       <Hero />
       <Features />
       <Performance />
+      <Philosophy />
       <Experience />
+      <BetaForm />
       <CTA />
       <Footer />
     </main>
