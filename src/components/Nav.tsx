@@ -1,34 +1,18 @@
 import { motion, useScroll, useSpring } from "framer-motion";
-import { Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { Link, useLocation } from "@tanstack/react-router";
 
-const sections = [
-  { id: "features", label: "Features" },
-  { id: "performance", label: "Performance" },
-  { id: "philosophy", label: "Philosophy" },
-  { id: "experience", label: "Experience" },
-];
+const navItems = [
+  { to: "/", label: "Product", exact: true },
+  { to: "/changelog", label: "Changelog" },
+  { to: "/docs", label: "Docs" },
+  { to: "/feedback", label: "Feedback" },
+  { to: "/contact", label: "Contact" },
+] as const;
 
 export function Nav() {
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 24, mass: 0.4 });
-  const [active, setActive] = useState<string>("");
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) setActive(e.target.id);
-        });
-      },
-      { rootMargin: "-45% 0px -50% 0px", threshold: 0 }
-    );
-    sections.forEach((s) => {
-      const el = document.getElementById(s.id);
-      if (el) observer.observe(el);
-    });
-    return () => observer.disconnect();
-  }, []);
+  const { pathname } = useLocation();
 
   return (
     <motion.header
@@ -48,41 +32,36 @@ export function Nav() {
           </Link>
 
           <nav className="hidden md:flex items-center gap-1 text-[13px] absolute left-1/2 -translate-x-1/2">
-            {sections.map((s) => (
-              <a
-                key={s.id}
-                href={`#${s.id}`}
-                className={`relative px-3 py-1.5 rounded-full transition-colors ${
-                  active === s.id
-                    ? "text-foreground"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                {active === s.id && (
-                  <motion.span
-                    layoutId="nav-active"
-                    className="absolute inset-0 rounded-full bg-surface-elevated/70 ring-hairline"
-                    transition={{ type: "spring", stiffness: 380, damping: 32 }}
-                  />
-                )}
-                <span className="relative">{s.label}</span>
-              </a>
-            ))}
+            {navItems.map((item) => {
+              const active = item.exact ? pathname === item.to : pathname.startsWith(item.to);
+              return (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  className={`relative px-3 py-1.5 rounded-full transition-colors ${
+                    active ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {active && (
+                    <motion.span
+                      layoutId="nav-active"
+                      className="absolute inset-0 rounded-full bg-surface-elevated/70 ring-hairline"
+                      transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                    />
+                  )}
+                  <span className="relative">{item.label}</span>
+                </Link>
+              );
+            })}
           </nav>
 
           <div className="flex items-center gap-1">
-            <a
-              href="https://github.com"
-              className="hidden sm:inline-flex text-[13px] text-muted-foreground hover:text-foreground transition-colors px-3 py-1.5"
-            >
-              GitHub
-            </a>
-            <a
-              href="#beta"
+            <Link
+              to="/request-access"
               className="text-[13px] font-medium px-3.5 py-1.5 rounded-full bg-foreground text-background hover:opacity-90 transition-opacity"
             >
-              Join Beta
-            </a>
+              Request access
+            </Link>
           </div>
 
           <motion.div
