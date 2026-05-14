@@ -53,7 +53,7 @@ function FooterCol({ title, children }: { title: string; children: React.ReactNo
 function FooterLink({ to, children }: { to: string; children: React.ReactNode }) {
   return (
     <li>
-      <Link to={to} className="text-foreground/80 hover:text-foreground transition-colors text-[13px]">
+      <Link to={to as "/"} className="text-foreground/80 hover:text-foreground transition-colors text-[13px]">
         {children}
       </Link>
     </li>
