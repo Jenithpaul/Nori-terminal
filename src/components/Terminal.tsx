@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { GitBranch, Folder, Check, Clock, Sparkles } from "lucide-react";
 
 type Block = {
@@ -40,7 +39,7 @@ const defaultBlocks: Block[] = [
     output: (
       <div className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-0.5 text-[13px]">
         <span className="text-jade">M</span><span className="font-mono text-foreground/80">src/runtime/exec.rs</span>
-        <span className="text-cyan-muted">M</span><span className="font-mono text-foreground/80">src/ui/blocks.tsx</span>
+        <span className="text-jade">M</span><span className="font-mono text-foreground/80">src/ui/blocks.tsx</span>
         <span className="text-muted-foreground">?</span><span className="font-mono text-muted-foreground">notes/perf.md</span>
       </div>
     ),
@@ -54,22 +53,15 @@ export function Terminal({
   path = "~/nori/core",
 }: TerminalProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-      className={`relative rounded-2xl border hairline bg-surface/80 backdrop-blur-xl overflow-hidden shadow-[0_30px_80px_-30px_rgba(0,0,0,0.6)]`}
-    >
-      {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b hairline bg-surface-elevated/60">
+    <div className="relative rounded-xl border hairline bg-surface/80 backdrop-blur-xl overflow-hidden shadow-[0_30px_80px_-30px_rgba(0,0,0,0.8)]">
+      <div className="flex items-center justify-between px-4 py-2.5 border-b hairline bg-surface-elevated/60">
         <div className="flex items-center gap-3">
           <div className="flex gap-1.5">
-            <span className="size-2.5 rounded-full bg-foreground/10" />
-            <span className="size-2.5 rounded-full bg-foreground/10" />
-            <span className="size-2.5 rounded-full bg-foreground/10" />
+            <span className="size-2.5 rounded-full bg-foreground/15" />
+            <span className="size-2.5 rounded-full bg-foreground/15" />
+            <span className="size-2.5 rounded-full bg-foreground/15" />
           </div>
-          <div className="flex items-center gap-1.5 text-[11px] font-mono text-muted-foreground ml-2">
+          <div className="hidden sm:flex items-center gap-1.5 text-[11px] font-mono text-muted-foreground ml-2">
             <Folder className="size-3" />
             <span>{path}</span>
           </div>
@@ -83,41 +75,33 @@ export function Terminal({
         </div>
       </div>
 
-      {/* Body */}
-      <div className={`p-5 ${size === "lg" ? "min-h-[420px]" : "min-h-[300px]"} font-mono text-[13px] leading-relaxed`}>
-        <div className="space-y-5">
+      <div className={`p-4 sm:p-5 ${size === "lg" ? "min-h-[380px]" : "min-h-[280px]"} font-mono text-[12.5px] sm:text-[13px] leading-relaxed`}>
+        <div className="space-y-4">
           {blocks.map((b, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 8 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.15 + i * 0.12, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="rounded-lg border hairline bg-background/40"
-            >
-              <div className="flex items-center justify-between px-3.5 py-2 border-b hairline">
+            <div key={i} className="rounded-md border hairline bg-background/40">
+              <div className="flex items-center justify-between px-3 py-2 border-b hairline">
                 <div className="flex items-center gap-2 min-w-0">
                   <span className="text-jade">›</span>
-                  <span className="text-muted-foreground truncate">{b.prompt}</span>
+                  <span className="text-muted-foreground truncate hidden sm:inline">{b.prompt}</span>
                   <span className="text-foreground/90 truncate">{b.command}</span>
                 </div>
-                <div className="flex items-center gap-3 text-[11px] text-muted-foreground shrink-0">
+                <div className="flex items-center gap-2 text-[11px] text-muted-foreground shrink-0 ml-2">
                   <span className="flex items-center gap-1"><Clock className="size-3" />{b.duration}</span>
                   {b.status === "ok" && <Check className="size-3 text-jade" />}
                 </div>
               </div>
-              {b.output && <div className="px-3.5 py-3">{b.output}</div>}
-            </motion.div>
+              {b.output && <div className="px-3 py-3">{b.output}</div>}
+            </div>
           ))}
 
           <div className="flex items-center gap-2 pt-1">
             <span className="text-jade">›</span>
-            <span className="text-muted-foreground">{path}</span>
+            <span className="text-muted-foreground truncate">{path}</span>
             <span className="text-foreground/60">$</span>
-            <span className="inline-block w-1.5 h-4 bg-jade cursor-blink translate-y-[2px]" />
+            <span className="inline-block w-1.5 h-4 bg-foreground cursor-blink translate-y-[2px]" />
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
