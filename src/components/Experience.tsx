@@ -1,5 +1,5 @@
 import { Terminal } from "./Terminal";
-import { FileCode2, GitBranch, Package } from "lucide-react";
+import { FileCode2, Package } from "lucide-react";
 
 const blocks = [
   {
@@ -10,7 +10,7 @@ const blocks = [
     output: (
       <div className="space-y-1.5 text-[13px]">
         <div className="flex items-center gap-2 text-foreground/80">
-          <Package className="size-3 text-cyan-muted" />
+          <Package className="size-3 text-foreground/60" />
           <span>@acme/api · 42 tests</span>
         </div>
         <div className="grid grid-cols-[auto_1fr_auto] gap-x-3 text-muted-foreground">
@@ -29,14 +29,9 @@ const blocks = [
     output: (
       <div className="space-y-1 text-[13px]">
         <div className="grid grid-cols-[auto_1fr_auto] gap-x-3">
-          <FileCode2 className="size-3 text-cyan-muted self-center" />
+          <FileCode2 className="size-3 text-foreground/60 self-center" />
           <span className="text-foreground/80">apps/web/app/page.tsx</span>
           <span className="font-mono text-muted-foreground"><span className="text-jade">+42</span> <span className="text-destructive">-7</span></span>
-        </div>
-        <div className="grid grid-cols-[auto_1fr_auto] gap-x-3">
-          <FileCode2 className="size-3 text-cyan-muted self-center" />
-          <span className="text-foreground/80">packages/ui/button.tsx</span>
-          <span className="font-mono text-muted-foreground"><span className="text-jade">+12</span> <span className="text-destructive">-3</span></span>
         </div>
       </div>
     ),
@@ -56,20 +51,20 @@ const blocks = [
 
 export function Experience() {
   return (
-    <section id="experience" className="relative py-32 border-t hairline">
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="grid lg:grid-cols-[1fr_1.4fr] gap-16 items-center">
+    <section id="experience" className="relative py-28 border-t hairline">
+      <div className="mx-auto max-w-6xl px-5 sm:px-6">
+        <div className="grid lg:grid-cols-[1fr_1.4fr] gap-12 lg:gap-16 items-center">
           <div>
-            <p className="text-[11px] font-mono uppercase tracking-[0.2em] text-jade">// Experience</p>
-            <h2 className="mt-4 text-4xl md:text-5xl font-semibold tracking-[-0.03em] text-balance">
+            <p className="reveal text-[11px] font-mono uppercase tracking-[0.22em] text-muted-foreground">Experience</p>
+            <h2 className="reveal mt-4 text-3xl md:text-5xl font-semibold tracking-[-0.035em] text-balance text-gradient-soft">
               Keyboard-first.
               <br />Context-aware.
             </h2>
-            <p className="mt-5 text-muted-foreground leading-relaxed max-w-md">
-              Every interaction is intentional. Nori organizes your work into structured blocks, surfaces the right context at the right time, and stays out of your way otherwise.
+            <p className="reveal mt-5 text-muted-foreground leading-relaxed max-w-md">
+              Every interaction is intentional. Nori organizes work into structured blocks, surfaces the right context at the right time, and stays out of your way otherwise.
             </p>
 
-            <ul className="mt-8 space-y-4 text-sm">
+            <ul className="reveal mt-8 space-y-4 text-sm">
               {[
                 ["Structured blocks", "Each command is its own discrete unit."],
                 ["Repo context", "Branch, status, and project metadata, always visible."],
@@ -87,7 +82,9 @@ export function Experience() {
             </ul>
           </div>
 
-          <Terminal size="lg" blocks={blocks} branch="feat/auth" path="~/acme/web" />
+          <div className="reveal">
+            <Terminal size="lg" blocks={blocks} branch="feat/auth" path="~/acme/web" />
+          </div>
         </div>
       </div>
     </section>

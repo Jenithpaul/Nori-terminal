@@ -1,75 +1,80 @@
-import { motion, useScroll, useSpring } from "framer-motion";
+import { useState } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
+import { Menu, X } from "lucide-react";
 
-const navItems: { to: string; label: string; exact?: boolean }[] = [
-  { to: "/", label: "Product", exact: true },
-  { to: "/changelog", label: "Changelog" },
+const navItems = [
   { to: "/docs", label: "Docs" },
+  { to: "/changelog", label: "Changelog" },
   { to: "/feedback", label: "Feedback" },
-  { to: "/contact", label: "Contact" },
-];
+] as const;
 
 export function Nav() {
-  const { scrollYProgress } = useScroll();
-  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 24, mass: 0.4 });
   const { pathname } = useLocation();
+  const [open, setOpen] = useState(false);
 
   return (
-    <motion.header
-      initial={{ opacity: 0, y: -8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed top-0 inset-x-0 z-50"
-    >
-      <div className="mx-auto max-w-5xl px-6 mt-4">
-        <div className="relative flex items-center justify-between rounded-full border hairline bg-background/55 backdrop-blur-2xl px-3.5 py-2 shadow-[0_8px_30px_-10px_rgba(0,0,0,0.5)]">
-          <Link to="/" className="flex items-center gap-2 group">
-            <span className="size-5 rounded-[6px] bg-gradient-to-br from-jade to-teal-deep grid place-items-center shadow-[0_0_12px_-2px_var(--jade)]">
-              <span className="size-1.5 rounded-[2px] bg-background" />
-            </span>
-            <span className="text-[13px] font-semibold tracking-tight">nori</span>
-            <span className="text-[10px] font-mono text-muted-foreground ml-0.5">0.1</span>
-          </Link>
+    <header className="fixed top-0 inset-x-0 z-50 border-b hairline bg-background/70 backdrop-blur-xl">
+      <div className="mx-auto max-w-6xl px-5 sm:px-6 h-14 flex items-center justify-between">
+        <Link
+          to="/"
+          className="flex items-center gap-2 group"
+          onClick={() => setOpen(false)}
+        >
+          <span className="size-5 rounded-[5px] bg-foreground grid place-items-center">
+            <span className="size-1.5 rounded-[1px] bg-background" />
+          </span>
+          <span className="text-[14px] font-semibold tracking-tight">Nori</span>
+        </Link>
 
-          <nav className="hidden md:flex items-center gap-1 text-[13px] absolute left-1/2 -translate-x-1/2">
+        <nav className="hidden md:flex items-center gap-1 text-[13px]">
+          {navItems.map((item) => {
+            const active = pathname.startsWith(item.to);
+            return (
+              <Link
+                key={item.to}
+                to={item.to}
+                className={`px-3 py-1.5 rounded-md transition-colors ${
+                  active
+                    ? "text-foreground"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
+
+        <button
+          aria-label="Toggle menu"
+          onClick={() => setOpen((v) => !v)}
+          className="md:hidden size-9 grid place-items-center rounded-md border hairline text-foreground/80"
+        >
+          {open ? <X className="size-4" /> : <Menu className="size-4" />}
+        </button>
+      </div>
+
+      {open && (
+        <div className="md:hidden border-t hairline bg-background">
+          <nav className="px-5 py-3 flex flex-col">
             {navItems.map((item) => {
-              const active = item.exact ? pathname === item.to : pathname.startsWith(item.to);
+              const active = pathname.startsWith(item.to);
               return (
                 <Link
                   key={item.to}
-                  to={item.to as "/"}
-                  className={`relative px-3 py-1.5 rounded-full transition-colors ${
-                    active ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                  to={item.to}
+                  onClick={() => setOpen(false)}
+                  className={`py-2.5 text-[15px] ${
+                    active ? "text-foreground" : "text-muted-foreground"
                   }`}
                 >
-                  {active && (
-                    <motion.span
-                      layoutId="nav-active"
-                      className="absolute inset-0 rounded-full bg-surface-elevated/70 ring-hairline"
-                      transition={{ type: "spring", stiffness: 380, damping: 32 }}
-                    />
-                  )}
-                  <span className="relative">{item.label}</span>
+                  {item.label}
                 </Link>
               );
             })}
           </nav>
-
-          <div className="flex items-center gap-1">
-            <Link
-              to="/request-access"
-              className="text-[13px] font-medium px-3.5 py-1.5 rounded-full bg-foreground text-background hover:opacity-90 transition-opacity"
-            >
-              Request access
-            </Link>
-          </div>
-
-          <motion.div
-            style={{ scaleX: progress }}
-            className="absolute left-3 right-3 bottom-0 h-px bg-gradient-to-r from-transparent via-jade to-transparent origin-left"
-          />
         </div>
-      </div>
-    </motion.header>
+      )}
+    </header>
   );
 }
