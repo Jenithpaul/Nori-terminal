@@ -15,6 +15,7 @@ export function Footer() {
         <nav className="flex items-center gap-5 text-[13px] text-muted-foreground">
           <Link to="/docs" className="hover:text-foreground transition-colors">Docs</Link>
           <Link to="/changelog" className="hover:text-foreground transition-colors">Changelog</Link>
+          <Link to="/releases" className="hover:text-foreground transition-colors">Releases</Link>
           <Link to="/feedback" className="hover:text-foreground transition-colors">Feedback</Link>
         </nav>
 

@@ -9,11 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ReleasesRouteImport } from './routes/releases'
 import { Route as FeedbackRouteImport } from './routes/feedback'
 import { Route as DocsRouteImport } from './routes/docs'
 import { Route as ChangelogRouteImport } from './routes/changelog'
 import { Route as IndexRouteImport } from './routes/index'
 
+const ReleasesRoute = ReleasesRouteImport.update({
+  id: '/releases',
+  path: '/releases',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FeedbackRoute = FeedbackRouteImport.update({
   id: '/feedback',
   path: '/feedback',
@@ -40,12 +46,14 @@ export interface FileRoutesByFullPath {
   '/changelog': typeof ChangelogRoute
   '/docs': typeof DocsRoute
   '/feedback': typeof FeedbackRoute
+  '/releases': typeof ReleasesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/changelog': typeof ChangelogRoute
   '/docs': typeof DocsRoute
   '/feedback': typeof FeedbackRoute
+  '/releases': typeof ReleasesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +61,14 @@ export interface FileRoutesById {
   '/changelog': typeof ChangelogRoute
   '/docs': typeof DocsRoute
   '/feedback': typeof FeedbackRoute
+  '/releases': typeof ReleasesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/changelog' | '/docs' | '/feedback'
+  fullPaths: '/' | '/changelog' | '/docs' | '/feedback' | '/releases'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/changelog' | '/docs' | '/feedback'
-  id: '__root__' | '/' | '/changelog' | '/docs' | '/feedback'
+  to: '/' | '/changelog' | '/docs' | '/feedback' | '/releases'
+  id: '__root__' | '/' | '/changelog' | '/docs' | '/feedback' | '/releases'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,10 +76,18 @@ export interface RootRouteChildren {
   ChangelogRoute: typeof ChangelogRoute
   DocsRoute: typeof DocsRoute
   FeedbackRoute: typeof FeedbackRoute
+  ReleasesRoute: typeof ReleasesRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/releases': {
+      id: '/releases'
+      path: '/releases'
+      fullPath: '/releases'
+      preLoaderRoute: typeof ReleasesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/feedback': {
       id: '/feedback'
       path: '/feedback'
@@ -107,6 +124,7 @@ const rootRouteChildren: RootRouteChildren = {
   ChangelogRoute: ChangelogRoute,
   DocsRoute: DocsRoute,
   FeedbackRoute: FeedbackRoute,
+  ReleasesRoute: ReleasesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

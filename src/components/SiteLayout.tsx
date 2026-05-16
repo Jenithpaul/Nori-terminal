@@ -51,18 +51,19 @@ export function PageHeader({
   description?: string;
 }) {
   return (
-    <section className="relative pt-36 pb-16 border-b hairline">
-      <div className="mx-auto max-w-4xl px-6">
+    <section className="relative pt-40 pb-20">
+      <div className="mx-auto max-w-6xl px-6 sm:px-8">
         {eyebrow && (
-          <p className="reveal text-[11px] font-mono uppercase tracking-[0.22em] text-muted-foreground">
+          <p className="reveal text-[10.5px] font-mono uppercase tracking-[0.28em] text-muted-foreground flex items-center gap-2">
+            <span className="size-[5px] rounded-full bg-jade" />
             {eyebrow}
           </p>
         )}
-        <h1 className="reveal mt-4 text-4xl md:text-5xl lg:text-6xl font-semibold tracking-[-0.04em] leading-[1.02] text-balance text-gradient-soft">
+        <h1 className="reveal mt-5 text-5xl md:text-6xl lg:text-7xl font-medium tracking-[-0.045em] leading-[0.98] text-balance text-gradient-soft">
           {title}
         </h1>
         {description && (
-          <p className="reveal mt-5 text-muted-foreground max-w-2xl leading-relaxed">{description}</p>
+          <p className="reveal mt-6 text-muted-foreground max-w-xl leading-relaxed text-[15px]">{description}</p>
         )}
       </div>
     </section>
