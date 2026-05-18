@@ -90,17 +90,28 @@ function FeedbackPage() {
             <div className="col-span-12 lg:col-span-8">
               {submitted ? (
                 <div className="reveal h-full min-h-[420px] flex flex-col items-start justify-center gap-6 border-t hairline pt-12">
-                  <div className="size-12 rounded-full border hairline grid place-items-center">
-                    <Check className="size-5 text-jade" />
+                  <div className="size-14 rounded-full border-2 border-jade/40 grid place-items-center relative">
+                    <span aria-hidden className="absolute inset-0 rounded-full bg-jade/10 animate-ping" />
+                    <svg viewBox="0 0 24 24" className="size-7 text-jade" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path
+                        d="M5 12.5L10 17.5L19 7.5"
+                        style={{
+                          strokeDasharray: 24,
+                          strokeDashoffset: 24,
+                          animation: "draw 0.6s 0.1s cubic-bezier(.7,0,.3,1) forwards",
+                        }}
+                      />
+                    </svg>
                   </div>
                   <div>
-                    <h3 className="text-4xl font-medium tracking-[-0.03em]">
-                      Received.
+                    <h3 className="text-4xl md:text-5xl font-medium tracking-[-0.04em]">
+                      Received<span className="font-serif italic text-foreground/70">.</span>
                     </h3>
                     <p className="mt-3 text-muted-foreground max-w-sm">
                       Your note is in. We read each one personally — expect a reply within two business days.
                     </p>
                   </div>
+                  <style>{`@keyframes draw { to { stroke-dashoffset: 0; } }`}</style>
                 </div>
               ) : (
                 <form onSubmit={onSubmit} className="reveal space-y-0 border-t hairline">
