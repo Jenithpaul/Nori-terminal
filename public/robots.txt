@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nori-terminal.pages.dev/sitemap.xml

@@ -7,9 +7,15 @@ export const Route = createFileRoute("/download")({
   component: DownloadPage,
   head: () => ({
     meta: [
-      { title: "Download — Nori" },
-      { name: "description", content: "Download Nori — the studio-grade terminal built in Rust." },
-      { property: "og:title", content: "Download — Nori" },
+      { title: "Download Nori — Free Terminal Built in Rust" },
+      { name: "description", content: "Download Nori for Windows. A studio-grade, high-performance terminal built in Rust. Free early access. v0.1.0, ~8MB, no dependencies." },
+      { property: "og:title", content: "Download Nori — Free Terminal Built in Rust" },
+      { property: "og:url", content: "https://nori-terminal.pages.dev/download" },
+      { property: "og:description", content: "Download Nori for Windows. Studio-grade terminal built in Rust. Free early access. v0.1.0, ~8MB, no dependencies." },
+      { name: "robots", content: "index, follow" },
+    ],
+    links: [
+      { rel: "canonical", href: "https://nori-terminal.pages.dev/download" },
     ],
   }),
 });
@@ -43,7 +49,7 @@ function DownloadPage() {
           <div className="reveal group relative rounded-2xl border border-jade/25 bg-jade/5 overflow-hidden hover:border-jade/40 transition-all duration-300">
             <div aria-hidden className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
               style={{ background: "radial-gradient(500px circle at 0% 50%, color-mix(in oklab, var(--jade) 8%, transparent), transparent 60%)" }} />
-            <div className="relative flex items-center gap-6 px-8 py-7">
+            <div className="relative flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 px-6 sm:px-8 py-6 sm:py-7">
               {/* Windows icon */}
               <div className="size-14 rounded-2xl bg-jade/10 border border-jade/25 grid place-items-center shrink-0">
                 <svg viewBox="0 0 16 16" className="size-7 text-jade" fill="currentColor">
@@ -72,7 +78,7 @@ function DownloadPage() {
               </div>
               <a
                 href="https://github.com/jenithpaul/nori/releases/latest/download/nori-windows-x86_64.zip"
-                className="shrink-0 inline-flex items-center gap-2.5 rounded-full bg-foreground text-background pl-5 pr-2 py-2 text-[13px] font-medium hover:-translate-y-px transition-all"
+                className="w-full sm:w-auto shrink-0 inline-flex items-center justify-center gap-2.5 rounded-full bg-foreground text-background pl-5 pr-2 py-2 text-[13px] font-medium hover:-translate-y-px transition-all"
               >
                 Download
                 <span className="grid place-items-center size-7 rounded-full bg-background text-foreground">

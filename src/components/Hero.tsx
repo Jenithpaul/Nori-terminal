@@ -119,7 +119,7 @@ export function Hero() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative pt-32 pb-36 overflow-hidden min-h-screen flex items-center bg-[#040605]">
+    <section ref={sectionRef} className="relative pt-24 pb-16 sm:pt-32 sm:pb-36 overflow-hidden min-h-screen flex items-center bg-[#040605]">
       {/* Cinematic backgrounds */}
       <NoiseLayer />
       <GridOverlay />
@@ -142,7 +142,7 @@ export function Hero() {
         }}
       />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-8 w-full grid lg:grid-cols-[1.15fr_0.85fr] gap-12 lg:gap-16 items-center">
+      <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-8 w-full grid lg:grid-cols-[1.15fr_0.85fr] gap-10 lg:gap-16 items-center">
         
         {/* Left Column (Left-heavy contents) */}
         <div className="text-left flex flex-col items-start select-none">
@@ -161,7 +161,7 @@ export function Hero() {
 
           {/* Headline */}
           <h1 ref={h1Ref} style={{ opacity: 0, perspective: "1000px" }}
-            className="text-[3.5rem] sm:text-6xl md:text-7xl lg:text-[4.5rem] xl:text-[5rem] font-light tracking-[-0.035em] leading-[1.0] text-balance text-foreground/95">
+            className="text-[2.75rem] xs:text-[3.25rem] sm:text-6xl md:text-7xl lg:text-[4.5rem] xl:text-[5rem] font-light tracking-[-0.035em] leading-[1.0] text-balance text-foreground/95">
             Terminal,<br/>
             <span className="text-gradient-soft font-serif italic">re-designed.</span>
           </h1>
@@ -174,13 +174,13 @@ export function Hero() {
 
           {/* CTA */}
           <div ref={ctaRef} style={{ opacity: 0 }}
-            className="mt-10 flex flex-wrap items-center gap-4 w-full">
+            className="mt-8 flex flex-wrap items-center gap-3 sm:gap-4 w-full">
             <Link to="/download"
-              className="group inline-flex items-center justify-center gap-3 rounded-2xl bg-white text-black px-8 py-3.5 text-[14.5px] font-normal transition-all duration-300 hover:bg-neutral-200 hover:-translate-y-0.5">
+              className="group inline-flex items-center justify-center gap-3 rounded-2xl bg-white text-black px-7 py-3.5 sm:px-8 text-[14px] sm:text-[14.5px] font-normal transition-all duration-300 hover:bg-neutral-200 hover:-translate-y-0.5 min-h-[48px]">
               Download Nori
             </Link>
             <Link to="/docs"
-              className="group inline-flex items-center gap-2 rounded-2xl bg-transparent hover:bg-white/[0.03] px-6 py-3.5 text-[14.5px] text-foreground/80 transition-all duration-300 hover:text-foreground font-normal">
+              className="group inline-flex items-center gap-2 rounded-2xl bg-transparent hover:bg-white/[0.03] px-5 py-3.5 sm:px-6 text-[14px] sm:text-[14.5px] text-foreground/80 transition-all duration-300 hover:text-foreground font-normal min-h-[48px]">
               Read docs
               <svg viewBox="0 0 12 12" className="size-3.5 text-muted-foreground transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <path d="M2.5 6h7M6 2.5L9.5 6 6 9.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -202,9 +202,24 @@ export function Hero() {
           </div>
         </div>
 
-        {/* Right Column (Floating Interactive Terminal Preview) */}
-        <div ref={termRef} style={{ opacity: 0 }} className="relative w-full max-w-2xl mx-auto lg:mx-0">
+        {/* Right Column — hide on small screens to avoid layout overflow */}
+        <div ref={termRef} style={{ opacity: 0 }} className="relative w-full max-w-2xl mx-auto lg:mx-0 hidden lg:block">
           <Terminal size="lg" branch="main" path="~/repos/nori" />
+        </div>
+        {/* Mobile-only compact preview bar */}
+        <div className="lg:hidden mt-2 rounded-2xl border border-white/5 bg-white/[0.02] overflow-hidden">
+          <div className="flex items-center gap-2 px-4 py-2.5 border-b border-white/5">
+            <span className="size-2.5 rounded-full bg-red-500/60" />
+            <span className="size-2.5 rounded-full bg-yellow-500/60" />
+            <span className="size-2.5 rounded-full bg-jade/60" />
+            <span className="ml-2 font-mono text-[10px] text-muted-foreground/60">nori — ~/repos/nori</span>
+          </div>
+          <div className="px-4 py-3 font-mono text-[12px] text-jade/90 leading-[1.8]">
+            <p><span className="text-muted-foreground/50">~/repos/nori</span> <span className="text-foreground/60">git:(main)</span></p>
+            <p><span className="text-jade">✔</span> cold start: 18ms</p>
+            <p><span className="text-jade">✔</span> memory: 14MB at rest</p>
+            <p><span className="text-jade">✔</span> 100% native rust</p>
+          </div>
         </div>
 
       </div>

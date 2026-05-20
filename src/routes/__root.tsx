@@ -12,7 +12,18 @@ import noriLogo from "@/assets/nori.png";
 import appCss from "../styles.css?url";
 
 // Update this once you have a real domain
-const SITE_URL = "https://nori.pages.dev";
+const SITE_URL = "https://nori-terminal.pages.dev";
+
+const JSON_LD = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Nori",
+  operatingSystem: "Windows",
+  applicationCategory: "DeveloperApplication",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  description: "A calmer, high-performance developer terminal built in Rust. Studio-grade workspace with Git, Docker, SSH, and system metrics.",
+  url: SITE_URL,
+});
 
 function NotFoundComponent() {
   return (
@@ -75,29 +86,37 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Nori — The modern terminal runtime" },
-      { name: "description", content: "A calmer, high-performance developer workspace built for the terminal." },
+      { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
+      { title: "Nori — The Modern Terminal, Re‑designed" },
+      { name: "description", content: "Nori is a fast, context-aware terminal built in Rust. Studio-grade workspace with Git, Docker, SSH, files, and system metrics — currently in closed Developer Preview." },
+      { name: "keywords", content: "terminal, developer terminal, rust terminal, modern terminal, git terminal, developer tools, nori, command line, CLI" },
       { name: "author", content: "Nori" },
+      { name: "robots", content: "index, follow" },
+      { name: "theme-color", content: "#040605" },
       // Open Graph
       { property: "og:type", content: "website" },
       { property: "og:url", content: SITE_URL },
-      { property: "og:title", content: "Nori — The modern terminal runtime" },
-      { property: "og:description", content: "A calmer, high-performance developer workspace built for the terminal." },
+      { property: "og:site_name", content: "Nori" },
+      { property: "og:title", content: "Nori — The Modern Terminal, Re‑designed" },
+      { property: "og:description", content: "A calmer, high-performance developer terminal built in Rust. Studio-grade workspace with Git, Docker, SSH, and system metrics." },
       { property: "og:image", content: `${SITE_URL}/preview.png` },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
-      { property: "og:image:alt", content: "Nori terminal workspace screenshot" },
+      { property: "og:image:alt", content: "Nori terminal workspace — a modern, dark terminal with Git integration" },
+      { property: "og:locale", content: "en_US" },
       // Twitter / X
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@nori_terminal" },
-      { name: "twitter:title", content: "Nori — The modern terminal runtime" },
-      { name: "twitter:description", content: "A calmer, high-performance developer workspace built for the terminal." },
+      { name: "twitter:creator", content: "@nori_terminal" },
+      { name: "twitter:title", content: "Nori — The Modern Terminal, Re‑designed" },
+      { name: "twitter:description", content: "A calmer, high-performance developer terminal built in Rust. Studio-grade workspace with Git, Docker, SSH, and system metrics." },
       { name: "twitter:image", content: `${SITE_URL}/preview.png` },
       { name: "twitter:image:alt", content: "Nori terminal workspace screenshot" },
     ],
     links: [
       { rel: "icon", type: "image/png", href: noriLogo },
+      { rel: "apple-touch-icon", href: noriLogo },
+      { rel: "canonical", href: SITE_URL },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
@@ -105,6 +124,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap",
       },
       { rel: "stylesheet", href: appCss },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON_LD,
+      },
     ],
   }),
   shellComponent: RootShell,

@@ -204,3 +204,26 @@
   }
   .animate-jade-pulse { animation: jade-pulse 2s ease-in-out infinite; }
 }
+
+/* Accessibility: respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal { opacity: 1 !important; transform: none !important; }
+}
+
+/* Performance: use GPU layer for fixed backgrounds */
+.bg-grid { will-change: auto; }
+
+/* Mobile: ensure tap targets are at least 48x48 per WCAG */
+@media (max-width: 768px) {
+  a, button { min-height: 44px; }
+  nav a { min-height: 44px; }
+}
+

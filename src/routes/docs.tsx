@@ -22,10 +22,15 @@ export const Route = createFileRoute("/docs")({
   component: DocsPage,
   head: () => ({
     meta: [
-      { title: "Docs — Nori" },
-      { name: "description", content: "Complete documentation for Nori — the studio-grade terminal built in Rust." },
-      { property: "og:title", content: "Docs — Nori" },
-      { property: "og:description", content: "Complete documentation for Nori — the studio-grade terminal built in Rust." },
+      { title: "Documentation — Nori Terminal" },
+      { name: "description", content: "Complete documentation for Nori terminal. Installation, configuration, keybindings, Git workflow, Docker integration, and more." },
+      { property: "og:title", content: "Documentation — Nori Terminal" },
+      { property: "og:url", content: "https://nori-terminal.pages.dev/docs" },
+      { property: "og:description", content: "Complete documentation for Nori terminal. Installation, configuration, keybindings, Git workflow, Docker integration, and more." },
+      { name: "robots", content: "index, follow" },
+    ],
+    links: [
+      { rel: "canonical", href: "https://nori-terminal.pages.dev/docs" },
     ],
   }),
 });
