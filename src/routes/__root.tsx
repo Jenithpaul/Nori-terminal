@@ -8,7 +8,11 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 
+import noriLogo from "@/assets/nori.png";
 import appCss from "../styles.css?url";
+
+// Update this once you have a real domain
+const SITE_URL = "https://nori.pages.dev";
 
 function NotFoundComponent() {
   return (
@@ -72,16 +76,28 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Nori — The modern terminal runtime" },
+      { name: "description", content: "A calmer, high-performance developer workspace built for the terminal." },
+      { name: "author", content: "Nori" },
+      // Open Graph
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
+      { property: "og:url", content: SITE_URL },
+      { property: "og:title", content: "Nori — The modern terminal runtime" },
+      { property: "og:description", content: "A calmer, high-performance developer workspace built for the terminal." },
+      { property: "og:image", content: `${SITE_URL}/preview.png` },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "Nori terminal workspace screenshot" },
+      // Twitter / X
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:site", content: "@nori_terminal" },
+      { name: "twitter:title", content: "Nori — The modern terminal runtime" },
+      { name: "twitter:description", content: "A calmer, high-performance developer workspace built for the terminal." },
+      { name: "twitter:image", content: `${SITE_URL}/preview.png` },
+      { name: "twitter:image:alt", content: "Nori terminal workspace screenshot" },
     ],
     links: [
+      { rel: "icon", type: "image/png", href: noriLogo },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {

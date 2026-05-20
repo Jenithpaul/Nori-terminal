@@ -41,36 +41,41 @@
 :root {
   --radius: 0.625rem;
 
-  /* Pure black / white base */
-  --background: oklch(0 0 0);
-  --foreground: oklch(0.985 0 0);
+  /* Nori Brand Palette */
+  --background: #040605;
+  --foreground: #F5F5F2;
 
-  --surface: oklch(0.07 0 0);
-  --surface-elevated: oklch(0.11 0 0);
-  --hairline: oklch(1 0 0 / 9%);
+  --surface: rgba(14, 18, 16, 0.72);
+  --surface-elevated: rgba(12, 16, 14, 0.84);
+  --hairline: rgba(255, 255, 255, 0.05);
 
-  --card: oklch(0.07 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.07 0 0);
-  --popover-foreground: oklch(0.985 0 0);
+  --card: rgba(14, 18, 16, 0.72);
+  --card-foreground: #F5F5F2;
+  --popover: rgba(12, 16, 14, 0.84);
+  --popover-foreground: #F5F5F2;
 
-  /* Jade preserved as the single accent */
-  --jade: oklch(0.78 0.13 165);
+  /* Accent Colors */
+  --jade: #6EE7B7;
+  --jade-dim: #52B788;
+  --teal-accent: #2DD4BF;
+  --mint-accent: #7EF0C5;
 
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0 0 0);
+  --primary: #F5F5F2;
+  --primary-foreground: #040605;
 
-  --secondary: oklch(0.13 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.13 0 0);
-  --muted-foreground: oklch(0.62 0 0);
-  --accent: oklch(0.78 0.13 165);
-  --accent-foreground: oklch(0 0 0);
+  --secondary: rgba(255, 255, 255, 0.02);
+  --secondary-foreground: #B7C0BA;
+  --muted: rgba(12, 16, 14, 0.84);
+  --muted-foreground: #B7C0BA;
+  --accent: #6EE7B7;
+  --accent-foreground: #040605;
   --destructive: oklch(0.65 0.18 25);
-  --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(1 0 0 / 9%);
-  --input: oklch(1 0 0 / 10%);
-  --ring: oklch(0.78 0.13 165 / 50%);
+  --destructive-foreground: #F5F5F2;
+  
+  --border: rgba(255, 255, 255, 0.05);
+  --border-glow: rgba(82, 183, 136, 0.12);
+  --input: rgba(255, 255, 255, 0.05);
+  --ring: #6EE7B7;
 }
 
 .dark { color-scheme: dark; }
@@ -153,4 +158,49 @@
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .link-underline:hover::after { transform: scaleX(1); transform-origin: left; }
+
+  /* Hide scrollbars everywhere while keeping scroll functionality */
+  .scrollbar-none { scrollbar-width: none; -ms-overflow-style: none; }
+  .scrollbar-none::-webkit-scrollbar { display: none; }
+
+  /* Apply globally to all overflow-y-auto / overflow-x-auto elements */
+  * { scrollbar-width: thin; scrollbar-color: oklch(1 0 0 / 8%) transparent; }
+  *::-webkit-scrollbar { width: 4px; height: 4px; }
+  *::-webkit-scrollbar-track { background: transparent; }
+  *::-webkit-scrollbar-thumb { background: oklch(1 0 0 / 10%); border-radius: 99px; }
+  *::-webkit-scrollbar-thumb:hover { background: oklch(1 0 0 / 18%); }
+
+  /* Micro-interaction: shimmer on hover for buttons */
+  @keyframes shimmer {
+    0%   { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+  .shimmer-hover:hover::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, oklch(1 0 0 / 8%), transparent);
+    animation: shimmer 0.7s ease forwards;
+  }
+
+  /* Fade-in-up for docs section transitions */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-in-up { animation: fadeInUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+  /* Subtle float animation for decorative elements */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-6px); }
+  }
+  .animate-float { animation: float 4s ease-in-out infinite; }
+
+  /* Jade glow pulse */
+  @keyframes jade-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--jade) 40%, transparent); }
+    50%       { box-shadow: 0 0 0 6px color-mix(in oklab, var(--jade) 0%, transparent); }
+  }
+  .animate-jade-pulse { animation: jade-pulse 2s ease-in-out infinite; }
 }

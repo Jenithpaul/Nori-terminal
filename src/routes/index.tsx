@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
 import { Hero } from "@/components/Hero";
+import { Statement } from "@/components/Statement";
 import { Features } from "@/components/Features";
 import { Performance } from "@/components/Performance";
 import { Philosophy } from "@/components/Philosophy";
@@ -31,6 +32,7 @@ function Index() {
   return (
     <SiteLayout>
       <Hero />
+      <Statement />
       <Features />
       <Performance />
       <Philosophy />

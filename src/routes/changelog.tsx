@@ -64,13 +64,6 @@ function ChangelogPage() {
             <h1 className="text-5xl md:text-7xl font-medium tracking-[-0.045em] leading-[0.95] text-gradient-soft">
               What's <span className="font-serif italic text-foreground/85">new.</span>
             </h1>
-            <Link
-              to="/releases"
-              className="group inline-flex items-center gap-2 text-[13px] text-muted-foreground hover:text-foreground"
-            >
-              View full release archive
-              <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </Link>
           </div>
           <p className="reveal mt-6 text-muted-foreground max-w-xl text-[15px] leading-relaxed">
             Bug fixes and patches install silently in the running terminal. Larger updates are listed here in chronological order.
@@ -97,7 +90,7 @@ function ChangelogPage() {
                     {r.summary}
                   </p>
                   <Link
-                    to="/releases"
+                    to="/download"
                     className="mt-6 inline-flex items-center gap-1 text-[12px] text-muted-foreground hover:text-foreground"
                   >
                     Download <ArrowUpRight className="size-3" />

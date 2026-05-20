@@ -9,20 +9,20 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ReleasesRouteImport } from './routes/releases'
 import { Route as FeedbackRouteImport } from './routes/feedback'
+import { Route as DownloadRouteImport } from './routes/download'
 import { Route as DocsRouteImport } from './routes/docs'
 import { Route as ChangelogRouteImport } from './routes/changelog'
 import { Route as IndexRouteImport } from './routes/index'
 
-const ReleasesRoute = ReleasesRouteImport.update({
-  id: '/releases',
-  path: '/releases',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const FeedbackRoute = FeedbackRouteImport.update({
   id: '/feedback',
   path: '/feedback',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DownloadRoute = DownloadRouteImport.update({
+  id: '/download',
+  path: '/download',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DocsRoute = DocsRouteImport.update({
@@ -45,54 +45,54 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/changelog': typeof ChangelogRoute
   '/docs': typeof DocsRoute
+  '/download': typeof DownloadRoute
   '/feedback': typeof FeedbackRoute
-  '/releases': typeof ReleasesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/changelog': typeof ChangelogRoute
   '/docs': typeof DocsRoute
+  '/download': typeof DownloadRoute
   '/feedback': typeof FeedbackRoute
-  '/releases': typeof ReleasesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/changelog': typeof ChangelogRoute
   '/docs': typeof DocsRoute
+  '/download': typeof DownloadRoute
   '/feedback': typeof FeedbackRoute
-  '/releases': typeof ReleasesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/changelog' | '/docs' | '/feedback' | '/releases'
+  fullPaths: '/' | '/changelog' | '/docs' | '/download' | '/feedback'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/changelog' | '/docs' | '/feedback' | '/releases'
-  id: '__root__' | '/' | '/changelog' | '/docs' | '/feedback' | '/releases'
+  to: '/' | '/changelog' | '/docs' | '/download' | '/feedback'
+  id: '__root__' | '/' | '/changelog' | '/docs' | '/download' | '/feedback'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ChangelogRoute: typeof ChangelogRoute
   DocsRoute: typeof DocsRoute
+  DownloadRoute: typeof DownloadRoute
   FeedbackRoute: typeof FeedbackRoute
-  ReleasesRoute: typeof ReleasesRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/releases': {
-      id: '/releases'
-      path: '/releases'
-      fullPath: '/releases'
-      preLoaderRoute: typeof ReleasesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/feedback': {
       id: '/feedback'
       path: '/feedback'
       fullPath: '/feedback'
       preLoaderRoute: typeof FeedbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/download': {
+      id: '/download'
+      path: '/download'
+      fullPath: '/download'
+      preLoaderRoute: typeof DownloadRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/docs': {
@@ -123,9 +123,19 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ChangelogRoute: ChangelogRoute,
   DocsRoute: DocsRoute,
+  DownloadRoute: DownloadRoute,
   FeedbackRoute: FeedbackRoute,
-  ReleasesRoute: ReleasesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
