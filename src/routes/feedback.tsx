@@ -28,8 +28,26 @@ function FeedbackPage() {
     { id: "performance", label: "Perf" },
   ];
 
-  const onSubmit = (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    // Post feedback to Supabase
+    try {
+      await fetch("https://oxhbllnsoiwckjyypnrq.supabase.co/rest/v1/feedback", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im94aGJsbG5zb2l3Y2tqeXlwbnJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk2MjA0NDksImV4cCI6MjA5NTE5NjQ0OX0.8QqU2hgnQlK3BwxdPlWU6GT8zioNESi68jtHXSc8fZo",
+          "Prefer": "return=minimal"
+        },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          role: form.role,
+          topic: form.topic,
+          message: form.message
+        })
+      });
+    } catch (_) {}
     setSubmitted(true);
   };
 
@@ -66,7 +84,7 @@ function FeedbackPage() {
 
               <Meta label="Direct">
                 <a
-                  href="mailto:preview@nori.dev"
+                  href="mailto:hello@aethlon.dev"
                   className="link-underline text-foreground"
                 >
                   preview@nori.dev
