@@ -63,7 +63,7 @@ export const Route = createFileRoute("/docs")({
 const NERD_FONT_URL =
   "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip";
 
-type NavItem = { id: string; label: string; icon: React.ComponentType<{ className?: string }> };
+type NavItem = { id: string; label: string; icon: React.ComponentType<{ className?: string; strokeWidth?: number; fill?: string }> };
 type NavGroup = { label: string; items: NavItem[] };
 
 const navGroups: NavGroup[] = [

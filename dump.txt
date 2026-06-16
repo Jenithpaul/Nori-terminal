@@ -1,0 +1,246 @@
+Created At: 2026-06-16T09:36:20Z
+Completed At: 2026-06-16T09:36:20Z
+File Path: `file:///c:/Users/jenit/Desktop/BuildPublic/nori-wesite/src/routes/pricing.tsx`
+Total Lines: 707
+Total Bytes: 33771
+Showing lines 1 to 707
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+1: import { useEffect, useState } from 'react';
+2: import { X, ShieldCheck, Check } from '@phosphor-icons/react';
+3: import { motion, AnimatePresence } from 'framer-motion';
+4: import { useStore } from '../store';
+5: import { signOut } from '../lib/supabase';
+6: import { createCheckoutSession } from '../lib/payment';
+7: import { invoke } from '@tauri-apps/api/core';
+8: 
+9: /* ─── Credit Pricing ────────────────────────────────────────────────────── */
+10: // Volume breakpoints: interpolate between them for any credit count
+11: const CREDIT_BREAKPOINTS = [
+12:   { credits: 0,    price: 0 },
+13:   { credits: 100,  price: 3 },
+14:   { credits: 250,  price: 6 },
+15:   { credits: 500,  price: 10 },
+16:   { credits: 1000, price: 18 },
+17: ];
+18: 
+19: function calcCreditPrice(credits: number): { price: number; perCredit: number } {
+20:   if (credits <= 0) return { price: 0, perCredit: 0 };
+21: 
+22:   for (let i = 1; i < CREDIT_BREAKPOINTS.length; i++) {
+23:     const lo = CREDIT_BREAKPOINTS[i - 1];
+24:     const hi = CREDIT_BREAKPOINTS[i];
+25:     if (credits <= hi.credits) {
+26:       const t = (credits - lo.credits) / (hi.credits - lo.credits);
+27:       const price = lo.price + t * (hi.price - lo.price);
+28:       return { price, perCredit: price / credits };
+29:     }
+30:   }
+31: 
+32:   // Above 1000 — extrapolate at same per-credit rate as the last tier
+33:   const last = CREDIT_BREAKPOINTS[CREDIT_BREAKPOINTS.length - 
+<truncated 33645 bytes>
+ite mb-3">
+667:                     Sign In Required
+668:                   </h3>
+669:                   <p className="text-xs text-neutral-500 leading-relaxed max-w-xs mb-8 font-normal">
+670:                     You're in Guest Mode. Sign in or create a Nori account to upgrade
+671:                     to a premium plan.
+672:                   </p>
+673: 
+674:                   <div className="flex gap-3">
+675:                     <motion.button
+676:                       onClick={handleSignInRedirect}
+677:                       whileHover={{ scale: 1.02 }}
+678:                       whileTap={{  scale: 0.98  }}
+679:                       transition={spring}
+680:                       className="px-6 py-2.5 rounded-xl text-xs font-medium
+681:                         text-[#060606] bg-[#e4e4e7] hover:bg-white
+682:                         transition-colors duration-150 cursor-pointer"
+683:                     >
+684:                       Sign In / Register
+685:                     </motion.button>
+686:                     <motion.button
+687:                       onClick={() => setShowSignInPrompt(false)}
+688:                       whileHover={{ scale: 1.02 }}
+689:                       whileTap={{  scale: 0.98  }}
+690:                       transition={spring}
+691:                       className="px-5 py-2.5 rounded-xl text-xs font-normal
+692:                         text-neutral-500 border border-neutral-800/40
+693:                         hover:text-[#e4e4e7] hover:border-neutral-700/50
+694:                         transition-all duration-150 cursor-pointer"
+695:                     >
+696:                       Back
+697:                     </motion.button>
+698:                   </div>
+699:                 </motion.div>
+700:               )}
+701:             </AnimatePresence>
+702:           </motion.div>
+703:         </motion.div>
+704:       )}
+705:     </AnimatePresence>
+706:   );
+707: }
+The above content shows the entire, complete file contents of the requested file.
+
+---
+<USER_REQUEST>
+ah the pricing page well it was idiotic not at all good please enhance its just , Free , Go(5), Plus(15) 
+
+and then link the differenshiator alsoo why did u remove the extra credits pricing like you idoit i didnt ask you to do that 
+
+refer :
+import { useEffect, useState } from 'react';
+import { X, ShieldCheck, Check, Sparkles, ArrowUpRight, Zap, Command, TerminalSquare } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useStore } from '../store';
+import { signOut } from '../lib/supabase';
+import { createCheckoutSession } from '../lib/payment';
+import { invoke } from '@tauri-apps/api/core';
+
+/* ─── Credit Pricing Logic ──────────────────────────────────────────────── */
+const CREDIT_BREAKPOINTS = [
+  { credits: 0,    price: 0 },
+  { credits: 100,  price: 3 },
+  { credits: 250,  price: 6 },
+  { credits: 500,  price: 10 },
+  { credits: 1000, price: 18 },
+];
+
+function calcCreditPrice(credits: number): { price: number; perCredit: number } {
+  if (credits <= 0) return { price: 0, perCredit: 0 };
+  for (let i = 1; i < CREDIT_BREAKPOINTS.length; i++) {
+    const lo = CREDIT_BREAKPOINTS[i - 1];
+    const hi = CREDIT_BREAKPOINTS[i];
+    if (credits <= hi.credits) {
+      const t = (credits - lo.credits) / (hi.credits - lo.credits);
+      const price = lo.price + t * (hi.price - lo.price);
+      return { price, perCredit: price / credits };
+    }
+  }
+  const last = CREDIT_BREAKPOINTS[CREDIT_BREAKPOINTS.length - 1];
+  const prev = CREDIT_BREAKPOINTS[CREDIT_BREAKPOINTS.length - 2];
+  const rate = (last.price - prev.price) / (last.credits - prev.credits);
+  const price = last.price + rate * (credits - last.credits);
+  return { price, perCredit: price / credits };
+}
+
+/* ─── Animation Configs ────────────────────────────────────────────────
+<truncated 16685 bytes>
+               <ShieldCheck size={48} strokeWidth={1} style={{ color: 'var(--accent-lavender)' }} className="mb-6" />
+                  <h3 className="nori-pricing-guest-title">Authentication Required</h3>
+                  <p className="nori-pricing-guest-desc">
+                    You are currently in Guest Mode. Please authenticate to unlock full workspace capabilities and manage billing.
+                  </p>
+                  <div style={{ display: 'flex', gap: 16 }}>
+                    <motion.button onClick={handleSignInRedirect} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} 
+                      className="nori-pricing-guest-btn-primary">
+                      Sign In to Continue
+                    </motion.button>
+                    <motion.button onClick={() => setShowSignInPrompt(false)} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} 
+                      className="nori-pricing-guest-btn-secondary">
+                      Return
+                    </motion.button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+so now enhance it better 
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-06-16T16:20:12+05:30.
+
+The user's current state is as follows:
+Active Document: c:\Users\jenit\Desktop\BuildPublic\nori-wesite\src\styles.css (LANGUAGE_CSS)
+Cursor is on line: 1
+Other open documents:
+- c:\Users\jenit\Desktop\BuildPublic\nori-wesite\src\styles.css (LANGUAGE_CSS)
+Running terminal commands:
+- npm run dev (in c:\Users\jenit\Desktop\BuildPublic\nori-wesite, running for 11m50s)
+</ADDITIONAL_METADATA>
+<USER_SETTINGS_CHANGE>
+The user changed setting `Model Selection` from Gemini 3.5 Flash (High) to Gemini 3.1 Pro (High). No need to comment on this change if the user doesn't ask about it. If reporting what model you are, please use a human readable name instead of the exact string.
+</USER_SETTINGS_CHANGE>
+---
+{{ CHECKPOINT 1 }}
+ **The earlier parts of this conversation have been truncated due to its long length. The following content summarizes the truncated context so that you may continue your work. **
+
+
+# User Requests
+The following were user requests from the truncated conversation in chronological order:
+1. hey please fix the @[c:\Users\jenit\Desktop\BuildPublic\nori-wesite\src\components\Nav.tsx] @[c:\Users\jenit\Desktop\BuildPublic\nori-wesite\src\routes] like enhance the pricing modal as it is in the attached image while keeping the currnet websites Design Style intact  thx
+2. Continue
+3. ah the pricing page well it was idiotic not at all good please enhance its just , Free , Go(5), Plus(15) 
+
+and then link the differenshiator alsoo why did u remove the extra credits pricing like you idoit i didnt ask you to do that 
+
+refer :
+import { useEffect, useState } from 'react';
+import { X, ShieldCheck, Check, Sparkles, ArrowUpRight, Zap, Command, TerminalSquare } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useStore } from '../store';
+import { signOut } from '../lib/supabase';
+import { createCheckoutSession } from '../lib/payment';
+import { invoke } from '@tauri-apps/api/core';
+
+/* ─── Credit Pricing Logic ──────────────────────────────────────────────── */
+const CREDIT_BREAKPOINTS = [
+  { credits: 0,    price: 0 },
+  { credits: 100,  price: 3 },
+  { credits: 250,  price: 6 },
+  { credits: 500,  price: 10 },
+  { credits: 1000, price: 18 },
+];
+<truncated 18950 bytes>
+
+# Previous Session Summary:
+1. Outstanding User Requests
+- **Enhance the `/pricing` page UI**: User rejected the previous implementation as "idiotic" and "not at all good".
+- **Restore the original tier structure**: Revert from the 4-tier system (Free, Basic, Pro, Max) to the original 3-tier system: **Free**, **Go (€5)**, and **Plus (€15)**.
+- **Restore Credit Pricing Logic**: Add back the inter
+<truncated 1916 bytes>
+ser's provided snippet.
+- **Viewed Files**:
+  - `c:\Users\jenit\Desktop\BuildPublic\nori-wesite\src\styles.css`: Main stylesheet; likely contains the `nori-pricing-*` CSS classes referenced in the user's snippet.
+
+6. Current Work and Next Steps
+- **Next Steps**: 
+  1. Replace the existing implementation in `c:\Users\jenit\Desktop\BuildPublic\nori-wesite\src\routes\pricing.tsx` with the logic and structure provided by the user in the latest request.
+  2. Ensure all imports (`@/components/SiteLayout`, `lucide-react`, `framer-motion`) are compatible with the current codebase while preserving the requested `PricingModal` logic.
+  3. Verify the `/pricing` route still functions correctly within the TanStack Router structure.
+  4. Re-run `npx tsc --noEmit` to ensure the integration does not break existing types.
+
+You have the 4 following artifacts written to the artifacts directory:
+
+[ARTIFACT: implementation_plan]
+Path: file:///C:/Users/jenit/.gemini/antigravity-ide/brain/4794afc0-0998-4ead-8b47-ee5d804ff3ce/implementation_plan.md
+Last Edited: 2026-06-16T09:37:36Z
+
+[ARTIFACT: media__1781602526327]
+Path: file:///C:/Users/jenit/.gemini/antigravity-ide/brain/4794afc0-0998-4ead-8b47-ee5d804ff3ce/media__1781602526327.png
+Last Edited: 2026-06-16T09:35:37Z
+
+[ARTIFACT: task]
+Path: file:///C:/Users/jenit/.gemini/antigravity-ide/brain/4794afc0-0998-4ead-8b47-ee5d804ff3ce/task.md
+Last Edited: 2026-06-16T09:53:15Z
+
+[ARTIFACT: walkthrough]
+Path: file:///C:/Users/jenit/.gemini/antigravity-ide/brain/4794afc0-0998-4ead-8b47-ee5d804ff3ce/walkthrough.md
+Last Edited: 2026-06-16T09:53:18Z
+
+# Conversation Logs
+
+Reference the following log files for the full, untruncated conversation:
+
+- C:\Users\jenit\.gemini\antigravity-ide\brain\4794afc0-0998-4ead-8b47-ee5d804ff3ce\.system_generated\logs\transcript.jsonl
+
+**IMPORTANT: this summary is just for your reference. You may respond to my previous and future messages, but DO NOT ACKNOWLEDGE THIS CHECKPOINT MESSAGE. JUST READ IT BUT DO NOT MENTION IT, RESPOND TO IT, OR TAKE ACTION BECAUSE OF IT.**
+---
