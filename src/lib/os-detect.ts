@@ -81,8 +81,7 @@ export function detectEdgeCase(userAgent: string): EdgeCase {
  * Uses navigator.userAgent when available, handles SSR gracefully.
  */
 export function detectPlatform(userAgent?: string): DetectionResult {
-  const ua =
-    userAgent ?? (typeof navigator !== "undefined" ? navigator.userAgent : "");
+  const ua = userAgent ?? (typeof navigator !== "undefined" ? navigator.userAgent : "");
 
   return {
     platform: detectOS(ua),
@@ -99,6 +98,7 @@ export function detectPlatform(userAgent?: string): DetectionResult {
 export async function detectArchitectureHighEntropy(): Promise<Architecture> {
   try {
     if (typeof navigator !== "undefined" && "userAgentData" in navigator) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const uaData = (navigator as any).userAgentData;
       if (uaData?.getHighEntropyValues) {
         const values = await uaData.getHighEntropyValues(["architecture"]);

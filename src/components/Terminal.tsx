@@ -30,7 +30,9 @@ const defaultBlocks: Block[] = [
           <Sparkles className="size-3 text-white/70 animate-[pulse_3s_infinite]" />
           <span>Compiling 14 crates · cached 9</span>
         </div>
-        <div className="text-foreground/80">Finished <span className="text-white/80 font-medium">release</span> [optimized] target(s)</div>
+        <div className="text-foreground/80">
+          Finished <span className="text-white/80 font-medium">release</span> [optimized] target(s)
+        </div>
       </div>
     ),
   },
@@ -42,11 +44,16 @@ const defaultBlocks: Block[] = [
     output: (
       <div className="space-y-1.5 text-[13px]">
         <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5">
-          <span className="text-white/80 font-medium">M</span><span className="font-mono text-foreground/85">renderer/compositor.rs</span>
-          <span className="text-white/80 font-medium">M</span><span className="font-mono text-foreground/85">terminal/buffer.rs</span>
-          <span className="text-white/80 font-medium">+</span><span className="font-mono text-foreground/85">gpu/atlas.rs</span>
+          <span className="text-white/80 font-medium">M</span>
+          <span className="font-mono text-foreground/85">renderer/compositor.rs</span>
+          <span className="text-white/80 font-medium">M</span>
+          <span className="font-mono text-foreground/85">terminal/buffer.rs</span>
+          <span className="text-white/80 font-medium">+</span>
+          <span className="font-mono text-foreground/85">gpu/atlas.rs</span>
         </div>
-        <div className="text-muted-foreground/60 italic text-[12px] pl-0.5">render pipeline optimized</div>
+        <div className="text-muted-foreground/60 italic text-[12px] pl-0.5">
+          render pipeline optimized
+        </div>
       </div>
     ),
   },
@@ -64,7 +71,13 @@ const defaultBlocks: Block[] = [
   },
 ];
 
-export function Terminal({ size = "sm", blocks = defaultBlocks, branch = "main", path = "~/nori/core", variant = "blocks" }: TerminalProps) {
+export function Terminal({
+  size = "sm",
+  blocks = defaultBlocks,
+  branch = "main",
+  path = "~/nori/core",
+  variant = "blocks",
+}: TerminalProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [visibleBlocks, setVisibleBlocks] = useState<number>(0);
   const [typedCmd, setTypedCmd] = useState("");
@@ -96,19 +109,27 @@ export function Terminal({ size = "sm", blocks = defaultBlocks, branch = "main",
   // Entrance animation
   useEffect(() => {
     if (!containerRef.current) return;
-    gsap.fromTo(containerRef.current,
+    gsap.fromTo(
+      containerRef.current,
       { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.8, ease: "expo.out", delay: 0.2 }
+      { opacity: 1, y: 0, duration: 0.8, ease: "expo.out", delay: 0.2 },
     );
   }, []);
 
   return (
-    <div ref={containerRef}
+    <div
+      ref={containerRef}
       className="relative rounded-2xl border border-white/[0.08] bg-[#0C0C0C] overflow-hidden shadow-[0_40px_100px_-30px_rgba(0,0,0,0.9)]"
-      style={{ opacity: 0 }}>
+      style={{ opacity: 0 }}
+    >
       {/* Subtle inner glow at top */}
-      <div aria-hidden className="absolute inset-x-0 top-0 h-px"
-        style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)" }} />
+      <div
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-px"
+        style={{
+          background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)",
+        }}
+      />
 
       {/* Title bar */}
       <div className="flex items-center justify-between px-4 py-3 border-b hairline bg-surface-elevated/40">
@@ -126,10 +147,22 @@ export function Terminal({ size = "sm", blocks = defaultBlocks, branch = "main",
         <div className="flex items-center gap-4 text-[10px] font-mono uppercase tracking-[0.08em] text-muted-foreground/60 select-none">
           {/* Live system indicators */}
           <div className="hidden sm:flex items-center gap-4 mr-2">
-            <span className="flex items-center gap-1.5"><span className="size-1.5 rounded-full bg-white/80" />CPU</span>
-            <span className="flex items-center gap-1.5"><span className="size-1.5 rounded-full bg-white/80" />PTY</span>
-            <span className="flex items-center gap-1.5"><span className="size-1.5 rounded-full bg-white/80" />Local</span>
-            <span className="flex items-center gap-1.5"><span className="size-1.5 rounded-full bg-white/80" />Synced</span>
+            <span className="flex items-center gap-1.5">
+              <span className="size-1.5 rounded-full bg-white/80" />
+              CPU
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="size-1.5 rounded-full bg-white/80" />
+              PTY
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="size-1.5 rounded-full bg-white/80" />
+              Local
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="size-1.5 rounded-full bg-white/80" />
+              Synced
+            </span>
           </div>
 
           <span className="flex items-center gap-1.5 border-l border-white/10 pl-3 text-foreground/90 font-medium">
@@ -140,7 +173,9 @@ export function Terminal({ size = "sm", blocks = defaultBlocks, branch = "main",
       </div>
 
       {/* Content */}
-      <div className={`p-5 sm:p-6 ${size === "lg" ? "min-h-[360px]" : "min-h-[280px]"} font-mono text-[12.5px] sm:text-[13px] leading-relaxed text-left`}>
+      <div
+        className={`p-5 sm:p-6 ${size === "lg" ? "min-h-[360px]" : "min-h-[280px]"} font-mono text-[12.5px] sm:text-[13px] leading-relaxed text-left`}
+      >
         {variant === "blocks" ? (
           <div className="space-y-3">
             {/* Completed blocks */}
@@ -149,11 +184,16 @@ export function Terminal({ size = "sm", blocks = defaultBlocks, branch = "main",
                 <div className="flex items-center justify-between px-3 py-2 border-b hairline">
                   <div className="flex items-center gap-2 min-w-0">
                     <span className="text-white/70 text-[10px]">›</span>
-                    <span className="text-muted-foreground truncate hidden sm:inline text-[11px]">{b.prompt}</span>
+                    <span className="text-muted-foreground truncate hidden sm:inline text-[11px]">
+                      {b.prompt}
+                    </span>
                     <span className="text-foreground/90 truncate">{b.command}</span>
                   </div>
                   <div className="flex items-center gap-2 text-[11px] text-muted-foreground shrink-0 ml-2">
-                    <span className="flex items-center gap-1"><Clock className="size-3" />{b.duration}</span>
+                    <span className="flex items-center gap-1">
+                      <Clock className="size-3" />
+                      {b.duration}
+                    </span>
                     {b.status === "ok" && <Check className="size-3 text-white/60" />}
                   </div>
                 </div>
@@ -166,7 +206,9 @@ export function Terminal({ size = "sm", blocks = defaultBlocks, branch = "main",
               <div className="rounded-lg border border-white/[0.08] bg-background/40 overflow-hidden">
                 <div className="flex items-center gap-2 px-3 py-2">
                   <span className="text-white/70 text-[10px]">›</span>
-                  <span className="text-muted-foreground hidden sm:inline text-[11px]">{blocks[visibleBlocks].prompt}</span>
+                  <span className="text-muted-foreground hidden sm:inline text-[11px]">
+                    {blocks[visibleBlocks].prompt}
+                  </span>
                   <span className="text-foreground/90">{typedCmd}</span>
                   <span className="inline-block w-1.5 h-3.5 bg-foreground cursor-blink" />
                 </div>
@@ -200,11 +242,7 @@ export function Terminal({ size = "sm", blocks = defaultBlocks, branch = "main",
                     {b.status === "ok" && <Check className="size-3.5 text-white/60" />}
                   </div>
                 </div>
-                {b.output && (
-                  <div className="pl-4 sm:pl-5 text-foreground/80">
-                    {b.output}
-                  </div>
-                )}
+                {b.output && <div className="pl-4 sm:pl-5 text-foreground/80">{b.output}</div>}
                 {/* Horizontal line divider between commands */}
                 <div className="border-b hairline my-4 opacity-[0.18]" />
               </div>

@@ -16,10 +16,18 @@ export const Route = createFileRoute("/download")({
   head: () => ({
     meta: [
       { title: "Download Nori — Free Terminal Built in Rust" },
-      { name: "description", content: "Download Nori for Windows. A studio-grade, high-performance terminal built in Rust + Tauri. Free early access." },
+      {
+        name: "description",
+        content:
+          "Download Nori for Windows. A studio-grade, high-performance terminal built in Rust + Tauri. Free early access.",
+      },
       { property: "og:title", content: "Download Nori — Free Terminal Built in Rust" },
       { property: "og:url", content: "https://nori-terminal.pages.dev/download" },
-      { property: "og:description", content: "Download Nori for Windows. Studio-grade terminal built in Rust + Tauri. Free early access." },
+      {
+        property: "og:description",
+        content:
+          "Download Nori for Windows. Studio-grade terminal built in Rust + Tauri. Free early access.",
+      },
       { name: "robots", content: "index, follow" },
     ],
     links: [{ rel: "canonical", href: "https://nori-terminal.pages.dev/download" }],
@@ -45,9 +53,7 @@ const platforms: PlatformData[] = [
     label: "Windows",
     available: true,
     downloadUrl: `${RELEASE_BASE}/nori_0.1.0_x64-setup.exe`,
-    altDownloads: [
-      { label: "MSI Installer", url: `${RELEASE_BASE}/nori_0.1.0_x64_en-US.msi` },
-    ],
+    altDownloads: [{ label: "MSI Installer", url: `${RELEASE_BASE}/nori_0.1.0_x64_en-US.msi` }],
     fileType: ".exe installer",
     requirements: ["Windows 10+", "x86_64", "WebView2 (bundled)"],
     icon: (
@@ -74,9 +80,7 @@ const platforms: PlatformData[] = [
     label: "Linux",
     available: true,
     downloadUrl: `${RELEASE_BASE}/nori_0.1.0_amd64.AppImage`,
-    altDownloads: [
-      { label: ".deb (Debian/Ubuntu)", url: `${RELEASE_BASE}/nori_0.1.0_amd64.deb` },
-    ],
+    altDownloads: [{ label: ".deb (Debian/Ubuntu)", url: `${RELEASE_BASE}/nori_0.1.0_amd64.deb` }],
     fileType: ".AppImage",
     requirements: ["Ubuntu 20.04+ / Fedora 36+", "x86_64"],
     icon: (
@@ -106,7 +110,10 @@ function DownloadPage() {
   }, []);
 
   const sortedPlatforms = (() => {
-    if (detectedPlatform === "unknown") return [...platforms].sort((a, b) => DEFAULT_ORDER.indexOf(a.id) - DEFAULT_ORDER.indexOf(b.id));
+    if (detectedPlatform === "unknown")
+      return [...platforms].sort(
+        (a, b) => DEFAULT_ORDER.indexOf(a.id) - DEFAULT_ORDER.indexOf(b.id),
+      );
     return [...platforms].sort((a, b) => {
       if (a.id === detectedPlatform) return -1;
       if (b.id === detectedPlatform) return 1;
@@ -134,13 +141,16 @@ function DownloadPage() {
           {/* Primary download button */}
           {primaryPlatform && (
             <div className="reveal mt-10">
-              <a href={primaryPlatform.downloadUrl}
-                className="group inline-flex items-center gap-3 rounded-2xl bg-white text-[#0A0A0A] px-8 py-4 text-[15px] font-medium hover-lift hover:shadow-[0_12px_50px_rgba(255,255,255,0.18)] transition-all duration-300">
+              <a
+                href={primaryPlatform.downloadUrl}
+                className="group inline-flex items-center gap-3 rounded-2xl bg-white text-[#0A0A0A] px-8 py-4 text-[15px] font-medium hover-lift hover:shadow-[0_12px_50px_rgba(255,255,255,0.18)] transition-all duration-300"
+              >
                 <Download className="size-5 transition-transform group-hover:translate-y-0.5" />
                 Download for {primaryPlatform.label}
               </a>
               <p className="mt-3 text-[11px] text-white/25 font-mono">
-                {detectedArch !== "unknown" ? `${detectedArch} · ` : ""}{primaryPlatform.fileType} · ~8 MB
+                {detectedArch !== "unknown" ? `${detectedArch} · ` : ""}
+                {primaryPlatform.fileType} · ~8 MB
               </p>
             </div>
           )}
@@ -152,54 +162,60 @@ function DownloadPage() {
         <section className="mx-auto max-w-3xl px-5 sm:px-8 pb-6">
           <div className="reveal rounded-2xl border border-white/[0.06] bg-white/[0.02] px-6 py-4 flex items-start gap-4">
             <Monitor className="size-4 text-white/40 shrink-0 mt-0.5" />
-            <p className="text-[13px] text-white/50">Nori is a native desktop terminal. Not available for iPadOS.</p>
+            <p className="text-[13px] text-white/50">
+              Nori is a native desktop terminal. Not available for iPadOS.
+            </p>
           </div>
         </section>
       )}
 
       {/* All platforms */}
       <section className="mx-auto max-w-3xl px-5 sm:px-8 pb-16">
-        <p className="reveal font-mono text-[9px] uppercase tracking-[0.25em] text-white/20 mb-4">All platforms</p>
-        <div className="space-y-3">
+        <p className="reveal font-mono text-[9px] uppercase tracking-[0.25em] text-white/20 mb-4">
+          All platforms
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {sortedPlatforms.map((platform, idx) => {
             const isDetected = platform.id === detectedPlatform && detectedPlatform !== "unknown";
             return (
-              <div key={platform.id}
+              <div
+                key={platform.id}
                 style={{ animationDelay: `${idx * 80}ms` }}
-                className={`reveal animate-fade-in-scale group rounded-2xl border overflow-hidden transition-all duration-300 hover-lift border-white/[0.06] hover:border-white/[0.14] bg-white/[0.015] hover:bg-white/[0.025] hover:shadow-[0_8px_30px_rgba(0,0,0,0.4)]`}>
-                <div className="flex items-center gap-5 px-6 py-5">
-                  <div className="size-11 rounded-xl grid place-items-center shrink-0 bg-white/[0.04] border border-white/[0.06] text-white/70 group-hover:border-white/[0.14] group-hover:text-white/90 transition-all duration-300">
+                className={`reveal animate-fade-in-scale group rounded-2xl overflow-hidden transition-all duration-300 hover-lift bg-[#121214]/40 hover:bg-[#121214]/60 ${
+                  isDetected
+                    ? "shadow-[0_0_40px_rgba(168,85,247,0.15)]"
+                    : "hover:shadow-[0_8px_30px_rgba(0,0,0,0.4)]"
+                }`}
+              >
+                <div className="flex flex-col items-center text-center gap-4 px-6 py-8">
+                  <div className="size-12 rounded-xl grid place-items-center shrink-0 bg-white/[0.04] text-white/70 group-hover:text-white/90 transition-all duration-300">
                     {platform.icon}
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-3">
-                      <h3 className="text-[16px] font-medium text-white/90">
-                        {platform.label}
-                      </h3>
-                      {isDetected && (
-                        <span className="font-mono text-[9px] text-emerald-400/70 bg-emerald-500/[0.08] border border-emerald-500/[0.14] rounded-full px-2 py-0.5 uppercase tracking-[0.1em] animate-soft-glow">
-                          detected
-                        </span>
-                      )}
-                    </div>
-                    <div className="flex items-center gap-3 mt-1 text-[12px] text-white/30">
+                  <div className="flex-1 w-full">
+                    <h3 className="text-[16px] font-medium text-white/90 mb-2">{platform.label}</h3>
+                    <div className="flex flex-col items-center gap-1 mt-1 text-[11px] text-white/30">
                       {platform.requirements.map((r) => (
                         <span key={r}>{r}</span>
                       ))}
                     </div>
                   </div>
-                  <div className="shrink-0 flex items-center gap-2">
-                    {platform.altDownloads?.map((alt) => (
-                      <a key={alt.label} href={alt.url}
-                        className="inline-flex items-center gap-1.5 rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-2 text-[11px] text-white/50 hover:text-white hover:border-white/[0.16] hover:bg-white/[0.05] transition-all duration-200">
-                        {alt.label}
-                      </a>
-                    ))}
-                    <a href={platform.downloadUrl}
-                      className="inline-flex items-center gap-2 rounded-xl bg-white text-[#0A0A0A] px-5 py-2.5 text-[13px] font-medium hover:bg-white/95 hover:shadow-[0_4px_16px_rgba(255,255,255,0.12)] transition-all duration-200">
+                  <div className="w-full flex flex-col items-center gap-2 mt-4">
+                    <a
+                      href={platform.downloadUrl}
+                      className="w-full inline-flex justify-center items-center gap-2 rounded-xl bg-white text-[#0A0A0A] px-5 py-2.5 text-[13px] font-medium hover:bg-white/95 hover:shadow-[0_4px_16px_rgba(255,255,255,0.12)] transition-all duration-200"
+                    >
                       <Download className="size-3.5" />
                       {platform.fileType}
                     </a>
+                    {platform.altDownloads?.map((alt) => (
+                      <a
+                        key={alt.label}
+                        href={alt.url}
+                        className="w-full inline-flex justify-center items-center gap-1.5 rounded-lg bg-white/[0.02] px-3 py-2 text-[11px] text-white/50 hover:text-white hover:bg-white/[0.05] transition-all duration-200"
+                      >
+                        {alt.label}
+                      </a>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -213,11 +229,19 @@ function DownloadPage() {
         <div className="reveal rounded-2xl border border-white/[0.05] bg-white/[0.015] overflow-hidden">
           <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.04]">
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/30">All releases</p>
-              <p className="text-[13px] text-white/40 mt-1">View all versions and platforms on GitHub</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/30">
+                All releases
+              </p>
+              <p className="text-[13px] text-white/40 mt-1">
+                View all versions and platforms on GitHub
+              </p>
             </div>
-            <a href="https://github.com/Aethlon/Nori/releases" target="_blank" rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-1.5 text-[11px] text-white/40 hover:text-white/70 hover:border-white/[0.1] transition-all">
+            <a
+              href="https://github.com/Aethlon/Nori/releases"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-1.5 text-[11px] text-white/40 hover:text-white/70 hover:border-white/[0.1] transition-all"
+            >
               <ArrowUpRight className="size-3" /> GitHub Releases
             </a>
           </div>
@@ -229,7 +253,9 @@ function DownloadPage() {
 
       {/* What's included */}
       <section className="mx-auto max-w-3xl px-5 sm:px-8 pb-24">
-        <p className="reveal font-mono text-[9px] uppercase tracking-[0.25em] text-white/20 mb-5">What's included</p>
+        <p className="reveal font-mono text-[9px] uppercase tracking-[0.25em] text-white/20 mb-5">
+          What's included
+        </p>
         <div className="reveal grid grid-cols-2 sm:grid-cols-4 gap-4">
           {[
             { label: "Terminal", desc: "Native PTY" },
@@ -237,7 +263,10 @@ function DownloadPage() {
             { label: "Docker", desc: "Compose-aware" },
             { label: "Files", desc: "Tree explorer" },
           ].map((item) => (
-            <div key={item.label} className="rounded-xl border border-white/[0.04] bg-white/[0.01] p-4 text-center">
+            <div
+              key={item.label}
+              className="rounded-xl border border-white/[0.04] bg-white/[0.01] p-4 text-center"
+            >
               <p className="text-[13px] font-medium text-white/70">{item.label}</p>
               <p className="text-[11px] text-white/30 mt-1">{item.desc}</p>
             </div>
@@ -248,10 +277,16 @@ function DownloadPage() {
         <div className="reveal mt-12 flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] text-white/30">
           <p>Nori is in early access. Expect rough edges.</p>
           <div className="flex items-center gap-4">
-            <Link to="/changelog" className="hover:text-white/60 transition-colors flex items-center gap-1">
+            <Link
+              to="/changelog"
+              className="hover:text-white/60 transition-colors flex items-center gap-1"
+            >
               Changelog <ArrowUpRight className="size-3" />
             </Link>
-            <Link to="/docs" className="hover:text-white/60 transition-colors flex items-center gap-1">
+            <Link
+              to="/docs"
+              className="hover:text-white/60 transition-colors flex items-center gap-1"
+            >
               Docs <ArrowUpRight className="size-3" />
             </Link>
           </div>

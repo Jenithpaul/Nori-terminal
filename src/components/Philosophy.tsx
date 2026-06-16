@@ -95,9 +95,7 @@ export function Philosophy() {
           Philosophy
         </p>
         <h2 className="reveal mt-6 text-3xl md:text-5xl lg:text-6xl font-semibold tracking-[-0.04em] leading-[1.05] text-balance max-w-[65ch]">
-          <span className="text-foreground">
-            The terminal is where work happens.
-          </span>{" "}
+          <span className="text-foreground">The terminal is where work happens.</span>{" "}
           <span className="text-white/40">
             It deserves to be the most refined surface on your machine.
           </span>
@@ -109,20 +107,15 @@ export function Philosophy() {
             aria-hidden
             className="tenet-progress-line absolute left-0 top-0 bottom-0 w-[2px] origin-top hidden sm:block"
             style={{
-              background: "linear-gradient(to bottom, rgba(255,255,255,0.3), rgba(255,255,255,0.05))",
+              background:
+                "linear-gradient(to bottom, rgba(255,255,255,0.3), rgba(255,255,255,0.05))",
               transform: "scaleY(0)",
             }}
           />
           {tenets.map((t) => (
-            <article
-              key={t.num}
-              className="tenet-card group relative"
-              style={{ opacity: 0 }}
-            >
+            <article key={t.num} className="tenet-card group relative" style={{ opacity: 0 }}>
               <div className="flex items-center gap-3 mb-5">
-                <span className="font-mono text-[11px] text-white/50 tracking-widest">
-                  {t.num}
-                </span>
+                <span className="font-mono text-[11px] text-white/50 tracking-widest">{t.num}</span>
                 <span className="h-px flex-1 bg-white/[0.06] group-hover:bg-white/[0.15] transition-colors duration-700" />
               </div>
               <h3 className="text-xl md:text-2xl font-semibold tracking-[-0.025em] text-balance text-foreground/90 group-hover:text-foreground transition-colors">

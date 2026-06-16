@@ -5,7 +5,9 @@ const RELEASE_BASE = "https://github.com/Aethlon/Nori/releases/latest/download";
 
 export function DownloadModal({ onClose }: { onClose: () => void }) {
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
     return () => {
@@ -17,7 +19,9 @@ export function DownloadModal({ onClose }: { onClose: () => void }) {
   return (
     <div
       className="fixed inset-0 z-[60] flex items-center justify-center p-4"
-      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
     >
       {/* Backdrop */}
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
@@ -25,21 +29,32 @@ export function DownloadModal({ onClose }: { onClose: () => void }) {
       {/* Panel */}
       <div className="relative w-full max-w-md rounded-2xl border hairline bg-[oklch(0.07_0_0)] shadow-2xl overflow-hidden">
         {/* Glow */}
-        <div aria-hidden className="absolute inset-0 pointer-events-none"
-          style={{ background: "radial-gradient(600px circle at 50% -20%, rgba(255,255,255,0.06), transparent 60%)" }} />
+        <div
+          aria-hidden
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(600px circle at 50% -20%, rgba(255,255,255,0.06), transparent 60%)",
+          }}
+        />
 
         {/* Header */}
         <div className="relative flex items-start justify-between p-6 pb-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
               <span className="size-1.5 rounded-full bg-white/80 animate-[pulse_2.4s_ease-in-out_infinite] shadow-[0_0_6px_rgba(255,255,255,0.3)]" />
-              <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/70">Early Access</span>
+              <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/70">
+                Early Access
+              </span>
             </div>
             <h2 className="text-2xl font-medium tracking-tight text-foreground">Download Nori</h2>
             <p className="mt-1 text-[13px] text-muted-foreground">Studio-grade terminal · v0.1.0</p>
           </div>
-          <button onClick={onClose} aria-label="Close"
-            className="size-8 grid place-items-center rounded-full border hairline text-muted-foreground hover:text-foreground hover:border-foreground/20 transition-colors">
+          <button
+            onClick={onClose}
+            aria-label="Close"
+            className="size-8 grid place-items-center rounded-full border hairline text-muted-foreground hover:text-foreground hover:border-foreground/20 transition-colors"
+          >
             <X className="size-3.5" />
           </button>
         </div>
@@ -58,7 +73,9 @@ export function DownloadModal({ onClose }: { onClose: () => void }) {
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-[14px] font-medium text-foreground">Windows</p>
-              <p className="text-[12px] text-muted-foreground font-mono mt-0.5">x86_64 · .exe · v0.1.0</p>
+              <p className="text-[12px] text-muted-foreground font-mono mt-0.5">
+                x86_64 · .exe · v0.1.0
+              </p>
             </div>
             <Download className="size-4 text-white/70 opacity-70 group-hover:opacity-100 transition-opacity" />
           </a>
@@ -75,7 +92,9 @@ export function DownloadModal({ onClose }: { onClose: () => void }) {
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-[14px] font-medium text-foreground">macOS</p>
-              <p className="text-[12px] text-muted-foreground font-mono mt-0.5">Universal (Intel + Apple Silicon) · .dmg</p>
+              <p className="text-[12px] text-muted-foreground font-mono mt-0.5">
+                Universal (Intel + Apple Silicon) · .dmg
+              </p>
             </div>
             <Download className="size-4 text-white/70 opacity-70 group-hover:opacity-100 transition-opacity" />
           </a>
@@ -92,15 +111,21 @@ export function DownloadModal({ onClose }: { onClose: () => void }) {
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-[14px] font-medium text-foreground">Linux</p>
-              <p className="text-[12px] text-muted-foreground font-mono mt-0.5">x86_64 · .AppImage · v0.1.0</p>
+              <p className="text-[12px] text-muted-foreground font-mono mt-0.5">
+                x86_64 · .AppImage · v0.1.0
+              </p>
             </div>
             <Download className="size-4 text-white/70 opacity-70 group-hover:opacity-100 transition-opacity" />
           </a>
 
           <p className="text-center text-[11.5px] text-muted-foreground/40 pt-1">
             All platforms available ·{" "}
-            <a href="https://github.com/Aethlon/Nori/releases" target="_blank" rel="noreferrer"
-              className="hover:text-muted-foreground transition-colors underline underline-offset-2">
+            <a
+              href="https://github.com/Aethlon/Nori/releases"
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-muted-foreground transition-colors underline underline-offset-2"
+            >
               View all releases
             </a>
           </p>

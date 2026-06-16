@@ -8,7 +8,10 @@ interface ParticleFieldProps {
  * Replaces the previous JS canvas implementation for better performance.
  * Props are kept for API compatibility but density/interactive are no longer used.
  */
-export function ParticleField({ density: _density, interactive: _interactive }: ParticleFieldProps) {
+export function ParticleField({
+  density: _density,
+  interactive: _interactive,
+}: ParticleFieldProps) {
   return (
     <div
       aria-hidden

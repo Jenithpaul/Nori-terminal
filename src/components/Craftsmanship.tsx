@@ -79,19 +79,19 @@ export function Craftsmanship() {
     <section
       ref={sectionRef}
       id="craftsmanship"
-      className="relative py-28 sm:py-36 border-t border-white/[0.04]"
+      className="relative py-28 sm:py-36 border-t border-neutral-800/30 bg-[#060606]"
     >
       <div className="mx-auto max-w-6xl px-5 sm:px-6">
         <div className="max-w-2xl select-none">
-          <p className="reveal text-[10.5px] font-mono uppercase tracking-[0.22em] text-white/50">
+          <p className="reveal text-[10.5px] font-mono uppercase tracking-[0.22em] text-neutral-500">
             Engineering
           </p>
-          <h2 className="reveal mt-4 text-3xl md:text-5xl font-semibold tracking-[-0.035em] text-balance text-gradient-soft leading-[1.05]">
+          <h2 className="reveal mt-4 text-3xl md:text-5xl font-medium tracking-[-0.035em] text-balance text-neutral-200 leading-[1.05]">
             Crafted at the lowest level.
           </h2>
-          <p className="reveal mt-5 text-muted-foreground leading-relaxed max-w-lg text-[14.5px]">
-            Three architecture decisions define everything Nori can do — and
-            everything it refuses to compromise on.
+          <p className="reveal mt-5 text-neutral-400 leading-relaxed max-w-lg text-[14.5px]">
+            Three architecture decisions define everything Nori can do — and everything it refuses
+            to compromise on.
           </p>
         </div>
 
@@ -103,10 +103,16 @@ export function Craftsmanship() {
           <div className="craft-card md:col-span-5 md:row-start-1" style={{ opacity: 0 }}>
             <PrincipleCard principle={principles[0]} index={0} />
           </div>
-          <div className="craft-card md:col-span-4 md:col-start-7 md:row-start-1 md:mt-12" style={{ opacity: 0 }}>
+          <div
+            className="craft-card md:col-span-4 md:col-start-7 md:row-start-1 md:mt-12"
+            style={{ opacity: 0 }}
+          >
             <PrincipleCard principle={principles[1]} index={1} />
           </div>
-          <div className="craft-card md:col-span-5 md:col-start-3 md:row-start-2 md:mt-4" style={{ opacity: 0 }}>
+          <div
+            className="craft-card md:col-span-5 md:col-start-3 md:row-start-2 md:mt-4"
+            style={{ opacity: 0 }}
+          >
             <PrincipleCard principle={principles[2]} index={2} />
           </div>
         </div>
@@ -115,13 +121,7 @@ export function Craftsmanship() {
   );
 }
 
-function PrincipleCard({
-  principle,
-  index,
-}: {
-  principle: (typeof principles)[0];
-  index: number;
-}) {
+function PrincipleCard({ principle, index }: { principle: (typeof principles)[0]; index: number }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
 
@@ -145,7 +145,7 @@ function PrincipleCard({
     });
 
     gsap.to(glow, {
-      background: `radial-gradient(200px circle at ${x * 100}% ${y * 100}%, rgba(255, 255, 255, 0.04), transparent 70%)`,
+      background: `radial-gradient(200px circle at ${x * 100}% ${y * 100}%, rgba(168, 85, 247, 0.08), transparent 70%)`,
       duration: 0.3,
     });
   };
@@ -165,25 +165,25 @@ function PrincipleCard({
       ref={cardRef}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
-      className="group relative p-7 sm:p-8 rounded-2xl border border-white/[0.05] bg-white/[0.01] hover:bg-white/[0.03] hover:border-white/[0.12] hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] transition-[background,border-color,box-shadow] duration-500 overflow-hidden cursor-default will-change-transform"
+      className="group relative p-7 sm:p-8 rounded-2xl border border-neutral-800/30 bg-[#0a0a0c] hover:bg-[#121214] hover:border-purple-500/30 hover:shadow-[0_15px_35px_rgba(168,85,247,0.05)] transition-[background,border-color,box-shadow] duration-500 overflow-hidden cursor-default will-change-transform"
       style={{ transformStyle: "preserve-3d" }}
     >
       <div ref={glowRef} aria-hidden className="absolute inset-0 pointer-events-none" />
 
       <div className="relative flex items-center justify-between mb-5">
-        <span className="text-[10px] font-mono uppercase tracking-[0.22em] text-muted-foreground/50">
+        <span className="text-[10px] font-mono uppercase tracking-[0.22em] text-neutral-500">
           0{index + 1}
         </span>
-        <span className="font-mono text-[13px] tracking-tight text-white/80">
+        <span className="font-mono text-[13px] tracking-tight text-purple-400">
           {principle.metric}
         </span>
       </div>
 
-      <h3 className="relative text-lg sm:text-xl font-semibold tracking-[-0.02em] text-foreground/90 group-hover:text-foreground transition-colors duration-300">
+      <h3 className="relative text-lg sm:text-xl font-medium tracking-[-0.02em] text-neutral-200 group-hover:text-neutral-100 transition-colors duration-300">
         {principle.title}
       </h3>
 
-      <p className="relative mt-3 text-[13.5px] text-muted-foreground leading-[1.7] max-w-md">
+      <p className="relative mt-3 text-[13.5px] text-neutral-400 leading-[1.7] max-w-md">
         {principle.explanation}
       </p>
     </article>

@@ -78,10 +78,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
       />
 
       {/* Consistent global grid backdrop */}
-      <div
-        aria-hidden
-        className="pointer-events-none fixed inset-0 z-0 bg-grid opacity-[0.4]"
-      />
+      <div aria-hidden className="pointer-events-none fixed inset-0 z-0 bg-grid opacity-[0.4]" />
       <div
         aria-hidden
         className="pointer-events-none fixed inset-x-0 top-0 h-[80vh] z-0"

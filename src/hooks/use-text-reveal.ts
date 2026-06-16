@@ -11,11 +11,7 @@ if (typeof window !== "undefined") {
 /** Detect touch/mobile device for animation simplification */
 function isMobileDevice(): boolean {
   if (typeof window === "undefined") return false;
-  return (
-    "ontouchstart" in window ||
-    navigator.maxTouchPoints > 0 ||
-    window.innerWidth < 768
-  );
+  return "ontouchstart" in window || navigator.maxTouchPoints > 0 || window.innerWidth < 768;
 }
 
 export interface TextRevealOptions {
@@ -66,10 +62,7 @@ const MOBILE_STAGGER: Record<TextRevealOptions["type"], number> = {
  * Respects `prefers-reduced-motion` — skips animation entirely when enabled.
  * Text remains fully static after animation completes.
  */
-export function useTextReveal(
-  ref: RefObject<HTMLElement | null>,
-  options: TextRevealOptions,
-) {
+export function useTextReveal(ref: RefObject<HTMLElement | null>, options: TextRevealOptions) {
   const reducedMotion = useReducedMotion();
   const splitRef = useRef<SplitText | null>(null);
 

@@ -9,11 +9,7 @@ if (typeof window !== "undefined") {
 /** Detect touch/mobile device for animation adaptation */
 function isMobileDevice(): boolean {
   if (typeof window === "undefined") return false;
-  return (
-    "ontouchstart" in window ||
-    navigator.maxTouchPoints > 0 ||
-    window.innerWidth < 768
-  );
+  return "ontouchstart" in window || navigator.maxTouchPoints > 0 || window.innerWidth < 768;
 }
 
 /**
@@ -33,8 +29,7 @@ export function useReveal(deps: unknown[] = []) {
     if (typeof window === "undefined") return;
 
     // Respect reduced-motion preference
-    const prefersReduced =
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReduced) {
       // Show all reveal elements immediately without animation
       gsap.utils.toArray<HTMLElement>(".reveal").forEach((el) => {

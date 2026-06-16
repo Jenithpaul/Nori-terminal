@@ -5,10 +5,15 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
 
 const stats = [
-  { value: "6.4",  unit: "MB",  label: "Binary size",    detail: "Lean native binary" },
-  { value: "14",  unit: "MB",  label: "Memory at rest",  detail: "Single session, idle" },
-  { value: "0.4", unit: "ms",  label: "Block render",    detail: "GPU-accelerated layout" },
-  { value: "100", unit: "%",   label: "Native Rust",     detail: "No runtime overhead" },
+  { value: "7.8", unit: "MB", label: "Core Binary Size", detail: "Stripped native Rust core" },
+  { value: "45", unit: "MB", label: "Memory footprint", detail: "Single tab session, idle" },
+  {
+    value: "16",
+    unit: "ms",
+    label: "Batched render queue",
+    detail: "60 FPS requestAnimationFrame limit",
+  },
+  { value: "100", unit: "%", label: "Asynchronous I/O", detail: "Non-blocking PTY loops" },
 ];
 
 export function Performance() {
@@ -94,28 +99,43 @@ export function Performance() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="performance" className="relative py-28 sm:py-36 border-t border-white/[0.04]">
+    <section
+      ref={sectionRef}
+      id="performance"
+      className="relative py-28 sm:py-36 border-t border-white/[0.04]"
+    >
       <div className="relative mx-auto max-w-6xl px-5 sm:px-6">
         <div className="grid lg:grid-cols-[1fr_1.2fr] gap-12 lg:gap-16 items-start">
           <div className="select-none">
-            <p className="reveal text-[11px] font-mono uppercase tracking-[0.22em] text-white/50">Performance</p>
+            <p className="reveal text-[11px] font-mono uppercase tracking-[0.22em] text-white/50">
+              Performance
+            </p>
             <h2 className="reveal mt-4 text-3xl md:text-5xl font-semibold tracking-[-0.035em] text-balance leading-[1.05] text-gradient-soft">
-              Engineered for speed<br />you can feel.
+              Engineered for speed
+              <br />
+              you can feel.
             </h2>
             <p className="reveal mt-5 text-muted-foreground leading-relaxed max-w-md text-[14.5px]">
-              Nori is written in Rust with a RAM-only session cache and async-first execution model. The result is a terminal that disappears into your flow.
+              Nori is written in Rust with a RAM-only session cache and async-first execution model.
+              The result is a terminal that disappears into your flow.
             </p>
 
             <div ref={specListRef} className="mt-10 space-y-3.5 text-[13px] font-mono">
               {[
-                ["Architecture",    "Rust + Tauri"],
+                ["Architecture", "Rust + Tauri"],
                 ["Execution model", "Async, non-blocking"],
-                ["Session cache",   "RAM-only"],
-                ["Render pipeline", "GPU compositor"],
-                ["Binary size",     "6.4 MB"],
+                ["Session cache", "RAM-only snapshotting"],
+                ["Render pipeline", "xterm WebGL / GPU"],
+                ["Core binary size", "7.8 MB"],
               ].map(([label, value]) => (
-                <div key={label} className="spec-row flex items-center justify-between border-b border-white/5 pb-3 group hover:border-white/10 transition-colors" style={{ opacity: 0 }}>
-                  <span className="text-muted-foreground group-hover:text-foreground/70 transition-colors">{label}</span>
+                <div
+                  key={label}
+                  className="spec-row flex items-center justify-between border-b border-white/5 pb-3 group hover:border-white/10 transition-colors"
+                  style={{ opacity: 0 }}
+                >
+                  <span className="text-muted-foreground group-hover:text-foreground/70 transition-colors">
+                    {label}
+                  </span>
                   <span className="text-foreground/90">{value}</span>
                 </div>
               ))}
@@ -133,7 +153,7 @@ export function Performance() {
   );
 }
 
-function StatCard({ stat, index }: { stat: typeof stats[0]; index: number }) {
+function StatCard({ stat, index }: { stat: (typeof stats)[0]; index: number }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
 

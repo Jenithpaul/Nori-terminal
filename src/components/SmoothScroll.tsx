@@ -44,7 +44,7 @@ export function SmoothScroll() {
     return () => {
       lenis.destroy();
       lenisRef.current = null;
-      gsap.ticker.remove(lenis.raf as any);
+      gsap.ticker.remove(lenis.raf as unknown as gsap.TickerCallback);
     };
   }, [reducedMotion]);
 

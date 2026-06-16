@@ -1,11 +1,11 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Silk Background — A flowing, animated green silk/fabric effect
+ * Silk Background — A flowing, animated purple silk/fabric effect
  * rendered via WebGL shaders. Inspired by the premium silk texture
- * with deep emerald/green tones and smooth wave-like motion.
+ * with deep purple/violet tones and smooth wave-like motion.
  */
-export function SilkBackground() {
+export function SilkBackground({ opacity = 0.85 }: { opacity?: number }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animRef = useRef<number>(0);
 
@@ -88,25 +88,25 @@ export function SilkBackground() {
         float folds = mix(wave, wave2, 0.4) * 0.7 + silk * 0.3;
         folds = smoothstep(0.0, 1.0, folds);
         
-        // Deep emerald green color palette
-        vec3 darkGreen = vec3(0.01, 0.06, 0.04);
-        vec3 midGreen = vec3(0.02, 0.22, 0.14);
-        vec3 brightGreen = vec3(0.05, 0.55, 0.35);
-        vec3 highlight = vec3(0.1, 0.75, 0.5);
+        // Deep glowing purple color palette based on #a855f7
+        vec3 darkPurple = vec3(0.04, 0.01, 0.08);
+        vec3 midPurple = vec3(0.16, 0.05, 0.28);
+        vec3 brightPurple = vec3(0.45, 0.15, 0.75);
+        vec3 highlight = vec3(0.66, 0.33, 0.97);
         
         // Color mapping based on fold intensity
         vec3 color;
         if (folds < 0.3) {
-          color = mix(darkGreen, midGreen, folds / 0.3);
+          color = mix(darkPurple, midPurple, folds / 0.3);
         } else if (folds < 0.6) {
-          color = mix(midGreen, brightGreen, (folds - 0.3) / 0.3);
+          color = mix(midPurple, brightPurple, (folds - 0.3) / 0.3);
         } else {
-          color = mix(brightGreen, highlight, (folds - 0.6) / 0.4);
+          color = mix(brightPurple, highlight, (folds - 0.6) / 0.4);
         }
         
         // Add specular-like highlights on fold peaks
         float spec = pow(max(folds, 0.0), 3.0) * 0.4;
-        color += vec3(spec * 0.3, spec * 0.8, spec * 0.5);
+        color += vec3(spec * 0.5, spec * 0.2, spec * 0.8);
         
         // Subtle grain/texture
         float grain = (snoise(gl_FragCoord.xy * 0.5) * 0.5 + 0.5) * 0.03;
@@ -154,10 +154,11 @@ export function SilkBackground() {
     // Full-screen quad
     const posBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
-      -1, -1, 1, -1, -1, 1,
-      -1, 1, 1, -1, 1, 1,
-    ]), gl.STATIC_DRAW);
+    gl.bufferData(
+      gl.ARRAY_BUFFER,
+      new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]),
+      gl.STATIC_DRAW,
+    );
 
     const posLoc = gl.getAttribLocation(program, "a_position");
     gl.enableVertexAttribArray(posLoc);
@@ -205,7 +206,7 @@ export function SilkBackground() {
       ref={canvasRef}
       aria-hidden
       className="pointer-events-none absolute inset-0 z-0 w-full h-full"
-      style={{ opacity: 0.85 }}
+      style={{ opacity }}
     />
   );
 }

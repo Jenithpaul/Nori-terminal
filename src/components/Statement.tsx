@@ -9,7 +9,7 @@ if (typeof window !== "undefined") {
 
 /**
  * Statement section — "The terminal deserves better."
- * 
+ *
  * Premium scroll-driven animation:
  * - Each word fades in with a staggered blur-to-sharp + scale effect
  * - A glowing underline sweeps across on completion
@@ -54,23 +54,31 @@ export function Statement() {
       // Stagger each word in
       wordsRef.current.forEach((el, i) => {
         if (!el) return;
-        tl.to(el, {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          filter: "blur(0px)",
-          duration: 0.4,
-          ease: "power3.out",
-        }, i * 0.15);
+        tl.to(
+          el,
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            filter: "blur(0px)",
+            duration: 0.4,
+            ease: "power3.out",
+          },
+          i * 0.15,
+        );
       });
 
       // Sweep underline after words
-      tl.to(lineRef.current, {
-        scaleX: 1,
-        opacity: 1,
-        duration: 0.5,
-        ease: "power2.inOut",
-      }, 0.6);
+      tl.to(
+        lineRef.current,
+        {
+          scaleX: 1,
+          opacity: 1,
+          duration: 0.5,
+          ease: "power2.inOut",
+        },
+        0.6,
+      );
 
       // Background glow parallax
       if (glowRef.current) {
@@ -96,17 +104,25 @@ export function Statement() {
       className="relative py-40 sm:py-52 overflow-hidden bg-background flex items-center justify-center"
     >
       {/* Animated background glow */}
-      <div
-        ref={glowRef}
-        aria-hidden
-        className="absolute inset-0 pointer-events-none"
-      >
-        {/* Central emerald glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] rounded-full opacity-[0.06]"
-          style={{ background: "radial-gradient(ellipse at center, rgba(16, 185, 129, 0.8), transparent 70%)", filter: "blur(80px)" }} />
+      <div ref={glowRef} aria-hidden className="absolute inset-0 pointer-events-none">
+        {/* Central purple glow */}
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] rounded-full opacity-[0.06]"
+          style={{
+            background:
+              "radial-gradient(ellipse at center, rgba(16, 185, 129, 0.8), transparent 70%)",
+            filter: "blur(80px)",
+          }}
+        />
         {/* Secondary white glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full opacity-[0.04]"
-          style={{ background: "radial-gradient(ellipse at center, rgba(255, 255, 255, 0.6), transparent 60%)", filter: "blur(60px)" }} />
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full opacity-[0.04]"
+          style={{
+            background:
+              "radial-gradient(ellipse at center, rgba(255, 255, 255, 0.6), transparent 60%)",
+            filter: "blur(60px)",
+          }}
+        />
       </div>
 
       {/* Fade edges */}
@@ -122,7 +138,7 @@ export function Statement() {
       <div className="relative z-20 w-full max-w-[1100px] flex flex-col items-center select-none px-4">
         {/* Eyebrow */}
         <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground/50 mb-8">
-          <span className="inline-block size-1.5 rounded-full bg-emerald-500/60 mr-2 align-middle" />
+          <span className="inline-block size-1.5 rounded-full bg-purple-500/60 mr-2 align-middle" />
           Philosophy
         </p>
 
@@ -131,7 +147,9 @@ export function Statement() {
           {words.map((word, i) => (
             <span
               key={i}
-              ref={(el) => { wordsRef.current[i] = el; }}
+              ref={(el) => {
+                wordsRef.current[i] = el;
+              }}
               className="inline-block mr-[0.25em] last:mr-0 bg-gradient-to-b from-white via-white/90 to-white/50 bg-clip-text text-transparent"
               style={{ willChange: "transform, opacity, filter" }}
             >
@@ -146,7 +164,8 @@ export function Statement() {
             ref={lineRef}
             className="absolute inset-0 origin-left"
             style={{
-              background: "linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.6), rgba(255, 255, 255, 0.4), transparent)",
+              background:
+                "linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.6), rgba(255, 255, 255, 0.4), transparent)",
               opacity: 0,
               transform: "scaleX(0)",
             }}

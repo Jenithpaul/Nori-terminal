@@ -22,10 +22,7 @@ export interface ParallaxOptions {
  * Moves the element along Y axis relative to scroll progress.
  * Uses only translateY (GPU-composited) for smooth 60fps.
  */
-export function useParallax(
-  ref: RefObject<HTMLElement | null>,
-  options: ParallaxOptions = {},
-) {
+export function useParallax(ref: RefObject<HTMLElement | null>, options: ParallaxOptions = {}) {
   const { speed = -50, start = "top bottom", end = "bottom top", scrub = 1.5 } = options;
 
   useEffect(() => {

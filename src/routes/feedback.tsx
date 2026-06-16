@@ -11,7 +11,10 @@ export const Route = createFileRoute("/feedback")({
       { title: "Feedback — Nori" },
       { name: "description", content: "Send a note. Your feedback shapes the next preview wave." },
       { property: "og:title", content: "Feedback — Nori" },
-      { property: "og:description", content: "Send a note. Your feedback shapes the next preview wave." },
+      {
+        property: "og:description",
+        content: "Send a note. Your feedback shapes the next preview wave.",
+      },
     ],
   }),
 });
@@ -19,7 +22,13 @@ export const Route = createFileRoute("/feedback")({
 function FeedbackPage() {
   useReveal();
   const [submitted, setSubmitted] = useState(false);
-  const [form, setForm] = useState({ name: "", email: "", role: "", topic: "general", message: "" });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    role: "",
+    topic: "general",
+    message: "",
+  });
 
   const topics = [
     { id: "general", label: "General" },
@@ -36,18 +45,21 @@ function FeedbackPage() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im94aGJsbG5zb2l3Y2tqeXlwbnJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk2MjA0NDksImV4cCI6MjA5NTE5NjQ0OX0.8QqU2hgnQlK3BwxdPlWU6GT8zioNESi68jtHXSc8fZo",
-          "Prefer": "return=minimal"
+          apikey:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im94aGJsbG5zb2l3Y2tqeXlwbnJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk2MjA0NDksImV4cCI6MjA5NTE5NjQ0OX0.8QqU2hgnQlK3BwxdPlWU6GT8zioNESi68jtHXSc8fZo",
+          Prefer: "return=minimal",
         },
         body: JSON.stringify({
           name: form.name,
           email: form.email,
           role: form.role,
           topic: form.topic,
-          message: form.message
-        })
+          message: form.message,
+        }),
       });
-    } catch (_) {}
+    } catch (err) {
+      console.error(err);
+    }
     setSubmitted(true);
   };
 
@@ -83,10 +95,7 @@ function FeedbackPage() {
               </div>
 
               <Meta label="Direct">
-                <a
-                  href="mailto:hello@aethlon.dev"
-                  className="link-underline text-foreground"
-                >
+                <a href="mailto:hello@aethlon.dev" className="link-underline text-foreground">
                   preview@nori.dev
                 </a>
               </Meta>
@@ -110,7 +119,15 @@ function FeedbackPage() {
                 <div className="reveal h-full min-h-[420px] flex flex-col items-start justify-center gap-6 border-t hairline pt-12">
                   <div className="size-14 rounded-full border-2 border-white/20 grid place-items-center relative">
                     <span aria-hidden className="absolute inset-0 rounded-full bg-white/[0.06]" />
-                    <svg viewBox="0 0 24 24" className="size-7 text-white/80" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="size-7 text-white/80"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
                       <path
                         d="M5 12.5L10 17.5L19 7.5"
                         style={{
@@ -126,7 +143,8 @@ function FeedbackPage() {
                       Received<span className="font-serif italic text-foreground/70">.</span>
                     </h3>
                     <p className="mt-3 text-muted-foreground max-w-sm">
-                      Your note is in. We read each one personally — expect a reply within two business days.
+                      Your note is in. We read each one personally — expect a reply within two
+                      business days.
                     </p>
                   </div>
                   <style>{`@keyframes draw { to { stroke-dashoffset: 0; } }`}</style>

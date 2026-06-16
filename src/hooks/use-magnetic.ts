@@ -5,10 +5,7 @@ import gsap from "gsap";
  * Magnetic hover effect — elements subtly pull toward the cursor on hover.
  * Uses GPU-composited transforms only. Strength controls pull intensity.
  */
-export function useMagnetic(
-  ref: RefObject<HTMLElement | null>,
-  strength: number = 0.3,
-) {
+export function useMagnetic(ref: RefObject<HTMLElement | null>, strength: number = 0.3) {
   useEffect(() => {
     if (typeof window === "undefined") return;
     const el = ref.current;

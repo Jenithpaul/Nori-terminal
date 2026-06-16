@@ -1,9 +1,9 @@
-import fs from 'fs';
-import path from 'path';
+import fs from "fs";
+import path from "path";
 
 const filesToDelete = [
-  path.join('dist', 'client', 'wrangler.json'),
-  path.join('dist', 'server', 'wrangler.json')
+  path.join("dist", "client", "wrangler.json"),
+  path.join("dist", "server", "wrangler.json"),
 ];
 
 // Delete generated wrangler files from build output
@@ -19,7 +19,7 @@ for (const file of filesToDelete) {
 }
 
 // Delete .wrangler directory to clear redirect pointers
-const wranglerDir = '.wrangler';
+const wranglerDir = ".wrangler";
 if (fs.existsSync(wranglerDir)) {
   try {
     fs.rmSync(wranglerDir, { recursive: true, force: true });

@@ -69,17 +69,22 @@ export function Workflow() {
             Workflow
           </p>
           <h2 className="reveal mt-4 text-3xl md:text-5xl font-semibold tracking-[-0.035em] text-balance text-gradient-soft">
-            One workspace.<br />Every tool.
+            One workspace.
+            <br />
+            Every tool.
           </h2>
           <p className="reveal mt-5 text-muted-foreground leading-relaxed max-w-md">
-            Shell, Git, Docker, and files aren't separate apps bolted together — they're
-            panes in a single, coherent workspace. Context flows between them so you never
-            lose your place.
+            Shell, Git, Docker, and files aren't separate apps bolted together — they're panes in a
+            single, coherent workspace. Context flows between them so you never lose your place.
           </p>
         </div>
 
         {/* Multi-pane workspace mockup — mobile: horizontal scroll for readability */}
-        <div ref={mockupRef} className="mt-14 sm:mt-16" style={{ opacity: 0, perspective: "1200px" }}>
+        <div
+          ref={mockupRef}
+          className="mt-14 sm:mt-16"
+          style={{ opacity: 0, perspective: "1200px" }}
+        >
           <div className="rounded-2xl border border-white/[0.08] bg-[#0C0C0C] overflow-hidden shadow-[0_40px_100px_-30px_rgba(0,0,0,0.9)]">
             {/* Title bar */}
             <div className="flex items-center justify-between px-4 py-3 border-b hairline bg-[#111111]">
@@ -95,7 +100,8 @@ export function Workflow() {
               </div>
               <div className="flex items-center gap-3 text-[10px] font-mono uppercase tracking-[0.08em] text-muted-foreground/60">
                 <span className="hidden sm:flex items-center gap-1.5">
-                  <span className="size-1.5 rounded-full bg-white/80" />Local
+                  <span className="size-1.5 rounded-full bg-white/80" />
+                  Local
                 </span>
                 <span className="flex items-center gap-1.5 border-l border-white/10 pl-3 text-foreground/90 font-medium">
                   <GitBranch className="size-3.5 text-white/70" />
@@ -121,7 +127,8 @@ export function Workflow() {
                     <div className="px-3 py-3 text-muted-foreground">
                       <div>Compiling 14 crates · cached 9</div>
                       <div className="text-foreground/80 mt-1">
-                        Finished <span className="text-white/80 font-medium">release</span> [optimized]
+                        Finished <span className="text-white/80 font-medium">release</span>{" "}
+                        [optimized]
                       </div>
                     </div>
                   </div>
@@ -131,14 +138,17 @@ export function Workflow() {
                     <div className="flex items-center justify-between px-3 py-2 border-b hairline">
                       <div className="flex items-center gap-2">
                         <GitBranch className="size-3 text-white/50" />
-                        <span className="text-foreground/90">git commit -m "optimize renderer"</span>
+                        <span className="text-foreground/90">
+                          git commit -m "optimize renderer"
+                        </span>
                       </div>
                       <span className="text-[11px] text-muted-foreground">8ms ✓</span>
                     </div>
                     <div className="px-3 py-3 text-muted-foreground">
                       [feat/auth 3a1f2c9] optimize renderer
                       <br />
-                      <span className="text-white/70">3 files changed</span>, 42 insertions(+), 7 deletions(-)
+                      <span className="text-white/70">3 files changed</span>, 42 insertions(+), 7
+                      deletions(-)
                     </div>
                   </div>
 
@@ -184,11 +194,17 @@ export function Workflow() {
                   <div className="space-y-1.5 text-muted-foreground">
                     <div className="text-foreground/80">src/</div>
                     <div className="pl-3 text-white/70">renderer/</div>
-                    <div className="pl-6">compositor.rs <span className="text-white/50 text-[10px] ml-1">M</span></div>
+                    <div className="pl-6">
+                      compositor.rs <span className="text-white/50 text-[10px] ml-1">M</span>
+                    </div>
                     <div className="pl-3 text-white/70">terminal/</div>
-                    <div className="pl-6">buffer.rs <span className="text-white/50 text-[10px] ml-1">M</span></div>
+                    <div className="pl-6">
+                      buffer.rs <span className="text-white/50 text-[10px] ml-1">M</span>
+                    </div>
                     <div className="pl-3 text-white/70">gpu/</div>
-                    <div className="pl-6">atlas.rs <span className="text-white/50 text-[10px] ml-1">+</span></div>
+                    <div className="pl-6">
+                      atlas.rs <span className="text-white/50 text-[10px] ml-1">+</span>
+                    </div>
                   </div>
                 </div>
 
@@ -221,7 +237,9 @@ export function Workflow() {
                     <span>Git</span>
                   </div>
                   <div className="space-y-1 text-muted-foreground text-[11px]">
-                    <div>feat/auth <span className="text-white/40">· 3 ahead</span></div>
+                    <div>
+                      feat/auth <span className="text-white/40">· 3 ahead</span>
+                    </div>
                     <div className="text-white/50">Last: optimize renderer</div>
                   </div>
                 </div>
@@ -233,10 +251,9 @@ export function Workflow() {
         {/* Narrative text */}
         <div className="reveal mt-12 sm:mt-14 max-w-lg">
           <p className="text-muted-foreground leading-relaxed">
-            Traditional terminals force you to context-switch between tools. Nori treats
-            your shell, version control, containers, and file system as a single integrated
-            environment — each pane aware of the others, each action flowing naturally into
-            the next.
+            Traditional terminals force you to context-switch between tools. Nori treats your shell,
+            version control, containers, and file system as a single integrated environment — each
+            pane aware of the others, each action flowing naturally into the next.
           </p>
         </div>
       </div>
