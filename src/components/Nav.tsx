@@ -12,7 +12,6 @@ if (typeof window !== "undefined") {
 
 const navItems = [
   { to: "/docs", label: "Docs" },
-  { to: "/pricing", label: "Pricing" },
   { to: "/changelog", label: "Changelog" },
   { to: "/feedback", label: "Feedback" },
 ] as const;

@@ -12,8 +12,6 @@ if (typeof window !== "undefined") {
 
 export function SiteLayout({ children }: { children: React.ReactNode }) {
   const mainRef = useRef<HTMLDivElement>(null);
-  const progressRef = useRef<HTMLDivElement>(null);
-
   useReveal();
 
   // Page entrance animation
@@ -34,24 +32,6 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
     return () => ctx.revert();
   }, []);
 
-  // Scroll progress bar at top
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const ctx = gsap.context(() => {
-      gsap.to(progressRef.current, {
-        scaleX: 1,
-        ease: "none",
-        scrollTrigger: {
-          trigger: document.documentElement,
-          start: "top top",
-          end: "bottom bottom",
-          scrub: 0.3,
-        },
-      });
-    });
-    return () => ctx.revert();
-  }, []);
-
   // Refresh ScrollTrigger after Lenis warms up
   useEffect(() => {
     const t = setTimeout(() => {
@@ -67,16 +47,6 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
       ref={mainRef}
       className="relative min-h-screen bg-[#060606] text-foreground antialiased overflow-x-hidden selection:bg-white/15 selection:text-foreground"
     >
-      {/* Scroll progress indicator */}
-      <div
-        ref={progressRef}
-        className="fixed top-0 left-0 right-0 h-[2px] z-[100] origin-left"
-        style={{
-          background: "linear-gradient(90deg, rgba(255,255,255,0.6), rgba(255,255,255,0.2))",
-          transform: "scaleX(0)",
-        }}
-      />
-
       {/* Consistent global grid backdrop */}
       <div aria-hidden className="pointer-events-none fixed inset-0 z-0 bg-grid opacity-[0.4]" />
       <div

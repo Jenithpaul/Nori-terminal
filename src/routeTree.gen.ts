@@ -9,18 +9,12 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as FeedbackRouteImport } from './routes/feedback'
 import { Route as DownloadRouteImport } from './routes/download'
 import { Route as DocsRouteImport } from './routes/docs'
 import { Route as ChangelogRouteImport } from './routes/changelog'
 import { Route as IndexRouteImport } from './routes/index'
 
-const PricingRoute = PricingRouteImport.update({
-  id: '/pricing',
-  path: '/pricing',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const FeedbackRoute = FeedbackRouteImport.update({
   id: '/feedback',
   path: '/feedback',
@@ -53,7 +47,6 @@ export interface FileRoutesByFullPath {
   '/docs': typeof DocsRoute
   '/download': typeof DownloadRoute
   '/feedback': typeof FeedbackRoute
-  '/pricing': typeof PricingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -61,7 +54,6 @@ export interface FileRoutesByTo {
   '/docs': typeof DocsRoute
   '/download': typeof DownloadRoute
   '/feedback': typeof FeedbackRoute
-  '/pricing': typeof PricingRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -70,27 +62,13 @@ export interface FileRoutesById {
   '/docs': typeof DocsRoute
   '/download': typeof DownloadRoute
   '/feedback': typeof FeedbackRoute
-  '/pricing': typeof PricingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/changelog'
-    | '/docs'
-    | '/download'
-    | '/feedback'
-    | '/pricing'
+  fullPaths: '/' | '/changelog' | '/docs' | '/download' | '/feedback'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/changelog' | '/docs' | '/download' | '/feedback' | '/pricing'
-  id:
-    | '__root__'
-    | '/'
-    | '/changelog'
-    | '/docs'
-    | '/download'
-    | '/feedback'
-    | '/pricing'
+  to: '/' | '/changelog' | '/docs' | '/download' | '/feedback'
+  id: '__root__' | '/' | '/changelog' | '/docs' | '/download' | '/feedback'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -99,18 +77,10 @@ export interface RootRouteChildren {
   DocsRoute: typeof DocsRoute
   DownloadRoute: typeof DownloadRoute
   FeedbackRoute: typeof FeedbackRoute
-  PricingRoute: typeof PricingRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/pricing': {
-      id: '/pricing'
-      path: '/pricing'
-      fullPath: '/pricing'
-      preLoaderRoute: typeof PricingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/feedback': {
       id: '/feedback'
       path: '/feedback'
@@ -155,7 +125,6 @@ const rootRouteChildren: RootRouteChildren = {
   DocsRoute: DocsRoute,
   DownloadRoute: DownloadRoute,
   FeedbackRoute: FeedbackRoute,
-  PricingRoute: PricingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
