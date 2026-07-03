@@ -1,0 +1,90 @@
+import { motion } from "framer-motion";
+import { Download } from "lucide-react";
+
+Nori ships as native installers for Windows, macOS, and Linux. Pick the one for your platform — no Rust toolchain or build steps required.
+
+<div className="not-prose grid sm:grid-cols-3 gap-3">
+  <a
+    href="https://github.com/Aethlon/Nori/releases/latest/download/nori_0.1.0_x64-setup.exe"
+    className="group relative rounded-2xl border border-neutral-800/30 bg-[#121214] p-5 hover:bg-[#121214] transition-all overflow-hidden block"
+  >
+    <div className="relative">
+      <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-neutral-500 mb-2">Windows</p>
+      <p className="text-[14px] font-normal text-white/90 mb-1">.exe / .msi</p>
+      <p className="text-[11.5px] text-white/35">Windows 10+ x64</p>
+      <div className="mt-4 flex items-center gap-1.5 text-[12px] text-white/60 group-hover:text-white transition-colors">
+        <Download strokeWidth={1.2} fill="none" className="size-3.5" /> Download
+      </div>
+    </div>
+  </a>
+  <a
+    href="https://github.com/Aethlon/Nori/releases/latest/download/nori_0.1.0_universal.dmg"
+    className="group relative rounded-2xl border border-neutral-800/30 bg-[#121214] p-5 hover:bg-[#121214] transition-all overflow-hidden block"
+  >
+    <div className="relative">
+      <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-neutral-500 mb-2">macOS</p>
+      <p className="text-[14px] font-normal text-white/90 mb-1">.dmg (Universal)</p>
+      <p className="text-[11.5px] text-white/35">10.15+ Intel & Apple Silicon</p>
+      <div className="mt-4 flex items-center gap-1.5 text-[12px] text-white/60 group-hover:text-white transition-colors">
+        <Download strokeWidth={1.2} fill="none" className="size-3.5" /> Download
+      </div>
+    </div>
+  </a>
+  <a
+    href="https://github.com/Aethlon/Nori/releases/latest/download/nori_0.1.0_amd64.AppImage"
+    className="group relative rounded-2xl border border-neutral-800/30 bg-[#121214] p-5 hover:bg-[#121214] transition-all overflow-hidden block"
+  >
+    <div className="relative">
+      <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-neutral-500 mb-2">Linux</p>
+      <p className="text-[14px] font-normal text-white/90 mb-1">.AppImage / .deb</p>
+      <p className="text-[11.5px] text-white/35">x86_64</p>
+      <div className="mt-4 flex items-center gap-1.5 text-[12px] text-white/60 group-hover:text-white transition-colors">
+        <Download strokeWidth={1.2} fill="none" className="size-3.5" /> Download
+      </div>
+    </div>
+  </a>
+</div>
+
+On first launch, Nori creates a configuration directory at <InlineCode>~/.nori/</InlineCode> (or <InlineCode>%USERPROFILE%\\.nori\\</InlineCode> on Windows) containing your settings, history, and shell integration scripts.
+
+<Callout>
+See all releases and changelogs on [GitHub Releases](https://github.com/Aethlon/Nori/releases). Or visit the [/download](/download) page.
+</Callout>
+
+<div className="not-prose rounded-2xl border border-neutral-800/30 bg-[#121214] overflow-hidden">
+  <div className="px-5 py-3 border-b border-neutral-800/30 bg-[#121214]">
+    <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-neutral-500">Recommended</p>
+  </div>
+  <div className="divide-y divide-neutral-900/40">
+    <div className="flex items-center justify-between px-5 py-3">
+      <div className="flex items-center gap-3">
+        <span className="size-1.5 rounded-full bg-neutral-500" />
+        <span className="text-[13px] text-white/80 font-normal">Git</span>
+      </div>
+      <div className="flex items-center gap-4 text-right">
+        <span className="font-mono text-[11px] text-white/50">2.x+</span>
+        <span className="text-[11.5px] text-white/30 hidden sm:inline">For repository features</span>
+      </div>
+    </div>
+    <div className="flex items-center justify-between px-5 py-3">
+      <div className="flex items-center gap-3">
+        <span className="size-1.5 rounded-full bg-neutral-500" />
+        <span className="text-[13px] text-white/80 font-normal">Docker</span>
+      </div>
+      <div className="flex items-center gap-4 text-right">
+        <span className="font-mono text-[11px] text-white/50">optional</span>
+        <span className="text-[11.5px] text-white/30 hidden sm:inline">For container management panel</span>
+      </div>
+    </div>
+    <div className="flex items-center justify-between px-5 py-3">
+      <div className="flex items-center gap-3">
+        <span className="size-1.5 rounded-full bg-neutral-500" />
+        <span className="text-[13px] text-white/80 font-normal">Nerd Font</span>
+      </div>
+      <div className="flex items-center gap-4 text-right">
+        <span className="font-mono text-[11px] text-white/50">any</span>
+        <span className="text-[11.5px] text-white/30 hidden sm:inline">For glyph rendering (recommended)</span>
+      </div>
+    </div>
+  </div>
+</div>

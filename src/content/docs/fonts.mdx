@@ -1,0 +1,50 @@
+import { Download, ArrowUpRight } from "lucide-react";
+
+Nori uses Nerd Font glyphs for file-type icons, Git status indicators, Docker markers, and branch symbols. Without a Nerd Font installed, these render as boxes or question marks.
+
+<div className="not-prose group relative rounded-2xl border border-neutral-800/30 bg-[#121214] p-6 overflow-hidden">
+  <div
+    aria-hidden
+    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+    style={{
+      background: "radial-gradient(400px circle at 80% 0%, rgba(16,185,129,0.05), transparent 60%)",
+    }}
+  />
+  <div className="relative flex items-start justify-between gap-6 flex-wrap">
+    <div>
+      <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-purple-400/50">Recommended</p>
+      <h3 className="mt-2 text-xl font-normal tracking-tight text-white/90">JetBrains Mono · Nerd Font</h3>
+      <p className="mt-1.5 text-[12px] text-white/40 font-mono">NL variant · ligatures · 4,000+ glyphs</p>
+    </div>
+    <div className="font-serif italic text-5xl text-white/10 select-none leading-none">Aa</div>
+  </div>
+  <div className="relative mt-5 flex flex-col sm:flex-row gap-3">
+    <a
+      href="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip"
+      target="_blank"
+      rel="noreferrer"
+      className="inline-flex items-center justify-center gap-2 rounded-xl bg-white text-[#0A0A0A] px-5 py-2.5 text-[13px] font-normal hover:-translate-y-px transition-all"
+    >
+      Download font <Download strokeWidth={1.2} fill="none" className="size-3.5" />
+    </a>
+    <a
+      href="https://www.nerdfonts.com/font-downloads"
+      target="_blank"
+      rel="noreferrer"
+      className="inline-flex items-center justify-center gap-2 rounded-xl border border-neutral-800/30 px-5 py-2.5 text-[13px] text-white/60 hover:text-white hover:border-neutral-800/30 transition-all"
+    >
+      Browse all Nerd Fonts <ArrowUpRight strokeWidth={1.2} fill="none" className="size-3.5" />
+    </a>
+  </div>
+</div>
+
+On Windows, Nori automatically attempts to install JetBrainsMono Nerd Font and configure the console font on first launch. If auto-setup fails, install manually:
+
+<Steps
+  items={[
+    "Download and unzip the JetBrainsMono Nerd Font archive.",
+    "Install: double-click .ttf files on Windows/macOS, or copy to ~/.local/share/fonts on Linux.",
+    "Set your terminal emulator's font to 'JetBrainsMono Nerd Font' (if running Nori inside another terminal).",
+    "Verify glyphs render correctly — file icons, branch symbols, and status markers should display properly.",
+  ]}
+/>

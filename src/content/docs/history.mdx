@@ -1,0 +1,23 @@
+Nori maintains a persistent command history that survives restarts. History is stored in <InlineCode>~/.nori/history</InlineCode> and loaded on startup.
+
+### Navigation
+
+<KeyTable
+  title="History Keys"
+  rows={[
+    ["↑", "Show previous history item"],
+    ["↓", "Show next history item (or clear input at end)"],
+  ]}
+/>
+
+### Behavior
+
+<Steps
+  items={[
+    "Every submitted command is added to history (duplicates allowed for recency).",
+    "History is saved to disk on clean exit (Ctrl+D or 'exit' command).",
+    "Navigating history replaces the current input — cursor moves to end.",
+    "Typing any character resets the history index (you're back to composing a new command).",
+    "Empty submissions are not added to history.",
+  ]}
+/>

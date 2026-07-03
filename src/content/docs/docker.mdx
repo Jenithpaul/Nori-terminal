@@ -1,0 +1,50 @@
+The Docker panel (<Kbd>F3</Kbd> / <Kbd>Alt+3</Kbd>) connects to your local Docker daemon and displays all containers in real-time. Nori is **compose-aware** — if a <InlineCode>docker-compose.yml</InlineCode> or <InlineCode>compose.yaml</InlineCode> exists in your working directory, it uses <InlineCode>docker compose ps</InlineCode> for richer output.
+
+### Container Management
+
+Navigate containers with keyboard shortcuts:
+
+<KeyTable
+  title="Docker Panel"
+  rows={[
+    ["j / ↓", "Select next container"],
+    ["k / ↑", "Select previous container"],
+    ["s", "Stop selected container"],
+    ["u", "Start selected container"],
+    ["r", "Restart selected container"],
+  ]}
+/>
+
+### Global Docker Shortcuts
+
+These work from any panel — no need to switch to the Docker tab first:
+
+<div className="not-prose grid sm:grid-cols-3 gap-3">
+  <div className="flex flex-col gap-2 rounded-xl border border-neutral-800/20 bg-[#121214] px-4 py-3">
+    <Kbd>Alt+D</Kbd>
+    <span className="text-[12px] text-neutral-400 font-mono">docker ps / compose ps</span>
+  </div>
+  <div className="flex flex-col gap-2 rounded-xl border border-neutral-800/20 bg-[#121214] px-4 py-3">
+    <Kbd>Alt+U</Kbd>
+    <span className="text-[12px] text-neutral-400 font-mono">docker compose up -d</span>
+  </div>
+  <div className="flex flex-col gap-2 rounded-xl border border-neutral-800/20 bg-[#121214] px-4 py-3">
+    <Kbd>Alt+X</Kbd>
+    <span className="text-[12px] text-neutral-400 font-mono">docker compose down</span>
+  </div>
+</div>
+
+### Compose Detection
+
+Nori checks for these files in your working directory to determine compose mode:
+
+<div className="not-prose flex flex-wrap gap-2 mt-2">
+  <code className="font-mono text-[11.5px] text-neutral-300 border border-neutral-800/30 bg-[#121214] rounded-lg px-3 py-1.5">docker-compose.yml</code>
+  <code className="font-mono text-[11.5px] text-neutral-300 border border-neutral-800/30 bg-[#121214] rounded-lg px-3 py-1.5">docker-compose.yaml</code>
+  <code className="font-mono text-[11.5px] text-neutral-300 border border-neutral-800/30 bg-[#121214] rounded-lg px-3 py-1.5">compose.yml</code>
+  <code className="font-mono text-[11.5px] text-neutral-300 border border-neutral-800/30 bg-[#121214] rounded-lg px-3 py-1.5">compose.yaml</code>
+</div>
+
+<Callout>
+Docker status refreshes every 3 seconds automatically. The sidebar icon shows running/total container count.
+</Callout>

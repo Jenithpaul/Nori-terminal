@@ -1,0 +1,61 @@
+The Terminal panel (<Kbd>F1</Kbd> / <Kbd>Alt+1</Kbd>) is Nori's primary interface — a native PTY that supports interactive tools like <InlineCode>vim</InlineCode>, <InlineCode>htop</InlineCode>, <InlineCode>npm init</InlineCode>, complex ANSI graphics, and full true-color rendering without lag.
+
+### PTY Architecture
+
+Nori spawns a real pseudo-terminal via <InlineCode>portable-pty</InlineCode>, then streams output asynchronously using background threads and <InlineCode>mpsc</InlineCode> channels. This means:
+
+<Steps
+  items={[
+    "Full interactive shell support — prompts, password inputs, and TUI apps work natively.",
+    "Async output streaming — long-running commands show output in real-time, not after completion.",
+    "Process isolation — Ctrl+C sends SIGINT to the child process, not to Nori itself.",
+    "Smart polling — 30fps during active output, 10fps idle. Near-zero CPU when nothing is happening.",
+  ]}
+/>
+
+### Built-in Commands
+
+Nori intercepts certain commands and handles them natively (without spawning a shell process) for instant response:
+
+<div className="not-prose rounded-2xl border border-neutral-800/30 bg-[#121214] overflow-hidden">
+  <div className="divide-y divide-white/[0.04]">
+    <div className="flex items-start gap-4 px-5 py-3">
+      <code className="font-mono text-[12px] text-white/70 whitespace-nowrap shrink-0">ls / dir</code>
+      <span className="text-[12.5px] text-white/40">Native directory listing with Nerd Font icons and per-file git status indicators</span>
+    </div>
+    <div className="flex items-start gap-4 px-5 py-3">
+      <code className="font-mono text-[12px] text-white/70 whitespace-nowrap shrink-0">cat / type</code>
+      <span className="text-[12.5px] text-white/40">Read and display file contents inline</span>
+    </div>
+    <div className="flex items-start gap-4 px-5 py-3">
+      <code className="font-mono text-[12px] text-white/70 whitespace-nowrap shrink-0">pwd</code>
+      <span className="text-[12.5px] text-white/40">Print current working directory</span>
+    </div>
+    <div className="flex items-start gap-4 px-5 py-3">
+      <code className="font-mono text-[12px] text-white/70 whitespace-nowrap shrink-0">cd &lt;path&gt;</code>
+      <span className="text-[12.5px] text-white/40">Change directory — updates git context and file tree automatically</span>
+    </div>
+    <div className="flex items-start gap-4 px-5 py-3">
+      <code className="font-mono text-[12px] text-white/70 whitespace-nowrap shrink-0">mkdir / touch / rm / cp / mv</code>
+      <span className="text-[12.5px] text-white/40">File operations handled natively for instant feedback</span>
+    </div>
+    <div className="flex items-start gap-4 px-5 py-3">
+      <code className="font-mono text-[12px] text-white/70 whitespace-nowrap shrink-0">echo</code>
+      <span className="text-[12.5px] text-white/40">Print text to terminal output</span>
+    </div>
+    <div className="flex items-start gap-4 px-5 py-3">
+      <code className="font-mono text-[12px] text-white/70 whitespace-nowrap shrink-0">clear / cls</code>
+      <span className="text-[12.5px] text-white/40">Clear terminal output buffer</span>
+    </div>
+    <div className="flex items-start gap-4 px-5 py-3">
+      <code className="font-mono text-[12px] text-white/70 whitespace-nowrap shrink-0">help</code>
+      <span className="text-[12.5px] text-white/40">Show all available commands and shortcuts</span>
+    </div>
+    <div className="flex items-start gap-4 px-5 py-3">
+      <code className="font-mono text-[12px] text-white/70 whitespace-nowrap shrink-0">about</code>
+      <span className="text-[12.5px] text-white/40">Display Nori version and info</span>
+    </div>
+  </div>
+</div>
+
+Any command not recognized as a built-in is passed to your system shell for execution. External commands run in a background thread with real-time stdout/stderr streaming.

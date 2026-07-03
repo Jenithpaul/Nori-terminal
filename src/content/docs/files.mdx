@@ -1,0 +1,24 @@
+The File Explorer (<Kbd>F4</Kbd> / <Kbd>Alt+4</Kbd>) provides a collapsible directory tree of your current working directory with per-file Git status indicators and Nerd Font icons.
+
+### Features
+
+<Steps
+  items={[
+    "Collapsible directory tree — expand/collapse folders with Enter or Space.",
+    "Per-file Git status — modified (~), staged (+), untracked (?), conflicted (!) indicators.",
+    "Nerd Font file-type icons — different icons for .rs, .ts, .json, directories, etc.",
+    "Keyboard navigation — j/k or Up/Down to move, Enter/Space to toggle.",
+    "Mouse support — click on directories to expand/collapse.",
+    "Auto-refresh — file tree updates when git status changes or after commands.",
+  ]}
+/>
+
+<KeyTable
+  title="File Explorer Keys"
+  rows={[
+    ["j / ↓", "Move selection down"],
+    ["k / ↑", "Move selection up"],
+    ["Enter / Space", "Expand or collapse directory"],
+    ["Click", "Toggle directory (mouse)"],
+  ]}
+/>

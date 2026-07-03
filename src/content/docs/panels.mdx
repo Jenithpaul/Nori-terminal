@@ -1,0 +1,56 @@
+Nori organizes its workspace into 6 dedicated panels. Switch between them instantly using function keys or Alt+Number shortcuts. The active panel is highlighted in the sidebar.
+
+<div className="not-prose overflow-x-auto rounded-xl border border-neutral-800/30 bg-[#121214]">
+  <table className="w-full text-[13px]">
+    <thead>
+      <tr className="border-b border-neutral-800/30 bg-[#121214]">
+        <th className="text-left px-5 py-3 font-mono text-[9px] uppercase tracking-[0.2em] text-neutral-500">Panel</th>
+        <th className="text-left px-5 py-3 font-mono text-[9px] uppercase tracking-[0.2em] text-neutral-500">Primary</th>
+        <th className="text-left px-5 py-3 font-mono text-[9px] uppercase tracking-[0.2em] text-neutral-500">Alt</th>
+        <th className="text-left px-5 py-3 font-mono text-[9px] uppercase tracking-[0.2em] text-neutral-500">Description</th>
+      </tr>
+    </thead>
+    <tbody className="divide-y divide-neutral-900/40">
+      <tr className="hover:bg-white/[0.01] transition-colors">
+        <td className="px-5 py-3 font-normal text-white/80 whitespace-nowrap">Terminal</td>
+        <td className="px-5 py-3 whitespace-nowrap"><Kbd>F1</Kbd></td>
+        <td className="px-5 py-3 whitespace-nowrap text-[12px] text-white/40 font-mono">Alt+1 / Ctrl+1</td>
+        <td className="px-5 py-3 text-white/40">Primary PTY shell with async streaming</td>
+      </tr>
+      <tr className="hover:bg-white/[0.01] transition-colors">
+        <td className="px-5 py-3 font-normal text-white/80 whitespace-nowrap">Git</td>
+        <td className="px-5 py-3 whitespace-nowrap"><Kbd>F2</Kbd></td>
+        <td className="px-5 py-3 whitespace-nowrap text-[12px] text-white/40 font-mono">Alt+2 / Ctrl+2</td>
+        <td className="px-5 py-3 text-white/40">Interactive workspace — files, diffs, branches, commits</td>
+      </tr>
+      <tr className="hover:bg-white/[0.01] transition-colors">
+        <td className="px-5 py-3 font-normal text-white/80 whitespace-nowrap">Docker</td>
+        <td className="px-5 py-3 whitespace-nowrap"><Kbd>F3</Kbd></td>
+        <td className="px-5 py-3 whitespace-nowrap text-[12px] text-white/40 font-mono">Alt+3 / Ctrl+3</td>
+        <td className="px-5 py-3 text-white/40">Container management with compose detection</td>
+      </tr>
+      <tr className="hover:bg-white/[0.01] transition-colors">
+        <td className="px-5 py-3 font-normal text-white/80 whitespace-nowrap">Files</td>
+        <td className="px-5 py-3 whitespace-nowrap"><Kbd>F4</Kbd></td>
+        <td className="px-5 py-3 whitespace-nowrap text-[12px] text-white/40 font-mono">Alt+4 / Ctrl+4</td>
+        <td className="px-5 py-3 text-white/40">Collapsible directory tree with git status</td>
+      </tr>
+      <tr className="hover:bg-white/[0.01] transition-colors">
+        <td className="px-5 py-3 font-normal text-white/80 whitespace-nowrap">Monitor</td>
+        <td className="px-5 py-3 whitespace-nowrap"><Kbd>F5</Kbd></td>
+        <td className="px-5 py-3 whitespace-nowrap text-[12px] text-white/40 font-mono">Alt+5 / Ctrl+5</td>
+        <td className="px-5 py-3 text-white/40">Live CPU and RAM metrics</td>
+      </tr>
+      <tr className="hover:bg-white/[0.01] transition-colors">
+        <td className="px-5 py-3 font-normal text-white/80 whitespace-nowrap">Settings</td>
+        <td className="px-5 py-3 whitespace-nowrap"><Kbd>F6</Kbd></td>
+        <td className="px-5 py-3 whitespace-nowrap text-[12px] text-white/40 font-mono">Alt+6 / Ctrl+6</td>
+        <td className="px-5 py-3 text-white/40">Theme switching, UI toggles, preferences</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<Callout>
+F-keys are preferred on Windows because Windows Terminal captures Ctrl+Number for its own tab switching. Alt+Number works in most terminal emulators.
+</Callout>

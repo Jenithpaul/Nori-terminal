@@ -1,0 +1,105 @@
+Slash commands are Nori's context-aware command interface. They provide structured access to Git and Docker operations with intelligent argument mapping. Type <InlineCode>/help</InlineCode> to see all available commands.
+
+### Git Slash Commands
+
+<div className="not-prose space-y-2">
+  <div className="flex items-center gap-3 rounded-xl border border-neutral-800/30 bg-white/[0.01] px-4 py-2.5">
+    <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">/git status</code>
+    <span className="text-[11px] text-white/25">→</span>
+    <code className="font-mono text-[11px] text-purple-400/50 shrink-0">gst</code>
+    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">Repository summary — branch, ahead/behind, changed files</span>
+  </div>
+  <div className="flex items-center gap-3 rounded-xl border border-neutral-800/30 bg-white/[0.01] px-4 py-2.5">
+    <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">/git log [n]</code>
+    <span className="text-[11px] text-white/25">→</span>
+    <code className="font-mono text-[11px] text-purple-400/50 shrink-0">glog</code>
+    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">Compact commit history (default: last 12 commits)</span>
+  </div>
+  <div className="flex items-center gap-3 rounded-xl border border-neutral-800/30 bg-white/[0.01] px-4 py-2.5">
+    <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">/git branches</code>
+    <span className="text-[11px] text-white/25">→</span>
+    <code className="font-mono text-[11px] text-purple-400/50 shrink-0">gbr</code>
+    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">All local and remote branches with verbose info</span>
+  </div>
+  <div className="flex items-center gap-3 rounded-xl border border-neutral-800/30 bg-white/[0.01] px-4 py-2.5">
+    <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">/git diff [args]</code>
+    <span className="text-[11px] text-white/25">→</span>
+    <code className="font-mono text-[11px] text-purple-400/50 shrink-0">gdiff</code>
+    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">Diff stat or custom diff arguments</span>
+  </div>
+  <div className="flex items-center gap-3 rounded-xl border border-neutral-800/30 bg-white/[0.01] px-4 py-2.5">
+    <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">/git push</code>
+    <span className="text-[11px] text-white/25">→</span>
+    <code className="font-mono text-[11px] text-purple-400/50 shrink-0">gps</code>
+    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">Push current branch to remote</span>
+  </div>
+  <div className="flex items-center gap-3 rounded-xl border border-neutral-800/30 bg-white/[0.01] px-4 py-2.5">
+    <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">/git pull</code>
+    <span className="text-[11px] text-white/25">→</span>
+    <code className="font-mono text-[11px] text-purple-400/50 shrink-0">gpl</code>
+    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">Pull with fast-forward only</span>
+  </div>
+  <div className="flex items-center gap-3 rounded-xl border border-neutral-800/30 bg-white/[0.01] px-4 py-2.5">
+    <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">/git add &lt;path&gt;</code>
+    <span className="text-[11px] text-white/25">→</span>
+    <code className="font-mono text-[11px] text-purple-400/50 shrink-0">ga</code>
+    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">Stage files for commit</span>
+  </div>
+  <div className="flex items-center gap-3 rounded-xl border border-neutral-800/30 bg-white/[0.01] px-4 py-2.5">
+    <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">/git commit &lt;msg&gt;</code>
+    <span className="text-[11px] text-white/25">→</span>
+    <code className="font-mono text-[11px] text-purple-400/50 shrink-0">git commit -m</code>
+    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">Commit with inline message</span>
+  </div>
+  <div className="flex items-center gap-3 rounded-xl border border-neutral-800/30 bg-white/[0.01] px-4 py-2.5">
+    <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">/git checkout &lt;ref&gt;</code>
+    <span className="text-[11px] text-white/25">→</span>
+    <code className="font-mono text-[11px] text-purple-400/50 shrink-0">gco</code>
+    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">Switch branch or checkout commit</span>
+  </div>
+  <div className="flex items-center gap-3 rounded-xl border border-neutral-800/30 bg-white/[0.01] px-4 py-2.5">
+    <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">/git stash</code>
+    <span className="text-[11px] text-white/25">→</span>
+    <code className="font-mono text-[11px] text-purple-400/50 shrink-0">gstash</code>
+    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">Stash current changes</span>
+  </div>
+  <div className="flex items-center gap-3 rounded-xl border border-neutral-800/30 bg-white/[0.01] px-4 py-2.5">
+    <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">/git stash-pop</code>
+    <span className="text-[11px] text-white/25">→</span>
+    <code className="font-mono text-[11px] text-purple-400/50 shrink-0">gpop</code>
+    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">Pop most recent stash</span>
+  </div>
+</div>
+
+### Docker Slash Commands
+
+<div className="not-prose space-y-2">
+  <div className="flex items-center gap-3 rounded-xl border border-neutral-800/30 bg-white/[0.01] px-4 py-2.5">
+    <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">/docker ps</code>
+    <span className="text-[11px] text-white/25">→</span>
+    <code className="font-mono text-[11px] text-purple-400/50 shrink-0">dstat</code>
+    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">Container status (compose-aware)</span>
+  </div>
+  <div className="flex items-center gap-3 rounded-xl border border-neutral-800/30 bg-white/[0.01] px-4 py-2.5">
+    <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">/docker images</code>
+    <span className="text-[11px] text-white/25">→</span>
+    <code className="font-mono text-[11px] text-purple-400/50 shrink-0">dimg</code>
+    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">Local Docker images</span>
+  </div>
+  <div className="flex items-center gap-3 rounded-xl border border-neutral-800/30 bg-white/[0.01] px-4 py-2.5">
+    <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">/docker up</code>
+    <span className="text-[11px] text-white/25">→</span>
+    <code className="font-mono text-[11px] text-purple-400/50 shrink-0">dup</code>
+    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">docker compose up -d</span>
+  </div>
+  <div className="flex items-center gap-3 rounded-xl border border-neutral-800/30 bg-white/[0.01] px-4 py-2.5">
+    <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">/docker down</code>
+    <span className="text-[11px] text-white/25">→</span>
+    <code className="font-mono text-[11px] text-purple-400/50 shrink-0">ddown</code>
+    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">docker compose down</span>
+  </div>
+</div>
+
+### Input Modes
+
+Typing <InlineCode>/git</InlineCode> alone enters **Git mode** — all subsequent commands are automatically prefixed with <InlineCode>/git</InlineCode>. Same for <InlineCode>/docker</InlineCode>. The prompt marker changes to indicate the active mode. Type <InlineCode>exit</InlineCode> to return to normal mode.

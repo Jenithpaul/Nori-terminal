@@ -1,0 +1,75 @@
+Nori is a single-binary TUI application built with Rust. Here's how the major systems fit together:
+
+<Code label="Module structure" lang="text">{`nori/src/
+├── main.rs          # Entry point — TUI loop, event polling, render cycle
+├── state.rs         # AppState — all mutable application state
+├── input.rs         # Keyboard & mouse event handlers
+├── commands.rs      # Built-in command execution + alias expansion
+├── shell.rs         # External command spawning via PTY
+├── config.rs        # TOML config loading/writing
+├── history.rs       # Persistent command history
+├── nerd_font.rs     # Nerd Font glyph mapping for file icons
+├── font_setup.rs    # Windows font installation automation
+├── install_setup.rs # First-run setup wizard
+├── update_guard.rs  # Version check and update notifications
+├── basha/
+│   ├── mod.rs       # Process manager (kill_all on exit)
+│   ├── runtime.rs   # Async PTY streaming via portable-pty
+│   ├── session.rs   # Shell session management
+│   └── shell_session.rs
+├── git/
+│   ├── mod.rs       # Git status fetching, branch detection
+│   └── workspace.rs # Async git operations (diff, stage, branches, log)
+├── foldertree/
+│   └── mod.rs       # Recursive directory tree with expand/collapse
+├── ui/
+│   ├── app.rs       # Main render function (ratatui frame)
+│   ├── layout.rs    # Panel layout calculations
+│   └── mod.rs       # UI module exports
+└── prompts/
+    └── mod.rs       # Prompt styling and markers`}</Code>
+
+### Render Loop
+
+Nori uses a smart render loop that minimizes CPU usage:
+
+<Steps
+  items={[
+    "Poll for events at 33ms intervals during active output (30fps), 100ms when idle.",
+    "Only redraw when state actually changes (new output, key press, git refresh).",
+    "Minimum 10fps guaranteed (every 6 ticks) to keep spinners and clocks fresh.",
+    "Force immediate redraw on any key press for responsive feel.",
+    "Full redraw on terminal resize events.",
+  ]}
+/>
+
+### Async Architecture
+
+Heavy I/O operations run on background threads and communicate via <InlineCode>mpsc</InlineCode> channels:
+
+<div className="not-prose grid sm:grid-cols-2 gap-3 mt-3">
+  <div className="rounded-xl border border-neutral-800/30 bg-white/[0.01] p-4">
+    <p className="text-[13px] font-normal text-white/70 mb-1">Command execution</p>
+    <p className="text-[12px] text-white/35 leading-relaxed">PTY process streams stdout/stderr back line-by-line</p>
+  </div>
+  <div className="rounded-xl border border-neutral-800/30 bg-white/[0.01] p-4">
+    <p className="text-[13px] font-normal text-white/70 mb-1">Git status</p>
+    <p className="text-[12px] text-white/35 leading-relaxed">Refreshes every ~2s in background, result merged on next tick</p>
+  </div>
+  <div className="rounded-xl border border-neutral-800/30 bg-white/[0.01] p-4">
+    <p className="text-[13px] font-normal text-white/70 mb-1">Docker status</p>
+    <p className="text-[12px] text-white/35 leading-relaxed">Polls every ~3s, updates container list asynchronously</p>
+  </div>
+  <div className="rounded-xl border border-neutral-800/30 bg-white/[0.01] p-4">
+    <p className="text-[13px] font-normal text-white/70 mb-1">File tree</p>
+    <p className="text-[12px] text-white/35 leading-relaxed">Directory scan + git status per-file runs off main thread</p>
+  </div>
+  <div className="rounded-xl border border-neutral-800/30 bg-white/[0.01] p-4">
+    <p className="text-[13px] font-normal text-white/70 mb-1">Git workspace</p>
+    <p className="text-[12px] text-white/35 leading-relaxed">Diffs, branch lists, logs fetched async with loading states</p>
+  </div>
+  <div className="rounded-xl border border-neutral-800/30 bg-white/[0.01] p-4">
+    <p className="text-[13px] font-normal text-white/70 mb-1">System metrics</p>
+    <p className="text-[12px] text-white/35 leading-relaxed">CPU/RAM sampled every ~1.5s via sysinfo crate</p>
+  </div>
+</div>

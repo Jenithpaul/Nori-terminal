@@ -1,0 +1,74 @@
+Complete keyboard reference for Nori. Everything is reachable without a mouse.
+
+<KeyTable
+  title="Panel Switching"
+  rows={[
+    ["F1 … F6", "Jump directly to a specific panel"],
+    ["Alt+1 … Alt+6", "Alternative panel switching"],
+    ["Ctrl+1 … Ctrl+6", "Fallback (when not intercepted by terminal emulator)"],
+  ]}
+/>
+
+<KeyTable
+  title="Terminal Input"
+  rows={[
+    ["Enter", "Submit command"],
+    ["↑ / ↓", "Navigate command history"],
+    ["← / →", "Move cursor within input"],
+    ["Home", "Jump to start of input"],
+    ["End", "Jump to end of input + re-pin scroll to bottom"],
+    ["Ctrl+A", "Jump to start of line (or select all output if input empty)"],
+    ["Ctrl+E", "Jump to end of line"],
+    ["Ctrl+W", "Delete word before cursor"],
+    ["Ctrl+U", "Delete from cursor to line start"],
+    ["Ctrl+K", "Delete from cursor to line end"],
+    ["Ctrl+Left", "Jump to previous word boundary"],
+    ["Ctrl+Right", "Jump to next word boundary"],
+    ["Ctrl+Backspace", "Delete word before cursor"],
+    ["Delete", "Forward-delete character at cursor"],
+    ["Esc", "Clear selection, or clear input if no selection"],
+  ]}
+/>
+
+<KeyTable
+  title="Process Control"
+  rows={[
+    ["Ctrl+C", "Copy selection (if active), clear input, or interrupt running process"],
+    ["Ctrl+L", "Clear terminal output"],
+    ["Ctrl+D", "Exit Nori (when input is empty)"],
+  ]}
+/>
+
+<KeyTable
+  title="Scrolling"
+  rows={[
+    ["PageUp", "Scroll terminal output up (8 lines)"],
+    ["PageDown", "Scroll terminal output down (8 lines)"],
+    ["Mouse Scroll", "Scroll output (3 lines per tick)"],
+    ["End", "Re-pin to bottom (auto-follow new output)"],
+  ]}
+/>
+
+<KeyTable
+  title="Global Quick Actions (from any panel)"
+  rows={[
+    ["Alt+G", "git status (gst)"],
+    ["Alt+B", "git branches (gbr)"],
+    ["Alt+L", "git log (glog)"],
+    ["Alt+P", "git push (gps)"],
+    ["Alt+O", "git pull (gpl)"],
+    ["Alt+D", "docker status (dstat)"],
+    ["Alt+U", "docker compose up -d (dup)"],
+    ["Alt+X", "docker compose down (ddown)"],
+  ]}
+/>
+
+<KeyTable
+  title="Settings Panel"
+  rows={[
+    ["t", "Cycle through themes"],
+    ["r", "Toggle repository header visibility"],
+    ["j / ↓", "Scroll settings down"],
+    ["k / ↑", "Scroll settings up"],
+  ]}
+/>

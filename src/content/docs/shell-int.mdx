@@ -1,0 +1,26 @@
+Nori auto-detects your system shell on startup. On Windows it uses <InlineCode>cmd.exe</InlineCode> or <InlineCode>pwsh</InlineCode> (from COMSPEC). On Unix it reads <InlineCode>$SHELL</InlineCode>. You can override this in config:
+
+<Code label="~/.nori/config.toml" lang="toml">{`# Force a specific shell
+shell = "pwsh"
+# shell = "/bin/zsh"
+# shell = "/usr/bin/fish"`}</Code>
+
+### How Commands Execute
+
+When you submit a command in Nori, it follows this pipeline:
+
+<Steps
+  items={[
+    "Input is trimmed and checked against built-in commands (ls, cd, cat, etc.).",
+    "If it starts with /, it's normalized as a slash command (/git status → gst).",
+    "If in Git/Docker mode, the mode prefix is prepended automatically.",
+    "Built-in commands execute synchronously and return instantly.",
+    "External commands spawn a background thread with a real PTY process.",
+    "Output streams back via mpsc channels and renders in real-time.",
+    "On completion, git status and file tree auto-refresh.",
+  ]}
+/>
+
+### Process Management
+
+Only one command runs at a time. If you try to submit while a command is running, Nori shows a system message: "a command is already running — wait for it to finish." Use <Kbd>Ctrl+C</Kbd> to interrupt the running process.

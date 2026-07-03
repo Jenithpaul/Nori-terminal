@@ -1,0 +1,34 @@
+While Nori is keyboard-first, it fully supports mouse interaction for navigation, text selection, and URL opening.
+
+### Mouse Actions
+
+<KeyTable
+  title="Terminal Panel"
+  rows={[
+    ["Left Click + Drag", "Select text in terminal output"],
+    ["Release", "Finalize selection (stays highlighted until Esc)"],
+    ["Ctrl+Click", "Open URL under cursor in default browser"],
+    ["Scroll Up/Down", "Scroll terminal output history"],
+  ]}
+/>
+
+<KeyTable
+  title="Sidebar"
+  rows={[
+    ["Click (column < 8)", "Switch to clicked panel tab"],
+  ]}
+/>
+
+<KeyTable
+  title="File Explorer"
+  rows={[
+    ["Click on directory", "Expand or collapse the directory"],
+    ["Scroll", "Scroll the file tree"],
+  ]}
+/>
+
+### Text Selection & Clipboard
+
+Selected text is highlighted in the terminal viewport. Press <Kbd>Ctrl+C</Kbd> while a selection is active to copy it to the system clipboard (via <InlineCode>arboard</InlineCode>). Press <Kbd>Esc</Kbd> to clear the selection.
+
+<Kbd>Ctrl+A</Kbd> with an empty input selects all visible terminal output for quick copying.

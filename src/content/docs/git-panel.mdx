@@ -1,0 +1,55 @@
+The Git Workspace panel (<Kbd>F2</Kbd> / <Kbd>Alt+2</Kbd>) is a full interactive Git interface. It shows your working tree, lets you stage/unstage files, view inline diffs, manage branches, browse commit history, and handle stashes — all without typing a single git command.
+
+### Views
+
+The Git panel has multiple sub-views you can switch between:
+
+<div className="not-prose grid sm:grid-cols-2 gap-3 mt-3">
+  <div className="rounded-xl border border-neutral-800/20 bg-[#121214] p-4">
+    <p className="text-[13px] font-normal text-[#E4E4E7] mb-1">Files</p>
+    <p className="text-[12px] text-neutral-400 leading-relaxed">Changed/staged/untracked files with XY status codes. Stage, unstage, or discard per-file.</p>
+  </div>
+  <div className="rounded-xl border border-neutral-800/20 bg-[#121214] p-4">
+    <p className="text-[13px] font-normal text-[#E4E4E7] mb-1">Diff</p>
+    <p className="text-[12px] text-neutral-400 leading-relaxed">Inline unified diff (unstaged + staged) for the selected file. Scrollable with j/k.</p>
+  </div>
+  <div className="rounded-xl border border-neutral-800/20 bg-[#121214] p-4">
+    <p className="text-[13px] font-normal text-[#E4E4E7] mb-1">Branches</p>
+    <p className="text-[12px] text-neutral-400 leading-relaxed">All local and remote branches. Switch branches directly from the panel.</p>
+  </div>
+  <div className="rounded-xl border border-neutral-800/20 bg-[#121214] p-4">
+    <p className="text-[13px] font-normal text-[#E4E4E7] mb-1">Commit</p>
+    <p className="text-[12px] text-neutral-400 leading-relaxed">Type a commit message and commit staged changes without leaving the panel.</p>
+  </div>
+  <div className="rounded-xl border border-neutral-800/20 bg-[#121214] p-4">
+    <p className="text-[13px] font-normal text-[#E4E4E7] mb-1">Log</p>
+    <p className="text-[12px] text-neutral-400 leading-relaxed">Recent commit history with SHA and summary. Scrollable.</p>
+  </div>
+  <div className="rounded-xl border border-neutral-800/20 bg-[#121214] p-4">
+    <p className="text-[13px] font-normal text-[#E4E4E7] mb-1">Stash</p>
+    <p className="text-[12px] text-neutral-400 leading-relaxed">View and manage stash entries.</p>
+  </div>
+</div>
+
+### File View Keybindings
+
+<KeyTable
+  title="Navigation & Actions"
+  rows={[
+    ["j / ↓", "Move selection down"],
+    ["k / ↑", "Move selection up"],
+    ["Enter", "Open inline diff for selected file"],
+    ["s", "Stage the selected file (git add)"],
+    ["u", "Unstage the selected file (git reset)"],
+    ["d", "Discard changes in selected file (git checkout --)"],
+    ["c", "Open commit message input"],
+    ["b", "Switch to branch list view"],
+    ["l", "Switch to commit log view"],
+    ["r", "Refresh file list"],
+    ["Tab", "Cycle between sub-views"],
+  ]}
+/>
+
+<Callout>
+The Git panel auto-refreshes every ~2 seconds. After any git action (stage, commit, checkout), it immediately re-fetches status so you always see the current state.
+</Callout>
