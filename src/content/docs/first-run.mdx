@@ -3,9 +3,11 @@ On first launch, Nori performs a one-time setup: creates the config directory, p
 <Code label="Launch" lang="bash">{`nori
 
 # Directly from source build
+
 ./target/release/nori
 
 # Windows (from build directory)
+
 .\\target\\release\\nori.exe`}</Code>
 
 The config directory structure created at <InlineCode>~/.nori/</InlineCode>:
@@ -14,15 +16,20 @@ The config directory structure created at <InlineCode>~/.nori/</InlineCode>:
   <div className="divide-y divide-white/[0.04]">
     <div className="flex items-start gap-4 px-5 py-3.5">
       <InlineCode>~/.nori/config.toml</InlineCode>
-      <span className="text-[12.5px] text-white/45 pt-0.5">Global settings — theme, shell, prompt marker, startup directory</span>
+      <span className="text-[12.5px] text-white/45 pt-0.5">
+        Global settings — theme, shell, prompt marker, startup directory
+      </span>
     </div>
     <div className="flex items-start gap-4 px-5 py-3.5">
       <InlineCode>~/.nori/history</InlineCode>
-      <span className="text-[12.5px] text-white/45 pt-0.5">Persistent command history (survives restarts)</span>
+      <span className="text-[12.5px] text-white/45 pt-0.5">
+        Persistent command history (survives restarts)
+      </span>
     </div>
   </div>
 </div>
 
 <Callout>
-First-run font installation may take a few seconds on Windows. All subsequent launches are instant.
+  First-run font installation may take a few seconds on Windows. All subsequent launches are
+  instant.
 </Callout>

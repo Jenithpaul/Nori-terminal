@@ -7,67 +7,101 @@ Slash commands are Nori's context-aware command interface. They provide structur
     <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">/git status</code>
     <span className="text-[11px] text-white/25">→</span>
     <code className="font-mono text-[11px] text-purple-400/50 shrink-0">gst</code>
-    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">Repository summary — branch, ahead/behind, changed files</span>
+    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">
+      Repository summary — branch, ahead/behind, changed files
+    </span>
   </div>
   <div className="flex items-center gap-3 rounded-xl border border-neutral-800/30 bg-white/[0.01] px-4 py-2.5">
     <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">/git log [n]</code>
     <span className="text-[11px] text-white/25">→</span>
     <code className="font-mono text-[11px] text-purple-400/50 shrink-0">glog</code>
-    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">Compact commit history (default: last 12 commits)</span>
+    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">
+      Compact commit history (default: last 12 commits)
+    </span>
   </div>
   <div className="flex items-center gap-3 rounded-xl border border-neutral-800/30 bg-white/[0.01] px-4 py-2.5">
-    <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">/git branches</code>
+    <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">
+      /git branches
+    </code>
     <span className="text-[11px] text-white/25">→</span>
     <code className="font-mono text-[11px] text-purple-400/50 shrink-0">gbr</code>
-    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">All local and remote branches with verbose info</span>
+    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">
+      All local and remote branches with verbose info
+    </span>
   </div>
   <div className="flex items-center gap-3 rounded-xl border border-neutral-800/30 bg-white/[0.01] px-4 py-2.5">
-    <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">/git diff [args]</code>
+    <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">
+      /git diff [args]
+    </code>
     <span className="text-[11px] text-white/25">→</span>
     <code className="font-mono text-[11px] text-purple-400/50 shrink-0">gdiff</code>
-    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">Diff stat or custom diff arguments</span>
+    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">
+      Diff stat or custom diff arguments
+    </span>
   </div>
   <div className="flex items-center gap-3 rounded-xl border border-neutral-800/30 bg-white/[0.01] px-4 py-2.5">
     <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">/git push</code>
     <span className="text-[11px] text-white/25">→</span>
     <code className="font-mono text-[11px] text-purple-400/50 shrink-0">gps</code>
-    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">Push current branch to remote</span>
+    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">
+      Push current branch to remote
+    </span>
   </div>
   <div className="flex items-center gap-3 rounded-xl border border-neutral-800/30 bg-white/[0.01] px-4 py-2.5">
     <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">/git pull</code>
     <span className="text-[11px] text-white/25">→</span>
     <code className="font-mono text-[11px] text-purple-400/50 shrink-0">gpl</code>
-    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">Pull with fast-forward only</span>
+    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">
+      Pull with fast-forward only
+    </span>
   </div>
   <div className="flex items-center gap-3 rounded-xl border border-neutral-800/30 bg-white/[0.01] px-4 py-2.5">
-    <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">/git add &lt;path&gt;</code>
+    <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">
+      /git add &lt;path&gt;
+    </code>
     <span className="text-[11px] text-white/25">→</span>
     <code className="font-mono text-[11px] text-purple-400/50 shrink-0">ga</code>
-    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">Stage files for commit</span>
+    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">
+      Stage files for commit
+    </span>
   </div>
   <div className="flex items-center gap-3 rounded-xl border border-neutral-800/30 bg-white/[0.01] px-4 py-2.5">
-    <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">/git commit &lt;msg&gt;</code>
+    <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">
+      /git commit &lt;msg&gt;
+    </code>
     <span className="text-[11px] text-white/25">→</span>
     <code className="font-mono text-[11px] text-purple-400/50 shrink-0">git commit -m</code>
-    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">Commit with inline message</span>
+    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">
+      Commit with inline message
+    </span>
   </div>
   <div className="flex items-center gap-3 rounded-xl border border-neutral-800/30 bg-white/[0.01] px-4 py-2.5">
-    <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">/git checkout &lt;ref&gt;</code>
+    <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">
+      /git checkout &lt;ref&gt;
+    </code>
     <span className="text-[11px] text-white/25">→</span>
     <code className="font-mono text-[11px] text-purple-400/50 shrink-0">gco</code>
-    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">Switch branch or checkout commit</span>
+    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">
+      Switch branch or checkout commit
+    </span>
   </div>
   <div className="flex items-center gap-3 rounded-xl border border-neutral-800/30 bg-white/[0.01] px-4 py-2.5">
     <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">/git stash</code>
     <span className="text-[11px] text-white/25">→</span>
     <code className="font-mono text-[11px] text-purple-400/50 shrink-0">gstash</code>
-    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">Stash current changes</span>
+    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">
+      Stash current changes
+    </span>
   </div>
   <div className="flex items-center gap-3 rounded-xl border border-neutral-800/30 bg-white/[0.01] px-4 py-2.5">
-    <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">/git stash-pop</code>
+    <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">
+      /git stash-pop
+    </code>
     <span className="text-[11px] text-white/25">→</span>
     <code className="font-mono text-[11px] text-purple-400/50 shrink-0">gpop</code>
-    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">Pop most recent stash</span>
+    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">
+      Pop most recent stash
+    </span>
   </div>
 </div>
 
@@ -78,10 +112,14 @@ Slash commands are Nori's context-aware command interface. They provide structur
     <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">/docker ps</code>
     <span className="text-[11px] text-white/25">→</span>
     <code className="font-mono text-[11px] text-purple-400/50 shrink-0">dstat</code>
-    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">Container status (compose-aware)</span>
+    <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">
+      Container status (compose-aware)
+    </span>
   </div>
   <div className="flex items-center gap-3 rounded-xl border border-neutral-800/30 bg-white/[0.01] px-4 py-2.5">
-    <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">/docker images</code>
+    <code className="font-mono text-[12px] text-white/70 shrink-0 min-w-[180px]">
+      /docker images
+    </code>
     <span className="text-[11px] text-white/25">→</span>
     <code className="font-mono text-[11px] text-purple-400/50 shrink-0">dimg</code>
     <span className="text-[12px] text-white/35 ml-auto hidden sm:inline">Local Docker images</span>

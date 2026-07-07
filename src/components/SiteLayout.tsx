@@ -10,7 +10,13 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-export function SiteLayout({ children }: { children: React.ReactNode }) {
+export function SiteLayout({
+  children,
+  forceDark = false,
+}: {
+  children: React.ReactNode;
+  forceDark?: boolean;
+}) {
   const mainRef = useRef<HTMLDivElement>(null);
   useReveal();
 
@@ -45,10 +51,18 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
     <div
       ref={mainRef}
-      className="relative min-h-screen bg-[#060606] text-foreground antialiased overflow-x-hidden selection:bg-white/15 selection:text-foreground"
+      className={`relative min-h-screen bg-background text-foreground antialiased overflow-x-hidden selection:bg-muted-foreground/30 selection:text-background ${forceDark ? "force-dark" : ""}`}
     >
       {/* Consistent global grid backdrop */}
-      <div aria-hidden className="pointer-events-none fixed inset-0 z-0 bg-grid opacity-[0.4]" />
+      <div
+        aria-hidden
+        className="pointer-events-none fixed inset-0 z-0 opacity-[0.4]"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, var(--color-border) 1px, transparent 1px), linear-gradient(to bottom, var(--color-border) 1px, transparent 1px)",
+          backgroundSize: "48px 48px",
+        }}
+      />
       <div
         aria-hidden
         className="pointer-events-none fixed inset-x-0 top-0 h-[80vh] z-0"
@@ -59,7 +73,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
       />
 
       <SmoothScroll />
-      <Nav />
+      <Nav forceDark={forceDark} />
       <main className="relative z-10">{children}</main>
       <Footer />
     </div>

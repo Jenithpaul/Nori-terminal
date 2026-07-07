@@ -8,6 +8,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 
+import { ThemeProvider } from "@/hooks/use-theme";
 import noriLogo from "@/assets/nori.png";
 import appCss from "../styles.css?url";
 
@@ -158,10 +159,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   errorComponent: ErrorComponent,
 });
 
+const THEME_INIT_SCRIPT = `
+  (function() {
+    try {
+      var stored = localStorage.getItem('nori-theme');
+      var theme = stored === 'light' || stored === 'dark' ? stored : 'dark';
+      document.documentElement.classList.add(theme);
+    } catch (e) {}
+  })();
+`;
+
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <HeadContent />
       </head>
       <body>
@@ -177,7 +189,9 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
+      <ThemeProvider>
+        <Outlet />
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

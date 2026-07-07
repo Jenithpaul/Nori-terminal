@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { GitBranch, Folder, Check, Clock, Sparkles } from "lucide-react";
+import { GitBranch, Folder, Check, Clock } from "lucide-react";
 import gsap from "gsap";
 
 type Block = {
@@ -27,7 +27,7 @@ const defaultBlocks: Block[] = [
     output: (
       <div className="space-y-1">
         <div className="flex items-center gap-2 text-muted-foreground">
-          <Sparkles className="size-3 text-white/70 animate-[pulse_3s_infinite]" />
+          <span className="size-1.5 rounded-full bg-white/70" />
           <span>Compiling 14 crates · cached 9</span>
         </div>
         <div className="text-foreground/80">

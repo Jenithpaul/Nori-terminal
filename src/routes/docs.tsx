@@ -32,14 +32,14 @@ function DocsPage() {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="text-center max-w-2xl mx-auto"
           >
-            <p className="text-[10.5px] font-mono uppercase tracking-[0.28em] text-muted-foreground flex items-center justify-center gap-2 mb-5">
-              <span className="size-[5px] rounded-full bg-white/80" />
+            <p className="text-xs font-mono uppercase tracking-[0.28em] text-muted-foreground flex items-center justify-center gap-2 mb-5">
+              <span className="size-[5px] rounded-full bg-foreground/80" />
               Documentation
             </p>
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-medium tracking-[-0.045em] leading-[0.98] text-balance text-gradient-soft">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-medium tracking-[-0.045em] leading-[0.98] text-balance text-foreground">
               Docs are being rebuilt
             </h1>
-            <p className="mt-6 text-muted-foreground max-w-xl mx-auto leading-relaxed text-[15px]">
+            <p className="mt-6 text-muted-foreground max-w-xl mx-auto leading-relaxed text-base">
               We're restructuring the documentation. For now, check the README or reach out.
             </p>
             <div className="mt-8 flex items-center justify-center gap-4">
@@ -47,13 +47,13 @@ function DocsPage() {
                 href="https://github.com/Aethlon/Nori"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 text-sm text-[#E4E4E7] hover:text-white transition-colors border border-neutral-800/30 rounded-xl px-5 py-2.5"
+                className="inline-flex items-center gap-2 text-sm text-foreground hover:text-muted-foreground transition-colors border border-border rounded-xl px-5 py-2.5"
               >
                 GitHub <ArrowUpRight size={14} strokeWidth={1.5} />
               </a>
               <Link
                 to="/feedback"
-                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-[#E4E4E7] transition-colors"
+                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 Ask a question
               </Link>

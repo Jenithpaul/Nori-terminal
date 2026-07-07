@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import noriLogo from "@/assets/nori.png";
+import { ThemeToggle } from "./ThemeToggle";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -12,12 +13,11 @@ if (typeof window !== "undefined") {
 
 const navItems = [
   { to: "/docs", label: "Docs" },
-  { to: "/pricing", label: "Pricing" },
   { to: "/changelog", label: "Changelog" },
   { to: "/feedback", label: "Feedback" },
 ] as const;
 
-export function Nav() {
+export function Nav({ forceDark = false }: { forceDark?: boolean }) {
   const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
   const [visible, setVisible] = useState(true);
@@ -56,7 +56,7 @@ export function Nav() {
     >
       {/* Subtle blend hide background */}
       <div
-        className={`absolute inset-0 transition-opacity duration-500 -z-10 bg-gradient-to-b from-[#060606] to-transparent ${
+        className={`absolute inset-0 transition-opacity duration-500 -z-10 bg-gradient-to-b from-background to-transparent ${
           scrolled ? "opacity-100" : "opacity-0"
         }`}
       />
@@ -66,7 +66,7 @@ export function Nav() {
           {/* Brand */}
           <Link to="/" className="flex items-center gap-2.5">
             <img src={noriLogo} alt="Nori" className="size-5 opacity-80" />
-            <span className="text-sm font-normal tracking-wide text-[#E4E4E7]">Nori</span>
+            <span className="text-sm font-normal tracking-wide text-foreground">Nori</span>
           </Link>
 
           {/* Center nav */}
@@ -78,7 +78,9 @@ export function Nav() {
                   key={item.to}
                   to={item.to}
                   className={`px-4 py-1.5 rounded-lg text-sm transition-colors duration-200 font-normal ${
-                    active ? "text-[#E4E4E7] bg-[#18181B]" : "text-[#71717A] hover:text-[#E4E4E7]"
+                    active
+                      ? "text-foreground bg-muted"
+                      : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
                   {item.label}
@@ -89,11 +91,16 @@ export function Nav() {
 
           {/* Right */}
           <div className="flex items-center gap-3">
+            {!forceDark && (
+              <div className="hidden md:block">
+                <ThemeToggle />
+              </div>
+            )}
             <Link to="/download">
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="hidden md:inline-flex items-center justify-center rounded-xl bg-[#E4E4E7] text-[#09090B] px-4 py-1.5 text-xs font-normal transition-transform hover:bg-white"
+                className="hidden md:inline-flex items-center justify-center rounded-xl bg-foreground text-background px-4 py-1.5 text-xs font-normal transition-transform hover:bg-foreground/90"
               >
                 Download
               </motion.button>
@@ -102,7 +109,7 @@ export function Nav() {
             <button
               aria-label="Toggle menu"
               onClick={() => setOpen((v) => !v)}
-              className="md:hidden size-9 grid place-items-center rounded-xl text-neutral-400 hover:text-[#E4E4E7]"
+              className="md:hidden size-9 grid place-items-center rounded-xl text-muted-foreground hover:text-foreground"
             >
               {open ? <X size={16} strokeWidth={1.2} /> : <Menu size={16} strokeWidth={1.2} />}
             </button>
@@ -118,7 +125,7 @@ export function Nav() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ type: "spring", stiffness: 400, damping: 30 }}
-            className="md:hidden bg-[#060606]"
+            className="md:hidden bg-background border-b border-border"
           >
             <nav className="mx-auto max-w-6xl px-5 py-4 flex flex-col gap-1">
               {navItems.map((item) => {
@@ -129,7 +136,7 @@ export function Nav() {
                     to={item.to}
                     onClick={() => setOpen(false)}
                     className={`flex items-center min-h-[44px] px-4 py-2.5 rounded-xl text-sm transition-all font-normal ${
-                      active ? "text-[#E4E4E7] bg-[#18181B]" : "text-[#71717A]"
+                      active ? "text-foreground bg-muted" : "text-muted-foreground"
                     }`}
                   >
                     {item.label}
@@ -137,7 +144,7 @@ export function Nav() {
                 );
               })}
               <Link to="/download" onClick={() => setOpen(false)} className="mt-2">
-                <button className="w-full flex items-center justify-center rounded-xl bg-neutral-200 text-[#09090B] min-h-[44px] py-2.5 text-sm font-normal">
+                <button className="w-full flex items-center justify-center rounded-xl bg-foreground text-background min-h-[44px] py-2.5 text-sm font-normal">
                   Download
                 </button>
               </Link>

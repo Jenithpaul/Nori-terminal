@@ -3,6 +3,8 @@ import { Terminal } from "./Terminal";
 import { motion } from "framer-motion";
 import { ArrowRight, Monitor, Apple, Command } from "lucide-react";
 import { SilkBackground } from "./atmosphere";
+import { useEffect, useState } from "react";
+import { detectPlatform, type Platform } from "@/lib/os-detect";
 
 /* ─── Framer Motion Config ────────────────────────────────────────────────── */
 const springStiff = {
@@ -20,12 +22,27 @@ const staggerContainer = {
 };
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 12 },
+  hidden: { opacity: 0, y: 16 },
   visible: { opacity: 1, y: 0, transition: springStiff },
+};
+
+const platformLabels: Record<Platform, string> = {
+  macos: "macOS",
+  windows: "Windows",
+  linux: "Linux",
+  unknown: "Your OS",
 };
 
 /* ─── Main Hero ───────────────────────────────────────────────────────────── */
 export function Hero() {
+  const [detected, setDetected] = useState<Platform>("unknown");
+
+  useEffect(() => {
+    setDetected(detectPlatform().platform);
+  }, []);
+
+  const primaryLabel = detected !== "unknown" ? platformLabels[detected] : "Your OS";
+
   return (
     <motion.section
       initial="hidden"
@@ -37,7 +54,6 @@ export function Hero() {
       {/* Animated Glowing Purple Background */}
       <SilkBackground opacity={0.35} />
 
-      {/* Global Noise Layer (Placed at root level typically, but we can add it here for the hero) */}
       <div
         className="absolute inset-0 opacity-[0.02] pointer-events-none z-0"
         style={{
@@ -46,33 +62,32 @@ export function Hero() {
       />
 
       <div className="relative z-10 mx-auto max-w-5xl px-5 sm:px-8 w-full flex flex-col items-center text-center select-none gap-0 portrait:gap-6">
-        {/* Status pill & Update Label */}
+        {/* Status pill */}
         <motion.div variants={fadeUp} className="flex flex-col items-center gap-3 mb-8">
           <div className="inline-flex items-center gap-2 rounded-full border border-neutral-800/30 bg-[#121214] px-4 py-1.5">
-            <span className="size-1.5 rounded-full bg-neutral-400" />
+            <span className="size-1.5 rounded-full bg-emerald-400" />
             <span className="text-xs font-mono tracking-widest uppercase text-neutral-400">
               v0.1 Developer preview
             </span>
           </div>
-          <span className="text-xs font-mono tracking-widest uppercase text-neutral-500">
-            New Update Released
-          </span>
         </motion.div>
 
         {/* Headline */}
         <motion.h1
           variants={fadeUp}
-          className="text-5xl sm:text-7xl lg:text-[5.5rem] font-medium tracking-tighter text-[#E4E4E7] leading-tight mb-6"
+          className="text-5xl sm:text-7xl lg:text-[5.5rem] font-medium tracking-tighter text-[#E4E4E7] leading-[1.05] mb-6"
         >
-          A terminal, <br /> engineered.
+          Your terminal,
+          <br /> finally fast.
         </motion.h1>
 
         {/* Sub */}
         <motion.p
           variants={fadeUp}
-          className="max-w-xl text-lg font-normal text-[#71717A] leading-relaxed mb-10"
+          className="max-w-xl text-lg sm:text-xl font-normal text-[#71717A] leading-relaxed mb-10"
         >
-          A calmer surface for serious work. Async-first, and deeply integrated with your repos.
+          Nori is a native terminal for serious work. Git, Docker, SSH, and multiple shells — all in
+          one calm, blazing-fast surface.
         </motion.p>
 
         {/* CTA */}
@@ -85,9 +100,9 @@ export function Hero() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               transition={springStiff}
-              className="px-6 py-3 rounded-xl bg-neutral-200 text-[#09090B] font-normal text-sm flex items-center gap-2"
+              className="px-7 py-3.5 rounded-xl bg-neutral-200 text-[#09090B] font-normal text-sm flex items-center gap-2 hover:bg-white transition-colors"
             >
-              Download Nori <ArrowRight size={16} strokeWidth={1.2} />
+              Download for {primaryLabel} <ArrowRight size={16} strokeWidth={1.2} />
             </motion.button>
           </Link>
 
@@ -96,7 +111,7 @@ export function Hero() {
               whileHover={{ scale: 1.02, backgroundColor: "#18181B" }}
               whileTap={{ scale: 0.98 }}
               transition={springStiff}
-              className="px-6 py-3 rounded-xl bg-[#121214] text-neutral-300 font-normal text-sm shadow-[inset_0_1px_0_0_rgba(255,255,255,0.02)] border border-neutral-800/30"
+              className="px-7 py-3.5 rounded-xl bg-[#121214] text-neutral-300 font-normal text-sm shadow-[inset_0_1px_0_0_rgba(255,255,255,0.02)] border border-neutral-800/30"
             >
               Read docs
             </motion.button>

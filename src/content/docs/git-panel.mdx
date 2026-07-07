@@ -7,23 +7,33 @@ The Git panel has multiple sub-views you can switch between:
 <div className="not-prose grid sm:grid-cols-2 gap-3 mt-3">
   <div className="rounded-xl border border-neutral-800/20 bg-[#121214] p-4">
     <p className="text-[13px] font-normal text-[#E4E4E7] mb-1">Files</p>
-    <p className="text-[12px] text-neutral-400 leading-relaxed">Changed/staged/untracked files with XY status codes. Stage, unstage, or discard per-file.</p>
+    <p className="text-[12px] text-neutral-400 leading-relaxed">
+      Changed/staged/untracked files with XY status codes. Stage, unstage, or discard per-file.
+    </p>
   </div>
   <div className="rounded-xl border border-neutral-800/20 bg-[#121214] p-4">
     <p className="text-[13px] font-normal text-[#E4E4E7] mb-1">Diff</p>
-    <p className="text-[12px] text-neutral-400 leading-relaxed">Inline unified diff (unstaged + staged) for the selected file. Scrollable with j/k.</p>
+    <p className="text-[12px] text-neutral-400 leading-relaxed">
+      Inline unified diff (unstaged + staged) for the selected file. Scrollable with j/k.
+    </p>
   </div>
   <div className="rounded-xl border border-neutral-800/20 bg-[#121214] p-4">
     <p className="text-[13px] font-normal text-[#E4E4E7] mb-1">Branches</p>
-    <p className="text-[12px] text-neutral-400 leading-relaxed">All local and remote branches. Switch branches directly from the panel.</p>
+    <p className="text-[12px] text-neutral-400 leading-relaxed">
+      All local and remote branches. Switch branches directly from the panel.
+    </p>
   </div>
   <div className="rounded-xl border border-neutral-800/20 bg-[#121214] p-4">
     <p className="text-[13px] font-normal text-[#E4E4E7] mb-1">Commit</p>
-    <p className="text-[12px] text-neutral-400 leading-relaxed">Type a commit message and commit staged changes without leaving the panel.</p>
+    <p className="text-[12px] text-neutral-400 leading-relaxed">
+      Type a commit message and commit staged changes without leaving the panel.
+    </p>
   </div>
   <div className="rounded-xl border border-neutral-800/20 bg-[#121214] p-4">
     <p className="text-[13px] font-normal text-[#E4E4E7] mb-1">Log</p>
-    <p className="text-[12px] text-neutral-400 leading-relaxed">Recent commit history with SHA and summary. Scrollable.</p>
+    <p className="text-[12px] text-neutral-400 leading-relaxed">
+      Recent commit history with SHA and summary. Scrollable.
+    </p>
   </div>
   <div className="rounded-xl border border-neutral-800/20 bg-[#121214] p-4">
     <p className="text-[13px] font-normal text-[#E4E4E7] mb-1">Stash</p>
@@ -51,5 +61,6 @@ The Git panel has multiple sub-views you can switch between:
 />
 
 <Callout>
-The Git panel auto-refreshes every ~2 seconds. After any git action (stage, commit, checkout), it immediately re-fetches status so you always see the current state.
+  The Git panel auto-refreshes every ~2 seconds. After any git action (stage, commit, checkout), it
+  immediately re-fetches status so you always see the current state.
 </Callout>

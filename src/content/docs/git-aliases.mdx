@@ -9,18 +9,28 @@ Beyond slash commands, Nori provides short aliases that map directly to Git oper
   <div className="divide-y divide-white/[0.04]">
     <div className="grid grid-cols-[100px_1fr_auto] items-center gap-4 px-5 py-2.5">
       <code className="font-mono text-[12px] text-purple-400/60 font-normal">gst</code>
-      <code className="font-mono text-[11px] text-white/35 truncate">git status --short --branch</code>
-      <span className="text-[11.5px] text-white/30 hidden md:inline">Formatted status with branch info</span>
+      <code className="font-mono text-[11px] text-white/35 truncate">
+        git status --short --branch
+      </code>
+      <span className="text-[11.5px] text-white/30 hidden md:inline">
+        Formatted status with branch info
+      </span>
     </div>
     <div className="grid grid-cols-[100px_1fr_auto] items-center gap-4 px-5 py-2.5">
       <code className="font-mono text-[12px] text-purple-400/60 font-normal">glog</code>
-      <code className="font-mono text-[11px] text-white/35 truncate">git log --oneline --decorate --graph -n 12</code>
+      <code className="font-mono text-[11px] text-white/35 truncate">
+        git log --oneline --decorate --graph -n 12
+      </code>
       <span className="text-[11.5px] text-white/30 hidden md:inline">Compact graph log</span>
     </div>
     <div className="grid grid-cols-[100px_1fr_auto] items-center gap-4 px-5 py-2.5">
       <code className="font-mono text-[12px] text-purple-400/60 font-normal">gbr</code>
-      <code className="font-mono text-[11px] text-white/35 truncate">git branch --all --verbose</code>
-      <span className="text-[11.5px] text-white/30 hidden md:inline">All branches with details</span>
+      <code className="font-mono text-[11px] text-white/35 truncate">
+        git branch --all --verbose
+      </code>
+      <span className="text-[11.5px] text-white/30 hidden md:inline">
+        All branches with details
+      </span>
     </div>
     <div className="grid grid-cols-[100px_1fr_auto] items-center gap-4 px-5 py-2.5">
       <code className="font-mono text-[12px] text-purple-400/60 font-normal">gdiff</code>
@@ -39,7 +49,9 @@ Beyond slash commands, Nori provides short aliases that map directly to Git oper
     </div>
     <div className="grid grid-cols-[100px_1fr_auto] items-center gap-4 px-5 py-2.5">
       <code className="font-mono text-[12px] text-purple-400/60 font-normal">gcm &lt;msg&gt;</code>
-      <code className="font-mono text-[11px] text-white/35 truncate">git commit -m &lt;msg&gt;</code>
+      <code className="font-mono text-[11px] text-white/35 truncate">
+        git commit -m &lt;msg&gt;
+      </code>
       <span className="text-[11.5px] text-white/30 hidden md:inline">Commit with message</span>
     </div>
     <div className="grid grid-cols-[100px_1fr_auto] items-center gap-4 px-5 py-2.5">
@@ -76,7 +88,9 @@ Beyond slash commands, Nori provides short aliases that map directly to Git oper
     </div>
     <div className="grid grid-cols-[120px_1fr_auto] items-center gap-4 px-5 py-2.5">
       <code className="font-mono text-[12px] text-purple-400/60 font-normal">dimg</code>
-      <code className="font-mono text-[11px] text-white/35 truncate">docker images (formatted)</code>
+      <code className="font-mono text-[11px] text-white/35 truncate">
+        docker images (formatted)
+      </code>
       <span className="text-[11.5px] text-white/30 hidden md:inline">Image list</span>
     </div>
     <div className="grid grid-cols-[120px_1fr_auto] items-center gap-4 px-5 py-2.5">
@@ -101,16 +115,24 @@ Beyond slash commands, Nori provides short aliases that map directly to Git oper
     </div>
     <div className="grid grid-cols-[120px_1fr_auto] items-center gap-4 px-5 py-2.5">
       <code className="font-mono text-[12px] text-purple-400/60 font-normal">dlogs &lt;id&gt;</code>
-      <code className="font-mono text-[11px] text-white/35 truncate">docker logs --tail 200 &lt;id&gt;</code>
+      <code className="font-mono text-[11px] text-white/35 truncate">
+        docker logs --tail 200 &lt;id&gt;
+      </code>
       <span className="text-[11.5px] text-white/30 hidden md:inline">View logs</span>
     </div>
     <div className="grid grid-cols-[120px_1fr_auto] items-center gap-4 px-5 py-2.5">
-      <code className="font-mono text-[12px] text-purple-400/60 font-normal">dshell &lt;id&gt;</code>
-      <code className="font-mono text-[11px] text-white/35 truncate">docker exec -it &lt;id&gt; /bin/sh</code>
+      <code className="font-mono text-[12px] text-purple-400/60 font-normal">
+        dshell &lt;id&gt;
+      </code>
+      <code className="font-mono text-[11px] text-white/35 truncate">
+        docker exec -it &lt;id&gt; /bin/sh
+      </code>
       <span className="text-[11.5px] text-white/30 hidden md:inline">Shell into container</span>
     </div>
     <div className="grid grid-cols-[120px_1fr_auto] items-center gap-4 px-5 py-2.5">
-      <code className="font-mono text-[12px] text-purple-400/60 font-normal">dstart &lt;id&gt;</code>
+      <code className="font-mono text-[12px] text-purple-400/60 font-normal">
+        dstart &lt;id&gt;
+      </code>
       <code className="font-mono text-[11px] text-white/35 truncate">docker start &lt;id&gt;</code>
       <span className="text-[11.5px] text-white/30 hidden md:inline">Start container</span>
     </div>

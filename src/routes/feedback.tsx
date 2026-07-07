@@ -69,18 +69,18 @@ function FeedbackPage() {
         <div className="mx-auto max-w-7xl px-6 sm:px-10">
           {/* Eyebrow */}
           <div className="reveal flex items-center justify-between gap-4 mb-10">
-            <p className="text-[10.5px] font-mono uppercase tracking-[0.28em] text-muted-foreground flex items-center gap-2">
-              <span className="size-[5px] rounded-full bg-white/80" />
+            <p className="text-xs font-mono uppercase tracking-[0.28em] text-muted-foreground flex items-center gap-2">
+              <span className="size-[5px] rounded-full bg-foreground/80" />
               Feedback · Preview wave 01
             </p>
-            <p className="hidden sm:block text-[11px] font-mono text-muted-foreground/60">
+            <p className="hidden sm:block text-xs font-mono text-muted-foreground/60">
               ⌘ + ENTER to send
             </p>
           </div>
 
           {/* Giant editorial headline */}
-          <h1 className="reveal font-medium tracking-[-0.06em] leading-[0.85] text-[clamp(4rem,16vw,16rem)] text-gradient-soft">
-            SAY <span className="font-serif italic text-foreground/85">it.</span>
+          <h1 className="reveal font-medium tracking-[-0.06em] leading-[0.85] text-[clamp(4rem,16vw,16rem)] text-foreground">
+            SAY <span className="font-serif italic text-muted-foreground">it.</span>
           </h1>
 
           {/* Two-column body */}
@@ -88,7 +88,7 @@ function FeedbackPage() {
             {/* Left — meta */}
             <div className="col-span-12 lg:col-span-4 space-y-12">
               <div className="reveal">
-                <p className="text-[18px] text-foreground/90 leading-relaxed max-w-sm">
+                <p className="text-lg text-foreground/90 leading-relaxed max-w-sm">
                   Tell us what's working, what isn't, and what's missing. Short answers are fine.
                   Every note reaches the team that builds Nori.
                 </p>
@@ -116,12 +116,12 @@ function FeedbackPage() {
             {/* Right — form */}
             <div className="col-span-12 lg:col-span-8">
               {submitted ? (
-                <div className="reveal h-full min-h-[420px] flex flex-col items-start justify-center gap-6 border-t hairline pt-12">
-                  <div className="size-14 rounded-full border-2 border-white/20 grid place-items-center relative">
-                    <span aria-hidden className="absolute inset-0 rounded-full bg-white/[0.06]" />
+                <div className="reveal h-full min-h-[420px] flex flex-col items-start justify-center gap-6 border-t border-border pt-12">
+                  <div className="size-14 rounded-full border-2 border-border grid place-items-center relative">
+                    <span aria-hidden className="absolute inset-0 rounded-full bg-muted" />
                     <svg
                       viewBox="0 0 24 24"
-                      className="size-7 text-white/80"
+                      className="size-7 text-foreground"
                       fill="none"
                       stroke="currentColor"
                       strokeWidth="2"
@@ -139,8 +139,8 @@ function FeedbackPage() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-4xl md:text-5xl font-medium tracking-[-0.04em]">
-                      Received<span className="font-serif italic text-foreground/70">.</span>
+                    <h3 className="text-4xl md:text-5xl font-medium tracking-[-0.04em] text-foreground">
+                      Received<span className="font-serif italic text-muted-foreground">.</span>
                     </h3>
                     <p className="mt-3 text-muted-foreground max-w-sm">
                       Your note is in. We read each one personally — expect a reply within two
@@ -150,7 +150,7 @@ function FeedbackPage() {
                   <style>{`@keyframes draw { to { stroke-dashoffset: 0; } }`}</style>
                 </div>
               ) : (
-                <form onSubmit={onSubmit} className="reveal space-y-0 border-t hairline">
+                <form onSubmit={onSubmit} className="reveal space-y-0 border-t border-border">
                   <Row>
                     <BareInput
                       label="Name"
@@ -173,8 +173,8 @@ function FeedbackPage() {
                       onChange={(v) => setForm({ ...form, role: v })}
                       placeholder="Software engineer"
                     />
-                    <div className="flex-1 border-b hairline px-1 py-5">
-                      <label className="block text-[10px] font-mono uppercase tracking-[0.22em] text-muted-foreground/70 mb-3">
+                    <div className="flex-1 border-b border-border px-1 py-5">
+                      <label className="block text-xs font-mono uppercase tracking-[0.22em] text-muted-foreground/70 mb-3">
                         Topic
                       </label>
                       <div className="flex flex-wrap gap-1.5">
@@ -185,10 +185,10 @@ function FeedbackPage() {
                               key={t.id}
                               type="button"
                               onClick={() => setForm({ ...form, topic: t.id })}
-                              className={`px-3 py-1 rounded-full text-[12px] border transition-all ${
+                              className={`px-3 py-1 rounded-full text-xs border transition-all ${
                                 active
-                                  ? "border-white/15 text-foreground bg-white/[0.05]"
-                                  : "hairline text-muted-foreground hover:text-foreground"
+                                  ? "border-border-strong text-foreground bg-muted"
+                                  : "border-border text-muted-foreground hover:text-foreground"
                               }`}
                             >
                               {t.label}
@@ -199,8 +199,8 @@ function FeedbackPage() {
                     </div>
                   </Row>
 
-                  <div className="px-1 py-5 border-b hairline">
-                    <label className="block text-[10px] font-mono uppercase tracking-[0.22em] text-muted-foreground/70 mb-3">
+                  <div className="px-1 py-5 border-b border-border">
+                    <label className="block text-xs font-mono uppercase tracking-[0.22em] text-muted-foreground/70 mb-3">
                       Message
                     </label>
                     <textarea
@@ -210,23 +210,23 @@ function FeedbackPage() {
                       value={form.message}
                       onChange={(e) => setForm({ ...form, message: e.target.value })}
                       placeholder="What's on your mind?"
-                      className="w-full bg-transparent resize-none outline-none text-[16px] text-foreground placeholder:text-muted-foreground/50 leading-relaxed"
+                      className="w-full bg-transparent resize-none outline-none text-base text-foreground placeholder:text-muted-foreground/50 leading-relaxed"
                     />
-                    <div className="mt-2 text-right font-mono text-[10px] text-muted-foreground/40">
+                    <div className="mt-2 text-right font-mono text-xs text-muted-foreground/40">
                       {form.message.length} / 1200
                     </div>
                   </div>
 
                   <div className="pt-8 flex items-center justify-between">
-                    <p className="text-[11px] font-mono text-muted-foreground/60 max-w-xs">
+                    <p className="text-xs font-mono text-muted-foreground/60 max-w-xs">
                       By sending you allow us to contact you about this note.
                     </p>
                     <button
                       type="submit"
-                      className="group inline-flex items-center gap-3 text-3xl md:text-4xl font-medium tracking-[-0.03em] text-foreground hover:text-white/80 transition-colors"
+                      className="group inline-flex items-center gap-3 text-3xl md:text-4xl font-medium tracking-[-0.03em] text-foreground hover:text-muted-foreground transition-colors"
                     >
                       Send
-                      <span className="grid place-items-center size-12 rounded-full border hairline group-hover:border-white/15 group-hover:bg-white/[0.05] transition-all">
+                      <span className="grid place-items-center size-12 rounded-full border border-border group-hover:border-border-strong group-hover:bg-muted transition-all">
                         <ArrowUpRight className="size-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                       </span>
                     </button>
@@ -264,13 +264,13 @@ function BareInput({
       <span
         aria-hidden
         className={`absolute left-0 right-0 bottom-0 h-px origin-left transition-transform duration-500 ${
-          focused ? "bg-white/80 scale-x-100" : "bg-foreground/10 scale-x-100"
+          focused ? "bg-foreground scale-x-100" : "bg-border scale-x-100"
         }`}
-        style={{ boxShadow: focused ? "0 0 8px rgba(255,255,255,0.3)" : undefined }}
+        style={{ boxShadow: focused ? "0 0 8px rgba(0,0,0,0.1)" : undefined }}
       />
-      <label className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.22em] text-muted-foreground/70 mb-3">
+      <label className="flex items-center gap-2 text-xs font-mono uppercase tracking-[0.22em] text-muted-foreground/70 mb-3">
         {label}
-        {focused && <span className="size-[5px] rounded-full bg-white/80" />}
+        {focused && <span className="size-[5px] rounded-full bg-foreground/80" />}
       </label>
       <input
         type={type}
@@ -279,7 +279,7 @@ function BareInput({
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         placeholder={placeholder}
-        className="w-full bg-transparent outline-none text-[16px] text-foreground placeholder:text-muted-foreground/40 caret-white"
+        className="w-full bg-transparent outline-none text-base text-foreground placeholder:text-muted-foreground/40 caret-foreground"
       />
     </div>
   );
@@ -288,10 +288,10 @@ function BareInput({
 function Meta({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="reveal">
-      <p className="text-[10px] font-mono uppercase tracking-[0.22em] text-muted-foreground/70 mb-2">
+      <p className="text-xs font-mono uppercase tracking-[0.22em] text-muted-foreground/70 mb-2">
         {label}
       </p>
-      <div className="text-[14px] text-foreground/85 leading-relaxed">{children}</div>
+      <div className="text-sm text-foreground/85 leading-relaxed">{children}</div>
     </div>
   );
 }

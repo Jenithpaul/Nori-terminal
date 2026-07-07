@@ -1,15 +1,23 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
-import { useReveal } from "@/hooks/use-reveal";
-import { Download, ArrowUpRight, Monitor } from "lucide-react";
+import {
+  useLatestRelease,
+  useAllReleases,
+  versionFromTag,
+  findAsset,
+  findAltAssets,
+} from "@/hooks/use-github-release";
+import { useDownloadAnalytics } from "@/hooks/use-download-analytics";
+import { Download, Monitor, Apple, Command, ArrowRight, Check } from "lucide-react";
 import {
   detectPlatform,
   detectArchitectureHighEntropy,
   type Platform,
-  type Architecture,
   type EdgeCase,
 } from "@/lib/os-detect";
 import { useState, useEffect } from "react";
+import type { GithubAsset } from "@/lib/github.server";
+import { motion } from "framer-motion";
 
 export const Route = createFileRoute("/download")({
   component: DownloadPage,
@@ -19,14 +27,13 @@ export const Route = createFileRoute("/download")({
       {
         name: "description",
         content:
-          "Download Nori for Windows. A studio-grade, high-performance terminal built in Rust + Tauri. Free early access.",
+          "Download Nori. A studio-grade, high-performance terminal built in Rust + Tauri. Free early access.",
       },
       { property: "og:title", content: "Download Nori — Free Terminal Built in Rust" },
       { property: "og:url", content: "https://nori-terminal.pages.dev/download" },
       {
         property: "og:description",
-        content:
-          "Download Nori for Windows. Studio-grade terminal built in Rust + Tauri. Free early access.",
+        content: "Download Nori. Studio-grade terminal built in Rust + Tauri. Free early access.",
       },
       { name: "robots", content: "index, follow" },
     ],
@@ -38,260 +45,460 @@ interface PlatformData {
   id: Platform;
   label: string;
   available: boolean;
-  downloadUrl?: string;
-  altDownloads?: { label: string; url: string }[];
+  downloadUrl: string;
+  installerType: string;
+  altDownloads: { label: string; url: string; installerType: string }[];
   fileType: string;
-  requirements: string[];
+  requirements: string;
   icon: React.ReactNode;
+  badge?: string;
 }
 
-const RELEASE_BASE = "https://github.com/Aethlon/Nori/releases/latest/download";
-
-const platforms: PlatformData[] = [
-  {
-    id: "windows",
-    label: "Windows",
-    available: true,
-    downloadUrl: `${RELEASE_BASE}/nori_0.1.0_x64-setup.exe`,
-    altDownloads: [{ label: "MSI Installer", url: `${RELEASE_BASE}/nori_0.1.0_x64_en-US.msi` }],
-    fileType: ".exe installer",
-    requirements: ["Windows 10+", "x86_64", "WebView2 (bundled)"],
-    icon: (
-      <svg viewBox="0 0 16 16" className="size-6" fill="currentColor">
-        <path d="M0 0h7.5v7.5H0zm8.5 0H16v7.5H8.5zM0 8.5h7.5V16H0zm8.5 0H16V16H8.5z" />
-      </svg>
-    ),
-  },
-  {
-    id: "macos",
+const platformMeta: Record<
+  Platform,
+  { label: string; fileType: string; requirements: string; badge?: string }
+> = {
+  macos: {
     label: "macOS",
-    available: true,
-    downloadUrl: `${RELEASE_BASE}/nori_0.1.0_universal.dmg`,
-    fileType: ".dmg (Universal)",
-    requirements: ["macOS 10.15+", "Apple Silicon & Intel"],
-    icon: (
-      <svg viewBox="0 0 24 24" className="size-6" fill="currentColor">
-        <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
-      </svg>
-    ),
+    fileType: "Universal DMG",
+    requirements: "macOS 11.0+",
+    badge: "Apple Silicon & Intel",
   },
-  {
-    id: "linux",
+  windows: {
+    label: "Windows",
+    fileType: "x64 Setup",
+    requirements: "Windows 10+",
+    badge: "x86_64",
+  },
+  linux: {
     label: "Linux",
-    available: true,
-    downloadUrl: `${RELEASE_BASE}/nori_0.1.0_amd64.AppImage`,
-    altDownloads: [{ label: ".deb (Debian/Ubuntu)", url: `${RELEASE_BASE}/nori_0.1.0_amd64.deb` }],
-    fileType: ".AppImage",
-    requirements: ["Ubuntu 20.04+ / Fedora 36+", "x86_64"],
-    icon: (
-      <svg viewBox="0 0 24 24" className="size-6" fill="currentColor">
-        <path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.464 1.208-.946.587-.003 1.23-.269 2.26-.334.699-.058 1.574.267 2.577.2.025.134.063.198.114.333l.003.003c.391.778 1.113 1.132 1.884 1.071.771-.06 1.592-.536 2.257-1.306.631-.765 1.683-1.084 2.378-1.503.348-.199.629-.469.649-.853.023-.4-.2-.811-.714-1.376v-.097l-.003-.003c-.17-.2-.25-.535-.338-.926-.085-.401-.182-.786-.492-1.046h-.003c-.059-.054-.123-.067-.188-.135a.357.357 0 00-.19-.064c.431-1.278.264-2.55-.173-3.694-.533-1.41-1.465-2.638-2.175-3.483-.796-1.005-1.576-1.957-1.56-3.368v-.003c-.026-1.351.56-2.886.552-4.329 0-1.105-.312-2.099-1.264-2.691-.335-.218-.73-.323-1.13-.323z" />
-      </svg>
-    ),
+    fileType: "AppImage",
+    requirements: "Ubuntu 22.04+",
+    badge: "AMD64",
   },
-];
+  unknown: {
+    label: "Unknown",
+    fileType: "—",
+    requirements: "Select your platform",
+  },
+};
 
-const DEFAULT_ORDER: Platform[] = ["windows", "macos", "linux"];
+function buildPlatforms(
+  release: { tag_name: string; assets: GithubAsset[] } | null,
+): PlatformData[] {
+  const fallback = (path: string) =>
+    `https://github.com/Aethlon/Nori/releases/latest/download/${path}`;
+
+  return [
+    {
+      id: "macos",
+      ...platformMeta.macos,
+      available: true,
+      downloadUrl: release
+        ? (findAsset(release.assets, /universal\.dmg$/i)?.browser_download_url ??
+          fallback("nori_0.1.0_universal.dmg"))
+        : fallback("nori_0.1.0_universal.dmg"),
+      installerType: "dmg",
+      altDownloads: [],
+      icon: <Apple size={22} strokeWidth={1.5} />,
+    },
+    {
+      id: "windows",
+      ...platformMeta.windows,
+      available: true,
+      downloadUrl: release
+        ? (findAsset(release.assets, /x64-setup\.exe$/i)?.browser_download_url ??
+          fallback("nori_0.1.0_x64-setup.exe"))
+        : fallback("nori_0.1.0_x64-setup.exe"),
+      installerType: "exe",
+      altDownloads: release
+        ? findAltAssets(release.assets, [/x64_en-US\.msi$/i]).map((a) => ({
+            label: "MSI Installer",
+            url: a.browser_download_url,
+            installerType: "msi",
+          }))
+        : [
+            {
+              label: "MSI Installer",
+              url: fallback("nori_0.1.0_x64_en-US.msi"),
+              installerType: "msi",
+            },
+          ],
+      icon: <Monitor size={22} strokeWidth={1.5} />,
+    },
+    {
+      id: "linux",
+      ...platformMeta.linux,
+      available: true,
+      downloadUrl: release
+        ? (findAsset(release.assets, /amd64\.AppImage$/i)?.browser_download_url ??
+          fallback("nori_0.1.0_amd64.AppImage"))
+        : fallback("nori_0.1.0_amd64.AppImage"),
+      installerType: "appimage",
+      altDownloads: release
+        ? findAltAssets(release.assets, [/amd64\.deb$/i]).map((a) => ({
+            label: ".deb package",
+            url: a.browser_download_url,
+            installerType: "deb",
+          }))
+        : [
+            {
+              label: ".deb package",
+              url: fallback("nori_0.1.0_amd64.deb"),
+              installerType: "deb",
+            },
+          ],
+      icon: <Command size={22} strokeWidth={1.5} />,
+    },
+  ];
+}
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08, delayChildren: 0.05 },
+  },
+};
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+};
 
 function DownloadPage() {
-  useReveal();
+  const { release, loading } = useLatestRelease();
+  const { releases } = useAllReleases();
+  const { trackDownload } = useDownloadAnalytics();
   const [detectedPlatform, setDetectedPlatform] = useState<Platform>("unknown");
-  const [detectedArch, setDetectedArch] = useState<Architecture>("unknown");
   const [edgeCase, setEdgeCase] = useState<EdgeCase>(null);
 
   useEffect(() => {
     const result = detectPlatform();
     setDetectedPlatform(result.platform);
-    setDetectedArch(result.architecture);
     setEdgeCase(result.edgeCase);
-    detectArchitectureHighEntropy().then((arch) => {
-      if (arch !== "unknown") setDetectedArch(arch);
-    });
+    detectArchitectureHighEntropy();
   }, []);
 
-  const sortedPlatforms = (() => {
-    if (detectedPlatform === "unknown")
-      return [...platforms].sort(
-        (a, b) => DEFAULT_ORDER.indexOf(a.id) - DEFAULT_ORDER.indexOf(b.id),
-      );
-    return [...platforms].sort((a, b) => {
-      if (a.id === detectedPlatform) return -1;
-      if (b.id === detectedPlatform) return 1;
-      return DEFAULT_ORDER.indexOf(a.id) - DEFAULT_ORDER.indexOf(b.id);
-    });
-  })();
+  const version = release ? versionFromTag(release.tag_name) : "0.1.0";
+  const platforms = buildPlatforms(release);
 
-  const primaryPlatform = sortedPlatforms.find((p) => p.available);
+  const handleDownload = (platform: string, installerType: string, url: string) => {
+    trackDownload(platform, installerType, version);
+    window.location.href = url;
+  };
+
+  const recommendedId: Platform = detectedPlatform !== "unknown" ? detectedPlatform : "windows";
+  const recommendedPlatform = platforms.find((p) => p.id === recommendedId) ?? platforms[1];
+  const otherPlatforms = platforms.filter((p) => p.id !== recommendedId);
 
   return (
     <SiteLayout>
-      {/* Hero */}
-      <section className="relative pt-36 sm:pt-44 pb-20">
-        <div className="mx-auto max-w-3xl px-5 sm:px-8 text-center">
-          <p className="reveal text-[10px] font-mono uppercase tracking-[0.3em] text-white/40 mb-5">
-            v0.1.0 · Developer Preview · Built with Rust + Tauri
-          </p>
-          <h1 className="reveal text-5xl sm:text-6xl md:text-7xl font-medium tracking-[-0.045em] leading-[0.95] text-gradient-animated">
-            Get Nori.
-          </h1>
-          <p className="reveal mt-5 text-white/50 max-w-md mx-auto text-[15px] leading-relaxed">
-            One workspace for your shell, Git, Docker, files, and system metrics. Free.
-          </p>
-
-          {/* Primary download button */}
-          {primaryPlatform && (
-            <div className="reveal mt-10">
-              <a
-                href={primaryPlatform.downloadUrl}
-                className="group inline-flex items-center gap-3 rounded-2xl bg-white text-[#0A0A0A] px-8 py-4 text-[15px] font-medium hover-lift hover:shadow-[0_12px_50px_rgba(255,255,255,0.18)] transition-all duration-300"
-              >
-                <Download className="size-5 transition-transform group-hover:translate-y-0.5" />
-                Download for {primaryPlatform.label}
-              </a>
-              <p className="mt-3 text-[11px] text-white/25 font-mono">
-                {detectedArch !== "unknown" ? `${detectedArch} · ` : ""}
-                {primaryPlatform.fileType} · ~8 MB
-              </p>
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={containerVariants}
+        className="relative max-w-5xl mx-auto px-5 sm:px-8 py-32 sm:py-40"
+      >
+        {/* Header */}
+        <div className="text-center mb-20">
+          <motion.div variants={fadeUp} className="flex justify-center mb-6">
+            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full border border-border bg-card text-muted-foreground text-xs">
+              <span
+                className={`size-1.5 rounded-full ${loading ? "bg-muted-foreground" : "bg-emerald-500"}`}
+              />
+              {loading ? "Fetching release..." : `v${version} — Latest release`}
             </div>
-          )}
+          </motion.div>
+
+          <motion.h1
+            variants={fadeUp}
+            className="text-5xl sm:text-6xl lg:text-7xl font-medium tracking-[-0.04em] text-foreground leading-[1.05] mb-5"
+          >
+            Download Nori
+          </motion.h1>
+          <motion.p
+            variants={fadeUp}
+            className="text-lg sm:text-xl text-muted-foreground max-w-xl mx-auto leading-relaxed"
+          >
+            Free early access. No account required.
+            <br className="hidden sm:block" />
+            Choose your platform and start in seconds.
+          </motion.p>
         </div>
-      </section>
 
-      {/* Edge case notices */}
-      {edgeCase === "ipados" && (
-        <section className="mx-auto max-w-3xl px-5 sm:px-8 pb-6">
-          <div className="reveal rounded-2xl border border-white/[0.06] bg-white/[0.02] px-6 py-4 flex items-start gap-4">
-            <Monitor className="size-4 text-white/40 shrink-0 mt-0.5" />
-            <p className="text-[13px] text-white/50">
-              Nori is a native desktop terminal. Not available for iPadOS.
-            </p>
-          </div>
-        </section>
-      )}
-
-      {/* All platforms */}
-      <section className="mx-auto max-w-3xl px-5 sm:px-8 pb-16">
-        <p className="reveal font-mono text-[9px] uppercase tracking-[0.25em] text-white/20 mb-4">
-          All platforms
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {sortedPlatforms.map((platform, idx) => {
-            const isDetected = platform.id === detectedPlatform && detectedPlatform !== "unknown";
-            return (
-              <div
-                key={platform.id}
-                style={{ animationDelay: `${idx * 80}ms` }}
-                className={`reveal animate-fade-in-scale group rounded-2xl overflow-hidden transition-all duration-300 hover-lift bg-[#121214]/40 hover:bg-[#121214]/60 ${
-                  isDetected
-                    ? "shadow-[0_0_40px_rgba(168,85,247,0.15)]"
-                    : "hover:shadow-[0_8px_30px_rgba(0,0,0,0.4)]"
-                }`}
-              >
-                <div className="flex flex-col items-center text-center gap-4 px-6 py-8">
-                  <div className="size-12 rounded-xl grid place-items-center shrink-0 bg-white/[0.04] text-white/70 group-hover:text-white/90 transition-all duration-300">
-                    {platform.icon}
-                  </div>
-                  <div className="flex-1 w-full">
-                    <h3 className="text-[16px] font-medium text-white/90 mb-2">{platform.label}</h3>
-                    <div className="flex flex-col items-center gap-1 mt-1 text-[11px] text-white/30">
-                      {platform.requirements.map((r) => (
-                        <span key={r}>{r}</span>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="w-full flex flex-col items-center gap-2 mt-4">
-                    <a
-                      href={platform.downloadUrl}
-                      className="w-full inline-flex justify-center items-center gap-2 rounded-xl bg-white text-[#0A0A0A] px-5 py-2.5 text-[13px] font-medium hover:bg-white/95 hover:shadow-[0_4px_16px_rgba(255,255,255,0.12)] transition-all duration-200"
-                    >
-                      <Download className="size-3.5" />
-                      {platform.fileType}
-                    </a>
-                    {platform.altDownloads?.map((alt) => (
-                      <a
-                        key={alt.label}
-                        href={alt.url}
-                        className="w-full inline-flex justify-center items-center gap-1.5 rounded-lg bg-white/[0.02] px-3 py-2 text-[11px] text-white/50 hover:text-white hover:bg-white/[0.05] transition-all duration-200"
-                      >
-                        {alt.label}
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* Build from source */}
-      <section className="mx-auto max-w-3xl px-5 sm:px-8 pb-16">
-        <div className="reveal rounded-2xl border border-white/[0.05] bg-white/[0.015] overflow-hidden">
-          <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.04]">
+        {/* iPadOS warning */}
+        {edgeCase === "ipados" && (
+          <motion.div
+            variants={fadeUp}
+            className="max-w-xl mx-auto mb-12 rounded-2xl border border-amber-500/20 bg-amber-500/5 px-5 py-4 flex gap-4 items-start"
+          >
+            <span className="text-lg mt-0.5">⚠️</span>
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/30">
-                All releases
+              <p className="text-sm font-medium text-amber-600 dark:text-amber-400">
+                iPadOS detected
               </p>
-              <p className="text-[13px] text-white/40 mt-1">
-                View all versions and platforms on GitHub
+              <p className="text-sm text-muted-foreground mt-0.5">
+                Nori is a native desktop app and is not compatible with iPadOS.
               </p>
             </div>
-            <a
-              href="https://github.com/Aethlon/Nori/releases"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-1.5 text-[11px] text-white/40 hover:text-white/70 hover:border-white/[0.1] transition-all"
-            >
-              <ArrowUpRight className="size-3" /> GitHub Releases
-            </a>
-          </div>
-          <div className="px-6 py-5 text-[12.5px] text-white/50 leading-[1.8]">
-            <p>Windows (.exe, .msi), macOS (.dmg), and Linux (.AppImage, .deb) available.</p>
-          </div>
-        </div>
-      </section>
+          </motion.div>
+        )}
 
-      {/* What's included */}
-      <section className="mx-auto max-w-3xl px-5 sm:px-8 pb-24">
-        <p className="reveal font-mono text-[9px] uppercase tracking-[0.25em] text-white/20 mb-5">
-          What's included
-        </p>
-        <div className="reveal grid grid-cols-2 sm:grid-cols-4 gap-4">
+        {/* Primary download card */}
+        <motion.div variants={fadeUp} className="mb-6">
+          <PrimaryCard
+            platform={recommendedPlatform}
+            onDownload={() =>
+              handleDownload(
+                recommendedPlatform.id,
+                recommendedPlatform.installerType,
+                recommendedPlatform.downloadUrl,
+              )
+            }
+            onAltDownload={(alt) =>
+              handleDownload(recommendedPlatform.id, alt.installerType, alt.url)
+            }
+          />
+        </motion.div>
+
+        {/* Other platforms */}
+        <motion.div variants={fadeUp} className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-20">
+          {otherPlatforms.map((platform) => (
+            <PlatformCard
+              key={platform.id}
+              platform={platform}
+              onDownload={() =>
+                handleDownload(platform.id, platform.installerType, platform.downloadUrl)
+              }
+              onAltDownload={(alt) => handleDownload(platform.id, alt.installerType, alt.url)}
+            />
+          ))}
+        </motion.div>
+
+        {/* Value strip */}
+        <motion.div
+          variants={fadeUp}
+          className="flex flex-wrap justify-center gap-x-8 gap-y-3 mb-24 text-sm text-muted-foreground"
+        >
           {[
-            { label: "Terminal", desc: "Native PTY" },
-            { label: "Git", desc: "Full workspace" },
-            { label: "Docker", desc: "Compose-aware" },
-            { label: "Files", desc: "Tree explorer" },
+            "Free during Early Access",
+            "No account required",
+            "Automatic updates",
+            "Built with Rust + Tauri",
           ].map((item) => (
-            <div
-              key={item.label}
-              className="rounded-xl border border-white/[0.04] bg-white/[0.01] p-4 text-center"
-            >
-              <p className="text-[13px] font-medium text-white/70">{item.label}</p>
-              <p className="text-[11px] text-white/30 mt-1">{item.desc}</p>
+            <div key={item} className="flex items-center gap-2">
+              <Check size={14} strokeWidth={2.5} className="text-accent" />
+              <span>{item}</span>
             </div>
           ))}
-        </div>
+        </motion.div>
 
-        {/* Footer links */}
-        <div className="reveal mt-12 flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] text-white/30">
-          <p>Nori is in early access. Expect rough edges.</p>
-          <div className="flex items-center gap-4">
+        {/* All releases */}
+        <motion.div variants={fadeUp} className="border-t border-border pt-16">
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground">
+              All releases
+            </h2>
             <Link
               to="/changelog"
-              className="hover:text-white/60 transition-colors flex items-center gap-1"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1"
             >
-              Changelog <ArrowUpRight className="size-3" />
-            </Link>
-            <Link
-              to="/docs"
-              className="hover:text-white/60 transition-colors flex items-center gap-1"
-            >
-              Docs <ArrowUpRight className="size-3" />
+              Changelog <ArrowRight size={13} strokeWidth={2} />
             </Link>
           </div>
-        </div>
-      </section>
+
+          <div className="flex flex-col">
+            {releases && releases.length > 0 ? (
+              releases.map((rel) => {
+                const relVersion = versionFromTag(rel.tag_name);
+                const isLatest = rel.tag_name === release?.tag_name;
+                return (
+                  <div
+                    key={rel.id}
+                    className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 py-5 border-b border-border"
+                  >
+                    <div className="flex items-center gap-4">
+                      <span className="font-mono text-foreground text-base">v{relVersion}</span>
+                      <span className="text-sm text-muted-foreground">
+                        {new Date(rel.published_at).toLocaleDateString(undefined, {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                        })}
+                      </span>
+                      {isLatest && (
+                        <span className="text-[10px] font-mono uppercase tracking-wider text-accent bg-accent/10 border border-accent/20 px-2 py-0.5 rounded-full">
+                          Latest
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="flex flex-wrap gap-2">
+                      {rel.assets.map((asset) => {
+                        let typeLabel = asset.name;
+                        if (asset.name.endsWith(".dmg")) typeLabel = "macOS";
+                        else if (asset.name.endsWith(".exe")) typeLabel = "Windows";
+                        else if (asset.name.endsWith(".msi")) typeLabel = "MSI";
+                        else if (asset.name.endsWith(".AppImage")) typeLabel = "Linux";
+                        else if (asset.name.endsWith(".deb")) typeLabel = "DEB";
+
+                        return (
+                          <a
+                            key={asset.id}
+                            href={asset.browser_download_url}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border bg-card hover:bg-muted hover:border-border-strong text-xs text-muted-foreground hover:text-foreground transition-colors"
+                          >
+                            <Download size={12} strokeWidth={2} />
+                            {typeLabel}
+                          </a>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })
+            ) : (
+              <div className="py-8 text-sm text-muted-foreground">No releases found.</div>
+            )}
+          </div>
+        </motion.div>
+
+        {/* Footer strip */}
+        <motion.div
+          variants={fadeUp}
+          className="mt-16 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground"
+        >
+          <p>Nori is in Developer Preview. Expect rough edges.</p>
+          <div className="flex gap-6">
+            <Link to="/changelog" className="hover:text-foreground transition-colors">
+              Changelog
+            </Link>
+            <Link to="/docs" className="hover:text-foreground transition-colors">
+              Documentation
+            </Link>
+          </div>
+        </motion.div>
+      </motion.div>
     </SiteLayout>
   );
 }
+
+function PrimaryCard({
+  platform,
+  onDownload,
+  onAltDownload,
+}: {
+  platform: PlatformData;
+  onDownload: () => void;
+  onAltDownload: (alt: { label: string; url: string; installerType: string }) => void;
+}) {
+  return (
+    <div className="group relative rounded-3xl p-px overflow-hidden">
+      {/* Gradient border */}
+      <div className="absolute inset-0 bg-gradient-to-br from-accent/40 via-accent/10 to-accent/30 opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
+
+      <div className="relative rounded-[calc(1.5rem-1px)] bg-card px-8 py-10 sm:px-12 sm:py-14">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-foreground/10 to-transparent" />
+        </div>
+
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+          <div className="flex items-start gap-6">
+            <div className="size-14 rounded-2xl bg-accent/10 border border-accent/20 grid place-items-center text-accent shrink-0">
+              {platform.icon}
+            </div>
+            <div>
+              <div className="flex items-center gap-3 mb-1.5">
+                <h2 className="text-2xl sm:text-3xl font-medium tracking-tight text-foreground">
+                  {platform.label}
+                </h2>
+                <span className="text-[10px] font-mono uppercase tracking-wider text-accent bg-accent/10 border border-accent/20 px-2 py-0.5 rounded-full">
+                  Recommended
+                </span>
+              </div>
+              <p className="text-base text-muted-foreground">
+                {platform.fileType} · {platform.requirements}
+                {platform.badge && ` · ${platform.badge}`}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 lg:min-w-[280px]">
+            <button
+              onClick={onDownload}
+              className="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-accent text-accent-foreground font-medium text-sm flex items-center justify-center gap-2 hover:opacity-90 transition-opacity"
+            >
+              <Download size={16} strokeWidth={2} />
+              Download for {platform.label}
+            </button>
+
+            {platform.altDownloads.length > 0 && (
+              <div className="flex gap-4">
+                {platform.altDownloads.map((alt) => (
+                  <button
+                    key={alt.label}
+                    onClick={() => onAltDownload(alt)}
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors underline underline-offset-4"
+                  >
+                    {alt.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PlatformCard({
+  platform,
+  onDownload,
+  onAltDownload,
+}: {
+  platform: PlatformData;
+  onDownload: () => void;
+  onAltDownload: (alt: { label: string; url: string; installerType: string }) => void;
+}) {
+  return (
+    <div className="group relative rounded-2xl border border-border bg-card hover:bg-muted transition-colors duration-300 p-6">
+      <div className="flex items-start justify-between mb-5">
+        <div className="size-11 rounded-xl bg-muted border border-border grid place-items-center text-muted-foreground group-hover:text-foreground transition-colors">
+          {platform.icon}
+        </div>
+        <span className="text-xs font-mono text-muted-foreground">{platform.fileType}</span>
+      </div>
+
+      <h3 className="text-lg font-medium tracking-tight text-foreground mb-1">{platform.label}</h3>
+      <p className="text-sm text-muted-foreground mb-6">{platform.requirements}</p>
+
+      <div className="flex flex-col gap-3">
+        <button
+          onClick={onDownload}
+          className="w-full px-5 py-2.5 rounded-xl border border-border bg-background hover:bg-muted text-foreground text-sm font-medium transition-colors flex items-center justify-center gap-2"
+        >
+          <Download size={14} strokeWidth={2} />
+          Download
+        </button>
+
+        {platform.altDownloads.length > 0 && (
+          <div className="flex justify-center gap-4">
+            {platform.altDownloads.map((alt) => (
+              <button
+                key={alt.label}
+                onClick={() => onAltDownload(alt)}
+                className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+              >
+                {alt.label}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default DownloadPage;

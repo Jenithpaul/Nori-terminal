@@ -1,6 +1,15 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Zap, Layers, GitBranch, Container, Palette, Keyboard, ShieldCheck, Link } from "lucide-react";
+import {
+  Zap,
+  Layers,
+  GitBranch,
+  Container,
+  Palette,
+  Keyboard,
+  ShieldCheck,
+  Link,
+} from "lucide-react";
 import { motion as m } from "framer-motion";
 
 const spring = { type: "spring", stiffness: 300, damping: 30, mass: 0.8 } as const;

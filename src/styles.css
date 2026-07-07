@@ -5,21 +5,58 @@
 @import "tw-animate-css";
 
 :root {
-  /* System 02 / Aethlon Palette */
-  --color-abyss: #060606;
-  --color-ash: #121214;
-  --color-charcoal: #18181b;
-  --color-graphite: #27272a;
-  --color-smoke: #71717a;
-  --color-ghost: #e4e4e7;
-  --color-accent: #a855f7;
+  --radius: 0.75rem;
 
-  --radius: 0.75rem; /* 12px default */
+  /* Default dark palette */
+  --color-background: #060606;
+  --color-foreground: #e4e4e7;
+  --color-muted: #121214;
+  --color-muted-foreground: #71717a;
+  --color-border: rgba(255, 255, 255, 0.06);
+  --color-border-strong: rgba(255, 255, 255, 0.1);
+  --color-card: #0a0a0c;
+  --color-card-hover: #121214;
+  --color-accent: #a855f7;
+  --color-accent-foreground: #ffffff;
+}
+
+.force-dark {
+  --color-background: #060606;
+  --color-foreground: #e4e4e7;
+  --color-muted: #121214;
+  --color-muted-foreground: #71717a;
+  --color-border: rgba(255, 255, 255, 0.06);
+  --color-border-strong: rgba(255, 255, 255, 0.1);
+  --color-card: #0a0a0c;
+  --color-card-hover: #121214;
+  --color-accent: #a855f7;
+  --color-accent-foreground: #ffffff;
+}
+
+html.light {
+  --color-background: #fafafa;
+  --color-foreground: #09090b;
+  --color-muted: #f4f4f5;
+  --color-muted-foreground: #71717a;
+  --color-border: rgba(0, 0, 0, 0.08);
+  --color-border-strong: rgba(0, 0, 0, 0.14);
+  --color-card: #ffffff;
+  --color-card-hover: #f4f4f5;
+  --color-accent: #7c3aed;
+  --color-accent-foreground: #ffffff;
 }
 
 @theme inline {
-  --color-background: var(--color-abyss);
-  --color-foreground: var(--color-ghost);
+  --color-background: var(--color-background);
+  --color-foreground: var(--color-foreground);
+  --color-muted: var(--color-muted);
+  --color-muted-foreground: var(--color-muted-foreground);
+  --color-border: var(--color-border);
+  --color-border-strong: var(--color-border-strong);
+  --color-card: var(--color-card);
+  --color-card-hover: var(--color-card-hover);
+  --color-accent: var(--color-accent);
+  --color-accent-foreground: var(--color-accent-foreground);
 
   --color-neutral-100: #f4f4f5;
   --color-neutral-200: #e4e4e7;
@@ -30,7 +67,6 @@
   --color-neutral-700: #3f3f46;
   --color-neutral-800: #27272a;
   --color-neutral-900: #18181b;
-  --color-accent: var(--color-accent);
 
   --font-sans: "DM Sans", sans-serif;
   --font-mono:
@@ -43,9 +79,14 @@
     box-sizing: border-box;
   }
 
+  html {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
+
   body {
-    background-color: var(--color-abyss);
-    color: var(--color-ghost);
+    background-color: var(--color-background);
+    color: var(--color-foreground);
     font-family: "DM Sans", sans-serif;
     font-weight: 300;
     -webkit-font-smoothing: antialiased;
@@ -53,8 +94,8 @@
   }
 
   ::selection {
-    background-color: var(--color-graphite);
-    color: #ffffff;
+    background-color: var(--color-muted-foreground);
+    color: var(--color-background);
   }
 
   /* Scrollbar */
@@ -63,14 +104,14 @@
     height: 4px;
   }
   ::-webkit-scrollbar-track {
-    background: var(--color-abyss);
+    background: var(--color-background);
   }
   ::-webkit-scrollbar-thumb {
-    background: var(--color-graphite);
+    background: var(--color-border-strong);
     border-radius: 2px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-neutral-700);
+    background: var(--color-muted-foreground);
   }
 }
 

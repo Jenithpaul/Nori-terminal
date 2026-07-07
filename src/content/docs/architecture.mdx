@@ -50,26 +50,38 @@ Heavy I/O operations run on background threads and communicate via <InlineCode>m
 <div className="not-prose grid sm:grid-cols-2 gap-3 mt-3">
   <div className="rounded-xl border border-neutral-800/30 bg-white/[0.01] p-4">
     <p className="text-[13px] font-normal text-white/70 mb-1">Command execution</p>
-    <p className="text-[12px] text-white/35 leading-relaxed">PTY process streams stdout/stderr back line-by-line</p>
+    <p className="text-[12px] text-white/35 leading-relaxed">
+      PTY process streams stdout/stderr back line-by-line
+    </p>
   </div>
   <div className="rounded-xl border border-neutral-800/30 bg-white/[0.01] p-4">
     <p className="text-[13px] font-normal text-white/70 mb-1">Git status</p>
-    <p className="text-[12px] text-white/35 leading-relaxed">Refreshes every ~2s in background, result merged on next tick</p>
+    <p className="text-[12px] text-white/35 leading-relaxed">
+      Refreshes every ~2s in background, result merged on next tick
+    </p>
   </div>
   <div className="rounded-xl border border-neutral-800/30 bg-white/[0.01] p-4">
     <p className="text-[13px] font-normal text-white/70 mb-1">Docker status</p>
-    <p className="text-[12px] text-white/35 leading-relaxed">Polls every ~3s, updates container list asynchronously</p>
+    <p className="text-[12px] text-white/35 leading-relaxed">
+      Polls every ~3s, updates container list asynchronously
+    </p>
   </div>
   <div className="rounded-xl border border-neutral-800/30 bg-white/[0.01] p-4">
     <p className="text-[13px] font-normal text-white/70 mb-1">File tree</p>
-    <p className="text-[12px] text-white/35 leading-relaxed">Directory scan + git status per-file runs off main thread</p>
+    <p className="text-[12px] text-white/35 leading-relaxed">
+      Directory scan + git status per-file runs off main thread
+    </p>
   </div>
   <div className="rounded-xl border border-neutral-800/30 bg-white/[0.01] p-4">
     <p className="text-[13px] font-normal text-white/70 mb-1">Git workspace</p>
-    <p className="text-[12px] text-white/35 leading-relaxed">Diffs, branch lists, logs fetched async with loading states</p>
+    <p className="text-[12px] text-white/35 leading-relaxed">
+      Diffs, branch lists, logs fetched async with loading states
+    </p>
   </div>
   <div className="rounded-xl border border-neutral-800/30 bg-white/[0.01] p-4">
     <p className="text-[13px] font-normal text-white/70 mb-1">System metrics</p>
-    <p className="text-[12px] text-white/35 leading-relaxed">CPU/RAM sampled every ~1.5s via sysinfo crate</p>
+    <p className="text-[12px] text-white/35 leading-relaxed">
+      CPU/RAM sampled every ~1.5s via sysinfo crate
+    </p>
   </div>
 </div>

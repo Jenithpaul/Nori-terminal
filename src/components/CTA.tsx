@@ -9,7 +9,7 @@ const springStiff = {
 };
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 12 },
+  hidden: { opacity: 0, y: 16 },
   visible: { opacity: 1, y: 0, transition: springStiff },
 };
 
@@ -32,31 +32,32 @@ export function CTA() {
 
         <motion.h2
           variants={fadeUp}
-          className="text-4xl md:text-5xl font-medium text-[#E4E4E7] tracking-tight mb-8"
+          className="text-4xl md:text-5xl lg:text-6xl font-medium text-[#E4E4E7] tracking-tight mb-8"
         >
-          Built for developers <br /> who live in the terminal.
+          Built for developers
+          <br />
+          who live in the terminal.
         </motion.h2>
 
         <motion.p
           variants={fadeUp}
-          className="mt-4 text-lg font-normal text-[#71717A] max-w-lg mx-auto leading-relaxed mb-12"
+          className="mt-4 text-lg sm:text-xl font-normal text-[#71717A] max-w-lg mx-auto leading-relaxed mb-12"
         >
-          Nori is in closed Developer Preview. Read the docs to get set up, or share what you'd like
-          to see next.
+          Join the preview, grab the build for your platform, and help shape what Nori becomes next.
         </motion.p>
 
         <motion.div
           variants={fadeUp}
           className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          <Link to="/docs">
+          <Link to="/download">
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               transition={springStiff}
-              className="px-8 py-3.5 rounded-xl bg-purple-500 text-white font-medium text-sm flex items-center gap-2 shadow-[0_0_24px_rgba(168,85,247,0.35)] hover:shadow-[0_0_32px_rgba(168,85,247,0.5)] hover:bg-purple-400 transition-all border border-purple-400/50"
+              className="px-8 py-3.5 rounded-xl bg-neutral-200 text-[#09090B] font-medium text-sm flex items-center gap-2 hover:bg-white transition-colors"
             >
-              Read the docs <ArrowRight size={16} strokeWidth={2} />
+              Download Nori <ArrowRight size={16} strokeWidth={2} />
             </motion.button>
           </Link>
 
