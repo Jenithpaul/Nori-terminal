@@ -87,8 +87,9 @@ const platformMeta: Record<
 function buildPlatforms(
   release: { tag_name: string; assets: GithubAsset[] } | null,
 ): PlatformData[] {
-  const fallback = (path: string) =>
-    `https://github.com/Aethlon/Nori/releases/latest/download/${path}`;
+  const version = release ? versionFromTag(release.tag_name) : "1.0.1";
+  const fallback = (suffix: string) =>
+    `https://github.com/Aethlon/Nori/releases/latest/download/nori_${version}${suffix}`;
 
   return [
     {
@@ -97,8 +98,8 @@ function buildPlatforms(
       available: true,
       downloadUrl: release
         ? (findAsset(release.assets, /universal\.dmg$/i)?.browser_download_url ??
-          fallback("nori_1.0.2_universal.dmg"))
-        : fallback("nori_1.0.2_universal.dmg"),
+          fallback("_universal.dmg"))
+        : fallback("_universal.dmg"),
       installerType: "dmg",
       altDownloads: [],
       icon: <Apple size={22} strokeWidth={1.5} />,
@@ -109,8 +110,8 @@ function buildPlatforms(
       available: true,
       downloadUrl: release
         ? (findAsset(release.assets, /x64-setup\.exe$/i)?.browser_download_url ??
-          fallback("nori_1.0.2_x64-setup.exe"))
-        : fallback("nori_1.0.2_x64-setup.exe"),
+          fallback("_x64-setup.exe"))
+        : fallback("_x64-setup.exe"),
       installerType: "exe",
       altDownloads: release
         ? findAltAssets(release.assets, [/x64_en-US\.msi$/i]).map((a) => ({
@@ -121,7 +122,7 @@ function buildPlatforms(
         : [
             {
               label: "MSI Installer",
-              url: fallback("nori_1.0.2_x64_en-US.msi"),
+              url: fallback("_x64_en-US.msi"),
               installerType: "msi",
             },
           ],
@@ -133,8 +134,8 @@ function buildPlatforms(
       available: true,
       downloadUrl: release
         ? (findAsset(release.assets, /amd64\.AppImage$/i)?.browser_download_url ??
-          fallback("nori_1.0.2_amd64.AppImage"))
-        : fallback("nori_1.0.2_amd64.AppImage"),
+          fallback("_amd64.AppImage"))
+        : fallback("_amd64.AppImage"),
       installerType: "appimage",
       altDownloads: release
         ? findAltAssets(release.assets, [/amd64\.deb$/i]).map((a) => ({
@@ -145,7 +146,7 @@ function buildPlatforms(
         : [
             {
               label: ".deb package",
-              url: fallback("nori_1.0.2_amd64.deb"),
+              url: fallback("_amd64.deb"),
               installerType: "deb",
             },
           ],
