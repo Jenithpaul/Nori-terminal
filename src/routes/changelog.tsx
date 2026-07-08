@@ -3,6 +3,7 @@ import { SiteLayout } from "@/components/SiteLayout";
 import { useReveal } from "@/hooks/use-reveal";
 import { useAllReleases, versionFromTag } from "@/hooks/use-github-release";
 import { ArrowUpRight } from "lucide-react";
+import { motion } from "framer-motion";
 
 export const Route = createFileRoute("/changelog")({
   component: ChangelogPage,
@@ -42,6 +43,19 @@ function parseBody(body: string): ReleaseGroup[] {
   return groups;
 }
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08 },
+  },
+};
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 16 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
+};
+
 function ChangelogPage() {
   useReveal();
   const { releases, loading, error } = useAllReleases();
@@ -49,18 +63,29 @@ function ChangelogPage() {
   return (
     <SiteLayout>
       {/* Header */}
-      <section className="relative pt-36 sm:pt-44 pb-16">
+      <section className="relative pt-32 sm:pt-40 pb-20">
         <div className="mx-auto max-w-3xl px-5 sm:px-8">
-          <p className="reveal text-xs font-mono uppercase tracking-[0.3em] text-muted-foreground mb-4">
-            Release Notes
-          </p>
-          <h1 className="reveal text-4xl sm:text-5xl md:text-6xl font-medium tracking-[-0.04em] leading-[0.95] text-foreground">
-            Changelog
-          </h1>
-          <p className="reveal mt-5 text-muted-foreground max-w-md text-base leading-relaxed">
-            What's shipped in each release. Bug fixes install silently — larger updates are listed
-            here.
-          </p>
+          <motion.div initial="hidden" animate="visible" variants={containerVariants}>
+            <motion.p
+              variants={fadeUp}
+              className="text-xs font-mono uppercase tracking-[0.3em] text-muted-foreground mb-4"
+            >
+              Release Notes
+            </motion.p>
+            <motion.h1
+              variants={fadeUp}
+              className="text-4xl sm:text-5xl md:text-6xl font-medium tracking-[-0.04em] leading-[1] text-foreground"
+            >
+              Changelog
+            </motion.h1>
+            <motion.p
+              variants={fadeUp}
+              className="mt-5 text-muted-foreground max-w-md text-base leading-relaxed"
+            >
+              What's shipped in each release. Bug fixes install silently — larger updates are listed
+              here.
+            </motion.p>
+          </motion.div>
         </div>
       </section>
 
@@ -76,29 +101,41 @@ function ChangelogPage() {
           <p className="text-muted-foreground text-sm font-mono">No releases yet.</p>
         )}
 
-        <div className="space-y-12">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={containerVariants}
+          className="relative"
+        >
+          {/* Timeline line */}
+          <div className="absolute left-[7px] top-3 bottom-3 w-px bg-border hidden sm:block" />
+
           {releases?.map((release) => {
             const version = versionFromTag(release.tag_name);
             const groups = parseBody(release.body || "");
             return (
-              <article
+              <motion.article
                 key={release.tag_name}
-                className="relative reveal bg-card border border-border rounded-3xl p-8 sm:p-12 hover:border-border-strong transition-colors"
+                variants={fadeUp}
+                className="relative pl-0 sm:pl-10 pb-16 last:pb-0"
               >
+                {/* Dot */}
+                <div className="absolute left-0 top-2.5 size-3.5 rounded-full border-2 border-border bg-background hidden sm:block" />
+
                 {/* Release header */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-6 border-b border-border">
+                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 mb-6">
                   <div className="flex items-center gap-3">
-                    <span className="font-mono text-2xl font-medium text-foreground">
-                      v{version}
-                    </span>
                     <a
                       href={release.html_url}
                       target="_blank"
                       rel="noreferrer"
-                      className="font-mono text-[10px] uppercase tracking-[0.15em] text-accent bg-accent/10 border border-accent/20 rounded-full px-3 py-1 hover:bg-accent/20 transition-colors"
+                      className="font-mono text-xl sm:text-2xl font-medium text-foreground hover:text-muted-foreground transition-colors"
                     >
-                      {release.name}
+                      v{version}
                     </a>
+                    <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-accent bg-accent/10 border border-accent/20 rounded-full px-2.5 py-0.5">
+                      {release.name}
+                    </span>
                   </div>
                   <span className="font-mono text-sm text-muted-foreground">
                     {new Date(release.published_at).toLocaleDateString("en-US", {
@@ -113,14 +150,14 @@ function ChangelogPage() {
                 <div className="space-y-8">
                   {groups.length > 0 ? (
                     groups.map((group, gIdx) => (
-                      <div key={gIdx} className="space-y-4">
-                        <h3 className="font-mono text-xs uppercase tracking-[0.2em] text-accent/80 font-medium">
+                      <div key={gIdx} className="space-y-3">
+                        <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground font-medium">
                           {group.title}
                         </h3>
-                        <ul className="space-y-3.5 text-base text-foreground/80 font-normal list-none pl-0">
+                        <ul className="space-y-2.5 text-[15px] text-foreground/80 font-normal list-none pl-0">
                           {group.items.map((item, i) => (
                             <li key={i} className="flex items-start gap-3 leading-relaxed">
-                              <span className="size-1.5 rounded-full bg-muted-foreground mt-2.5 shrink-0" />
+                              <span className="size-1 rounded-full bg-muted-foreground/60 mt-2 shrink-0" />
                               <span>{item}</span>
                             </li>
                           ))}
@@ -133,12 +170,12 @@ function ChangelogPage() {
                     </p>
                   )}
                 </div>
-              </article>
+              </motion.article>
             );
           })}
-        </div>
+        </motion.div>
 
-        {/* Timeline Footer */}
+        {/* Footer */}
         <div className="mt-20 pt-8 border-t border-border flex items-center justify-between">
           <p className="font-mono text-xs text-muted-foreground">
             {releases ? `${releases.length} release(s)` : "More releases as the preview expands."}
