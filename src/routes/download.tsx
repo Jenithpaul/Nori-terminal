@@ -23,17 +23,18 @@ export const Route = createFileRoute("/download")({
   component: DownloadPage,
   head: () => ({
     meta: [
-      { title: "Download Nori — Free Terminal Built in Rust" },
+      { title: "Download Nori — Free Terminal Emulator Built in Rust" },
       {
         name: "description",
         content:
-          "Download Nori. A studio-grade, high-performance terminal built in Rust + Tauri. Free early access.",
+          "Download Nori for free. A studio-grade terminal emulator built in Rust + Tauri for Windows, macOS, and Linux. Free early access with no account required.",
       },
-      { property: "og:title", content: "Download Nori — Free Terminal Built in Rust" },
+      { property: "og:title", content: "Download Nori — Free Terminal Emulator Built in Rust" },
       { property: "og:url", content: "https://nori-terminal.pages.dev/download" },
       {
         property: "og:description",
-        content: "Download Nori. Studio-grade terminal built in Rust + Tauri. Free early access.",
+        content:
+          "Download Nori for free. Studio-grade terminal emulator built in Rust + Tauri for Windows, macOS, and Linux. No account required.",
       },
       { name: "robots", content: "index, follow" },
     ],
@@ -96,8 +97,8 @@ function buildPlatforms(
       available: true,
       downloadUrl: release
         ? (findAsset(release.assets, /universal\.dmg$/i)?.browser_download_url ??
-          fallback("nori_0.1.0_universal.dmg"))
-        : fallback("nori_0.1.0_universal.dmg"),
+          fallback("nori_1.0.2_universal.dmg"))
+        : fallback("nori_1.0.2_universal.dmg"),
       installerType: "dmg",
       altDownloads: [],
       icon: <Apple size={22} strokeWidth={1.5} />,
@@ -108,8 +109,8 @@ function buildPlatforms(
       available: true,
       downloadUrl: release
         ? (findAsset(release.assets, /x64-setup\.exe$/i)?.browser_download_url ??
-          fallback("nori_0.1.0_x64-setup.exe"))
-        : fallback("nori_0.1.0_x64-setup.exe"),
+          fallback("nori_1.0.2_x64-setup.exe"))
+        : fallback("nori_1.0.2_x64-setup.exe"),
       installerType: "exe",
       altDownloads: release
         ? findAltAssets(release.assets, [/x64_en-US\.msi$/i]).map((a) => ({
@@ -120,7 +121,7 @@ function buildPlatforms(
         : [
             {
               label: "MSI Installer",
-              url: fallback("nori_0.1.0_x64_en-US.msi"),
+              url: fallback("nori_1.0.2_x64_en-US.msi"),
               installerType: "msi",
             },
           ],
@@ -132,8 +133,8 @@ function buildPlatforms(
       available: true,
       downloadUrl: release
         ? (findAsset(release.assets, /amd64\.AppImage$/i)?.browser_download_url ??
-          fallback("nori_0.1.0_amd64.AppImage"))
-        : fallback("nori_0.1.0_amd64.AppImage"),
+          fallback("nori_1.0.2_amd64.AppImage"))
+        : fallback("nori_1.0.2_amd64.AppImage"),
       installerType: "appimage",
       altDownloads: release
         ? findAltAssets(release.assets, [/amd64\.deb$/i]).map((a) => ({
@@ -144,7 +145,7 @@ function buildPlatforms(
         : [
             {
               label: ".deb package",
-              url: fallback("nori_0.1.0_amd64.deb"),
+              url: fallback("nori_1.0.2_amd64.deb"),
               installerType: "deb",
             },
           ],
@@ -180,7 +181,7 @@ function DownloadPage() {
     detectArchitectureHighEntropy();
   }, []);
 
-  const version = release ? versionFromTag(release.tag_name) : "0.1.0";
+  const version = release ? versionFromTag(release.tag_name) : "1.0.2";
   const platforms = buildPlatforms(release);
 
   const handleDownload = (platform: string, installerType: string, url: string) => {

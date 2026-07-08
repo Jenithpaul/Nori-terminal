@@ -9,10 +9,18 @@ export const Route = createFileRoute("/changelog")({
   component: ChangelogPage,
   head: () => ({
     meta: [
-      { title: "Changelog — Nori" },
-      { name: "description", content: "Release notes for the Nori developer preview." },
-      { property: "og:title", content: "Changelog — Nori" },
-      { property: "og:description", content: "Release notes for the Nori developer preview." },
+      { title: "Changelog — Nori Terminal Emulator" },
+      {
+        name: "description",
+        content:
+          "Release notes and version history for the Nori terminal emulator. See what's new, fixed, and improved in each release.",
+      },
+      { property: "og:title", content: "Changelog — Nori Terminal Emulator" },
+      {
+        property: "og:description",
+        content:
+          "Release notes and version history for the Nori terminal emulator. See what's new in each release.",
+      },
     ],
   }),
 });

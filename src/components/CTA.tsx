@@ -27,7 +27,7 @@ export function CTA() {
           variants={fadeUp}
           className="text-xs font-mono uppercase tracking-widest text-neutral-500 mb-6"
         >
-          v0.1 · Developer preview
+          v1.0.2
         </motion.p>
 
         <motion.h2

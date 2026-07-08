@@ -67,7 +67,7 @@ export function Hero() {
           <div className="inline-flex items-center gap-2 rounded-full border border-neutral-800/30 bg-[#121214] px-4 py-1.5">
             <span className="size-1.5 rounded-full bg-emerald-400" />
             <span className="text-xs font-mono tracking-widest uppercase text-neutral-400">
-              v0.1 Developer preview
+              v1.0.2
             </span>
           </div>
         </motion.div>

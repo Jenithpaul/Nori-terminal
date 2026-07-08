@@ -8,12 +8,17 @@ export const Route = createFileRoute("/feedback")({
   component: FeedbackPage,
   head: () => ({
     meta: [
-      { title: "Feedback — Nori" },
-      { name: "description", content: "Send a note. Your feedback shapes the next preview wave." },
-      { property: "og:title", content: "Feedback — Nori" },
+      { title: "Send Feedback — Nori Terminal Emulator" },
+      {
+        name: "description",
+        content:
+          "Send feedback for the Nori terminal emulator. Report bugs, suggest features, or share your thoughts with the development team.",
+      },
+      { property: "og:title", content: "Send Feedback — Nori Terminal Emulator" },
       {
         property: "og:description",
-        content: "Send a note. Your feedback shapes the next preview wave.",
+        content:
+          "Send feedback for the Nori terminal emulator. Report bugs, suggest features, or share your thoughts.",
       },
     ],
   }),
@@ -22,6 +27,8 @@ export const Route = createFileRoute("/feedback")({
 function FeedbackPage() {
   useReveal();
   const [submitted, setSubmitted] = useState(false);
+  const [lastSubmit, setLastSubmit] = useState(0);
+  const [rateLimited, setRateLimited] = useState(false);
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -37,9 +44,17 @@ function FeedbackPage() {
     { id: "performance", label: "Perf" },
   ];
 
+  const RATE_LIMIT_MS = 60_000;
+
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    // Post feedback to Supabase
+    const now = Date.now();
+    if (now - lastSubmit < RATE_LIMIT_MS) {
+      setRateLimited(true);
+      setTimeout(() => setRateLimited(false), 3000);
+      return;
+    }
+    setRateLimited(false);
     try {
       await fetch("https://oxhbllnsoiwckjyypnrq.supabase.co/rest/v1/feedback", {
         method: "POST",
@@ -60,6 +75,7 @@ function FeedbackPage() {
     } catch (err) {
       console.error(err);
     }
+    setLastSubmit(Date.now());
     setSubmitted(true);
   };
 
@@ -104,8 +120,8 @@ function FeedbackPage() {
                 <span>Within 48 hours · weekdays</span>
               </Meta>
 
-              <Meta label="Preview build">
-                <span className="font-mono">v0.1.0 · darwin-arm64</span>
+              <Meta label="Latest build">
+                <span className="font-mono">v1.0.2 · darwin-arm64</span>
               </Meta>
 
               <Meta label="What lands fastest">
@@ -217,10 +233,17 @@ function FeedbackPage() {
                     </div>
                   </div>
 
-                  <div className="pt-8 flex items-center justify-between">
-                    <p className="text-xs font-mono text-muted-foreground/60 max-w-xs">
-                      By sending you allow us to contact you about this note.
-                    </p>
+                  <div className="pt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div>
+                      <p className="text-xs font-mono text-muted-foreground/60 max-w-xs">
+                        By sending you allow us to contact you about this note.
+                      </p>
+                      {rateLimited && (
+                        <p className="text-xs font-mono text-amber-400 mt-1">
+                          Please wait a moment before sending again.
+                        </p>
+                      )}
+                    </div>
                     <button
                       type="submit"
                       className="group inline-flex items-center gap-3 text-3xl md:text-4xl font-medium tracking-[-0.03em] text-foreground hover:text-muted-foreground transition-colors"

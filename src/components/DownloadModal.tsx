@@ -48,7 +48,7 @@ export function DownloadModal({ onClose }: { onClose: () => void }) {
               </span>
             </div>
             <h2 className="text-2xl font-medium tracking-tight text-foreground">Download Nori</h2>
-            <p className="mt-1 text-[13px] text-muted-foreground">Studio-grade terminal · v0.1.0</p>
+            <p className="mt-1 text-[13px] text-muted-foreground">Studio-grade terminal · v1.0.2</p>
           </div>
           <button
             onClick={onClose}
@@ -63,7 +63,7 @@ export function DownloadModal({ onClose }: { onClose: () => void }) {
         <div className="relative px-6 pb-6 space-y-3">
           {/* Windows */}
           <a
-            href={`${RELEASE_BASE}/nori_0.1.0_x64-setup.exe`}
+            href={`${RELEASE_BASE}/nori_1.0.2_x64-setup.exe`}
             className="group flex items-center gap-4 rounded-xl border border-white/12 bg-white/[0.03] px-5 py-4 hover:border-white/20 hover:bg-white/[0.06] transition-all"
           >
             <div className="size-10 rounded-lg bg-white/[0.06] border border-white/10 grid place-items-center shrink-0">
@@ -74,7 +74,7 @@ export function DownloadModal({ onClose }: { onClose: () => void }) {
             <div className="flex-1 min-w-0">
               <p className="text-[14px] font-medium text-foreground">Windows</p>
               <p className="text-[12px] text-muted-foreground font-mono mt-0.5">
-                x86_64 · .exe · v0.1.0
+                x86_64 · .exe · v1.0.2
               </p>
             </div>
             <Download className="size-4 text-white/70 opacity-70 group-hover:opacity-100 transition-opacity" />
@@ -82,7 +82,7 @@ export function DownloadModal({ onClose }: { onClose: () => void }) {
 
           {/* macOS */}
           <a
-            href={`${RELEASE_BASE}/nori_0.1.0_universal.dmg`}
+            href={`${RELEASE_BASE}/nori_1.0.2_universal.dmg`}
             className="group flex items-center gap-4 rounded-xl border border-white/12 bg-white/[0.03] px-5 py-4 hover:border-white/20 hover:bg-white/[0.06] transition-all"
           >
             <div className="size-10 rounded-lg bg-white/[0.06] border border-white/10 grid place-items-center shrink-0">
@@ -101,7 +101,7 @@ export function DownloadModal({ onClose }: { onClose: () => void }) {
 
           {/* Linux */}
           <a
-            href={`${RELEASE_BASE}/nori_0.1.0_amd64.AppImage`}
+            href={`${RELEASE_BASE}/nori_1.0.2_amd64.AppImage`}
             className="group flex items-center gap-4 rounded-xl border border-white/12 bg-white/[0.03] px-5 py-4 hover:border-white/20 hover:bg-white/[0.06] transition-all"
           >
             <div className="size-10 rounded-lg bg-white/[0.06] border border-white/10 grid place-items-center shrink-0">
@@ -112,7 +112,7 @@ export function DownloadModal({ onClose }: { onClose: () => void }) {
             <div className="flex-1 min-w-0">
               <p className="text-[14px] font-medium text-foreground">Linux</p>
               <p className="text-[12px] text-muted-foreground font-mono mt-0.5">
-                x86_64 · .AppImage · v0.1.0
+                x86_64 · .AppImage · v1.0.2
               </p>
             </div>
             <Download className="size-4 text-white/70 opacity-70 group-hover:opacity-100 transition-opacity" />

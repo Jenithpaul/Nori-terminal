@@ -12,19 +12,23 @@ import { ThemeProvider } from "@/hooks/use-theme";
 import noriLogo from "@/assets/nori.png";
 import appCss from "../styles.css?url";
 
-// Update this once you have a real domain
 const SITE_URL = "https://nori-terminal.pages.dev";
 
 const JSON_LD = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
   name: "Nori",
-  operatingSystem: "Windows",
+  operatingSystem: "Windows, macOS, Linux",
   applicationCategory: "DeveloperApplication",
   offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
   description:
-    "A calmer, high-performance developer terminal built in Rust. Studio-grade workspace with Git, Docker, SSH, and system metrics.",
+    "Nori is a fast, context-aware developer terminal built in Rust. A modern terminal emulator with Git, Docker, SSH, and system metrics integration. Free developer preview for Windows, macOS, and Linux.",
   url: SITE_URL,
+  applicationSubCategory: "Terminal Emulator",
+  downloadUrl: `${SITE_URL}/download`,
+  featureList:
+    "Git integration, Docker management, SSH sessions, Multiple shells, System monitoring, Custom themes",
+  screenshot: `${SITE_URL}/preview.png`,
 });
 
 function NotFoundComponent() {
@@ -89,16 +93,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
-      { title: "Nori — The Modern Terminal, Re‑designed" },
+      { title: "Nori — A Modern Terminal Emulator for Developers | Fast, Rust-Powered" },
       {
         name: "description",
         content:
-          "Nori is a fast, context-aware terminal built in Rust. Studio-grade workspace with Git, Docker, SSH, files, and system metrics — currently in closed Developer Preview.",
+          "Nori is a fast, context-aware terminal emulator built in Rust. Git, Docker, SSH, multi-shell support, and system monitoring in one studio-grade workspace. Free developer preview for Windows, macOS, and Linux.",
       },
       {
         name: "keywords",
         content:
-          "terminal, developer terminal, rust terminal, modern terminal, git terminal, developer tools, nori, command line, CLI",
+          "terminal, terminal emulator, developer terminal, rust terminal, modern terminal, git terminal, developer tools, nori, command line, CLI, terminal app, mac terminal alternative, windows terminal alternative, linux terminal, ssh terminal, docker terminal",
       },
       { name: "author", content: "Nori" },
       { name: "robots", content: "index, follow" },
@@ -107,32 +111,33 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { property: "og:url", content: SITE_URL },
       { property: "og:site_name", content: "Nori" },
-      { property: "og:title", content: "Nori — The Modern Terminal, Re‑designed" },
+      { property: "og:title", content: "Nori — A Modern Terminal Emulator for Developers" },
       {
         property: "og:description",
         content:
-          "A calmer, high-performance developer terminal built in Rust. Studio-grade workspace with Git, Docker, SSH, and system metrics.",
+          "Nori is a fast, context-aware terminal emulator built in Rust. Studio-grade workspace with Git, Docker, SSH, and system metrics. Free preview for Windows, macOS, and Linux.",
       },
       { property: "og:image", content: `${SITE_URL}/preview.png` },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       {
         property: "og:image:alt",
-        content: "Nori terminal workspace — a modern, dark terminal with Git integration",
+        content:
+          "Nori terminal emulator — a modern, dark developer terminal with Git, Docker, and SSH integration",
       },
       { property: "og:locale", content: "en_US" },
       // Twitter / X
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@nori_terminal" },
       { name: "twitter:creator", content: "@nori_terminal" },
-      { name: "twitter:title", content: "Nori — The Modern Terminal, Re‑designed" },
+      { name: "twitter:title", content: "Nori — A Modern Terminal Emulator for Developers" },
       {
         name: "twitter:description",
         content:
-          "A calmer, high-performance developer terminal built in Rust. Studio-grade workspace with Git, Docker, SSH, and system metrics.",
+          "Nori is a fast, context-aware terminal emulator built in Rust. Studio-grade workspace with Git, Docker, SSH, and system metrics. Free preview.",
       },
       { name: "twitter:image", content: `${SITE_URL}/preview.png` },
-      { name: "twitter:image:alt", content: "Nori terminal workspace screenshot" },
+      { name: "twitter:image:alt", content: "Nori terminal emulator workspace screenshot" },
     ],
     links: [
       { rel: "icon", type: "image/png", href: noriLogo },
