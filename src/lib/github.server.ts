@@ -5,12 +5,14 @@ const REPO = "Nori";
 const PER_PAGE = 10;
 
 export interface GithubAsset {
+  id: number;
   name: string;
   browser_download_url: string;
   size: number;
 }
 
 export interface GithubRelease {
+  id: number;
   tag_name: string;
   name: string;
   body: string;
